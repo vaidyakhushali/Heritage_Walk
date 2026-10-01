@@ -1,0 +1,154 @@
+.information-page {
+  min-height: 65vh;
+  background: var(--color-bg);
+}
+
+.information-page-inner {
+  width: min(100% - 40px, 900px);
+  margin: 0 auto;
+}
+
+.information-page-header {
+  padding: 52px 0 40px;
+  background: linear-gradient(115deg, #462714, #70401f);
+  border-bottom: 3px solid var(--color-accent);
+}
+
+.information-page-header h1 {
+  color: #fffaf4;
+  font-size: 2.5rem;
+  margin: 8px 0;
+}
+
+.information-page-header p {
+  max-width: 680px;
+  color: rgba(255, 250, 244, 0.82);
+  margin: 0;
+}
+
+.information-kicker {
+  color: #f2c777;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.information-page-layout {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  align-items: start;
+  gap: 42px;
+  padding-top: 42px;
+  padding-bottom: 64px;
+}
+
+.information-nav {
+  position: sticky;
+  top: 92px;
+  display: grid;
+  gap: 4px;
+  border-left: 2px solid var(--color-border);
+}
+
+.information-nav a {
+  padding: 9px 12px;
+  color: var(--color-text-light);
+  font-size: 0.88rem;
+}
+
+.information-nav a[aria-current="page"] {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  background: var(--color-bg-alt);
+  border-left: 2px solid var(--color-accent);
+  margin-left: -2px;
+}
+
+.information-content section + section {
+  border-top: 1px solid var(--color-border);
+  margin-top: 28px;
+  padding-top: 24px;
+}
+
+.information-content h2 {
+  font-size: 1.35rem;
+  margin-bottom: 8px;
+}
+
+.information-content p {
+  line-height: 1.75;
+  margin: 0 0 12px;
+}
+
+.information-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  margin-top: 30px;
+  padding: 16px 18px;
+}
+
+.information-contact strong {
+  display: block;
+  color: var(--color-primary-dark);
+  margin-bottom: 3px;
+}
+
+.information-content .information-contact p {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.information-contact a {
+  overflow-wrap: anywhere;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .information-page-header {
+    padding: 38px 0 30px;
+  }
+
+  .information-page-header h1 {
+    font-size: 2rem;
+  }
+
+  .information-page-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 24px;
+    padding-bottom: 44px;
+  }
+
+  .information-nav {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border: 0;
+  }
+
+  .information-nav a {
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 7px 10px;
+  }
+
+  .information-nav a[aria-current="page"] {
+    border: 1px solid var(--color-accent);
+    margin: 0;
+  }
+
+  .information-contact {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

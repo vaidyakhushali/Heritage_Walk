@@ -1,0 +1,19 @@
+{
+  "name": "heritagewalk",
+  "version": "1.0.0",
+  "description": "HeritageWalk – A Community-Based Heritage Documentation Web Platform",
+  "scripts": {
+    "install-all": "cd server && npm install && cd ../client && npm install",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["heritage", "culture", "documentation", "community"],
+  "license": "MIT"
+}
