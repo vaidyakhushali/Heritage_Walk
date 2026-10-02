@@ -4,7 +4,7 @@ const User = require('../models/User');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'heritagewalk_secret_key_2024';
+const JWT_SECRET = process.env.JWT_SECRET || 'heritagewalk_2026';
 
 const generateToken = (id) => {
   return jwt.sign({ id }, JWT_SECRET, { expiresIn: '30d' });
@@ -32,7 +32,6 @@ router.post('/register', async (req, res, next) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        avatar: user.avatar,
         bio: user.bio,
         location: user.location,
         wishlist: user.wishlist,
@@ -78,7 +77,6 @@ router.post('/login', async (req, res, next) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        avatar: user.avatar,
         bio: user.bio,
         location: user.location,
         wishlist: user.wishlist,
@@ -100,7 +98,6 @@ router.get('/me', auth, async (req, res, next) => {
       id: user._id,
       name: user.name,
       email: user.email,
-      avatar: user.avatar,
       bio: user.bio,
       location: user.location,
       wishlist: user.wishlist,
@@ -122,7 +119,6 @@ router.put('/profile', auth, async (req, res, next) => {
     if (name) user.name = name;
     if (bio !== undefined) user.bio = bio;
     if (location !== undefined) user.location = location;
-    if (avatar !== undefined) user.avatar = avatar;
 
     await user.save();
 
@@ -132,7 +128,6 @@ router.put('/profile', auth, async (req, res, next) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        avatar: user.avatar,
         bio: user.bio,
         location: user.location,
         wishlist: user.wishlist,
