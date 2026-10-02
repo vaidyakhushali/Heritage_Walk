@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const router = express.Router();
 const multer = require('multer');
 const { Readable } = require('stream');
@@ -32,6 +34,45 @@ const upload = multer({
   limits: { fileSize: 50 * 1024 * 1024 }
 });
 
+const isCloudinaryConfigured = () => Boolean(
+  process.env.CLOUDINARY_CLOUD_NAME &&
+  process.env.CLOUDINARY_API_KEY &&
+  process.env.CLOUDINARY_API_SECRET
+);
+
+const getLocalUploadExtension = (mimetype) => {
+  const extensionMap = {
+    'image/jpeg': 'jpg',
+    'image/jpg': 'jpg',
+    'image/png': 'png',
+    'image/webp': 'webp',
+    'video/mp4': 'mp4',
+    'video/webm': 'webm',
+    'video/quicktime': 'mov'
+  };
+
+  return extensionMap[mimetype] || 'bin';
+};
+
+const uploadToLocal = async (file) => {
+  const resourceType = file.mimetype.startsWith('video/') ? 'video' : 'image';
+  const folderName = resourceType === 'video' ? 'videos' : 'images';
+  const uploadDir = path.join(__dirname, '..', 'uploads', folderName);
+
+  fs.mkdirSync(uploadDir, { recursive: true });
+
+  const extension = getLocalUploadExtension(file.mimetype);
+  const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}.${extension}`;
+  const uploadPath = path.join(uploadDir, fileName);
+
+  await fs.promises.writeFile(uploadPath, file.buffer);
+
+  return {
+    url: `/uploads/${folderName}/${fileName}`,
+    resourceType
+  };
+};
+
 const uploadToCloudinary = (file) => new Promise((resolve, reject) => {
   const resourceType = file.mimetype.startsWith('video/') ? 'video' : 'image';
   const stream = cloudinary.uploader.upload_stream({
@@ -44,6 +85,14 @@ const uploadToCloudinary = (file) => new Promise((resolve, reject) => {
 
   Readable.from(file.buffer).pipe(stream);
 });
+
+const uploadMedia = async (file) => {
+  if (isCloudinaryConfigured()) {
+    return uploadToCloudinary(file);
+  }
+
+  return uploadToLocal(file);
+};
 
 // POST /api/contributions - Create a contribution
 router.post('/', auth, upload.array('photos', 5), async (req, res, next) => {
@@ -67,13 +116,7 @@ router.post('/', auth, upload.array('photos', 5), async (req, res, next) => {
       contentStr = content.trim();
     }
 
-    if (req.files?.length && (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET)) {
-      return res.status(503).json({
-        error: { message: 'Cloudinary is not configured. Set the Cloudinary environment variables to upload media.' }
-      });
-    }
-
-    const uploadedMedia = await Promise.all((req.files || []).map(uploadToCloudinary));
+    const uploadedMedia = await Promise.all((req.files || []).map(uploadMedia));
     const contributionData = {
       type: type || 'photo',
       contributor: {
@@ -300,5 +343,8 @@ router.delete('/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+router.uploadMedia = uploadMedia;
+router.isCloudinaryConfigured = isCloudinaryConfigured;
 
 module.exports = router;
