@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { IconCamera, IconCheck, IconHeritage, IconSearch, IconShield, IconUsers } from '../components/Icons'
 import './About.css'
 
 function About() {
@@ -17,7 +18,7 @@ function About() {
         <div className="container">
           <div className="about-mission">
             <div className="mission-content">
-              <span className="about-icon">🎯</span>
+              <span className="about-icon"><IconHeritage size={28} color="currentColor" /></span>
               <h2>Our Mission</h2>
               <p>
                 Many people living in tier-2 and tier-3 towns see heritage places every day — stepwells, temples, havelis, colonial-era buildings — without knowing their historical or cultural importance. Many of these sites lack easily accessible photographs, historical information, or written records.
@@ -33,7 +34,7 @@ function About() {
       {/* How It Works */}
       <section className="about-section about-alt section-padding">
         <div className="container">
-          <span className="about-icon">🔄</span>
+          <span className="about-icon"><IconShield size={28} color="currentColor" /></span>
           <h2 className="section-title">How It Works</h2>
           <div className="about-flow">
             <div className="flow-step">
@@ -66,26 +67,26 @@ function About() {
       {/* Who Is It For */}
       <section className="about-section section-padding">
         <div className="container">
-          <span className="about-icon">👥</span>
+          <span className="about-icon"><IconUsers size={28} color="currentColor" /></span>
           <h2 className="section-title">Who Is HeritageWalk For?</h2>
           <div className="audience-grid">
             <div className="audience-card">
-              <span className="audience-emoji">🏘️</span>
+              <span className="audience-emoji"><IconHeritage size={24} color="currentColor" /></span>
               <h3>Residents & Visitors</h3>
               <p>Discover heritage places near you. Learn what makes them special before or after visiting.</p>
             </div>
             <div className="audience-card">
-              <span className="audience-emoji">🎓</span>
+              <span className="audience-emoji"><IconCheck size={24} color="currentColor" /></span>
               <h3>Students & Young People</h3>
               <p>Use community-curated information as a starting point for school projects and cultural learning.</p>
             </div>
             <div className="audience-card">
-              <span className="audience-emoji">📸</span>
+              <span className="audience-emoji"><IconCamera size={24} color="currentColor" /></span>
               <h3>Community Contributors</h3>
               <p>Share your photographs and local knowledge. Help build a living record of heritage sites.</p>
             </div>
             <div className="audience-card">
-              <span className="audience-emoji">🔬</span>
+              <span className="audience-emoji"><IconSearch size={24} color="currentColor" /></span>
               <h3>Educators & Researchers</h3>
               <p>Access community-sourced material as supplementary documentation for further academic research.</p>
             </div>
@@ -96,25 +97,25 @@ function About() {
       {/* Content Guidelines */}
       <section className="about-section about-alt section-padding">
         <div className="container">
-          <span className="about-icon">📋</span>
+          <span className="about-icon"><IconCheck size={28} color="currentColor" /></span>
           <h2 className="section-title">Content Guidelines</h2>
           <p className="section-subtitle">How we handle community contributions responsibly</p>
 
           <div className="guidelines-grid">
             <div className="guideline-item">
-              <h3>✅ Verified vs. Personal</h3>
+              <h3><IconCheck size={18} color="currentColor" /> Verified vs. Personal</h3>
               <p>Contributors can mark whether their information is factually verified or based on personal memory and oral history. Both are valuable — we label them appropriately.</p>
             </div>
             <div className="guideline-item">
-              <h3>📝 Attribution</h3>
+              <h3><IconHeritage size={18} color="currentColor" /> Attribution</h3>
               <p>All contributions are attributed to their contributors. Photographs include credit information. We respect the effort of every contributor.</p>
             </div>
             <div className="guideline-item">
-              <h3>🔍 Review Process</h3>
+              <h3><IconSearch size={18} color="currentColor" /> Review Process</h3>
               <p>Submitted content is reviewed before publication. This helps maintain quality, prevent misinformation, and ensure respectful representation.</p>
             </div>
             <div className="guideline-item">
-              <h3>✏️ Corrections</h3>
+              <h3><IconCamera size={18} color="currentColor" /> Corrections</h3>
               <p>Anyone can suggest corrections to existing information. Errors are taken seriously and addressed promptly.</p>
             </div>
           </div>
@@ -125,7 +126,7 @@ function About() {
       <section className="about-section section-padding">
         <div className="container">
           <div className="disclaimer-block">
-            <span className="about-icon">⚠️</span>
+            <span className="about-icon"><IconShield size={28} color="currentColor" /></span>
             <h2>Important Disclaimer</h2>
             <div className="disclaimer-content">
               <p>HeritageWalk is a <strong>community-sourced documentation platform</strong>. While we strive for accuracy, the information presented here:</p>
@@ -147,8 +148,8 @@ function About() {
           <h2>Ready to Make a Difference?</h2>
           <p>Every photograph shared, every story told, every site documented brings us closer to preserving India's heritage for future generations.</p>
           <div className="about-cta-actions">
-            <Link to="/contribute" className="btn btn-primary btn-lg">📸 Start Contributing</Link>
-            <Link to="/explore" className="btn btn-outline-white btn-lg">🔍 Explore Sites</Link>
+            <Link to="/contribute" className="btn btn-primary btn-lg"><IconCamera size={18} color="currentColor" /> Start Contributing</Link>
+            <Link to="/explore" className="btn btn-outline-white btn-lg"><IconSearch size={18} color="currentColor" /> Explore Sites</Link>
           </div>
         </div>
       </section>

@@ -215,10 +215,10 @@ function Explore() {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option value="featured">🌟 Featured First</option>
-              <option value="name">🔤 Name (A - Z)</option>
-              <option value="photos">📸 Most Photos</option>
-              <option value="contributions">👥 Community Documented</option>
+              <option value="featured">Featured First</option>
+              <option value="name">Name (A - Z)</option>
+              <option value="photos">Most Photos</option>
+              <option value="contributions">Community Documented</option>
             </select>
           </div>
 
@@ -238,7 +238,7 @@ function Explore() {
               onClick={() => setViewMode('map')}
               aria-label="Interactive Map View"
             >
-              🗺️ Map View
+              Map View
             </button>
           </div>
 

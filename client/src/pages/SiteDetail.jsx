@@ -469,22 +469,22 @@ function SiteDetail() {
 
               {/* Practical Visitor Guide Box */}
               <div className="sidebar-box practical-guide-box">
-                <h4>🧭 Practical Visitor Guide</h4>
+                <h4><IconHeritage size={18} color="currentColor" /> Practical Visitor Guide</h4>
                 <div className="practical-items">
                   <div className="practical-item">
-                    <span className="practical-label">⏰ Timings</span>
+                    <span className="practical-label"><IconClock size={14} color="currentColor" /> Timings</span>
                     <span className="practical-value">{practical.timings}</span>
                   </div>
                   <div className="practical-item">
-                    <span className="practical-label">🎟️ Entry Fee</span>
+                    <span className="practical-label"><IconCamera size={14} color="currentColor" /> Entry Fee</span>
                     <span className="practical-value">{practical.entryFee}</span>
                   </div>
                   <div className="practical-item">
-                    <span className="practical-label">☀️ Best Season</span>
+                    <span className="practical-label"><IconClock size={14} color="currentColor" /> Best Season</span>
                     <span className="practical-value">{practical.bestTimeToVisit}</span>
                   </div>
                   <div className="practical-item">
-                    <span className="practical-label">📷 Photo Tip</span>
+                    <span className="practical-label"><IconCamera size={14} color="currentColor" /> Photo Tip</span>
                     <span className="practical-value">{practical.photographyTips}</span>
                   </div>
                 </div>

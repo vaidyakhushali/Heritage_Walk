@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Loader from '../components/Loader'
 import Toast from '../components/Toast'
+import { IconCamera, IconCheck, IconHeritage, IconSearch, IconShield, IconUser, IconX } from '../components/Icons'
 import './Admin.css'
 
 function Admin() {
@@ -82,10 +83,10 @@ function Admin() {
   }
 
   const typeLabels = {
-    photo: '📸 Photo Documentation',
-    information: '📝 Historical Information',
-    new_site: '🏛️ Unlisted Heritage Site',
-    correction: '✏️ Record Correction'
+    photo: 'Photo Documentation',
+    information: 'Historical Information',
+    new_site: 'Unlisted Heritage Site',
+    correction: 'Record Correction'
   }
 
   if (authLoading) {
@@ -98,7 +99,7 @@ function Admin() {
       <div className="admin">
         <section className="admin-header">
           <div className="container">
-            <span className="admin-lock-badge">🛡️ Restricted Administrator Portal</span>
+            <span className="admin-lock-badge"><IconShield size={16} color="currentColor" /> Restricted Administrator Portal</span>
             <h1>Curator & Admin Dashboard</h1>
             <p>Verification & Content Moderation Console</p>
           </div>
@@ -107,21 +108,21 @@ function Admin() {
         <section className="admin-content section-padding">
           <div className="container">
             <div className="admin-lock-card">
-              <span className="lock-shield-icon">🛡️</span>
+              <span className="lock-shield-icon"><IconShield size={42} color="currentColor" /></span>
               <h2>Administrator Sign In Required</h2>
               <p>
                 This area is reserved for HeritageWalk curators and administrators to review and approve community contributions before publication.
               </p>
 
               <div className="admin-demo-box">
-                <span className="demo-box-label">🔑 Pre-configured Admin Credentials:</span>
+                <span className="demo-box-label"><IconShield size={16} color="currentColor" /> Pre-configured Admin Credentials:</span>
                 <p>Email: <code>admin@heritagewalk.com</code></p>
                 <p>Password: <code>admin123</code></p>
               </div>
 
               <div className="admin-lock-actions">
                 <Link to="/login?redirect=/admin" className="btn btn-primary btn-lg">
-                  🛡️ Sign In with Admin Account
+                  <IconShield size={18} color="currentColor" /> Sign In with Admin Account
                 </Link>
                 <Link to="/" className="btn btn-secondary btn-lg">
                   Return to Home
@@ -148,7 +149,7 @@ function Admin() {
     <div className="admin">
       <section className="admin-header">
         <div className="container">
-          <span className="admin-lock-badge">👑 Logged in as Administrator: {user.name}</span>
+          <span className="admin-lock-badge"><IconUser size={16} color="currentColor" /> Logged in as Administrator: {user.name}</span>
           <h1>Admin Moderation Dashboard</h1>
           <p>Review community photographs, verify historical submissions, and manage heritage archives</p>
         </div>
@@ -165,9 +166,9 @@ function Admin() {
                 onClick={() => setActiveTab(tab)}
               >
                 <span className="tab-label">
-                  {tab === 'pending' ? '⏳ Pending Review' :
-                   tab === 'approved' ? '✅ Approved' :
-                   tab === 'rejected' ? '❌ Rejected' : '📁 All Submissions'}
+                  {tab === 'pending' ? <><IconSearch size={14} color="currentColor" /> Pending Review</> :
+                   tab === 'approved' ? <><IconCheck size={14} color="currentColor" /> Approved</> :
+                   tab === 'rejected' ? <><IconX size={14} color="currentColor" /> Rejected</> : <><IconHeritage size={14} color="currentColor" /> All Submissions</>}
                 </span>
                 <span className={`tab-count badge badge-${tab === 'pending' ? 'warning' : tab === 'approved' ? 'success' : tab === 'rejected' ? 'error' : 'primary'}`}>
                   {counts[tab] || 0}
@@ -181,11 +182,11 @@ function Admin() {
             <Loader size="full" text="Loading community submissions..." />
           ) : contributions.length === 0 ? (
             <div className="admin-empty">
-              <span className="admin-empty-icon">📭</span>
+              <span className="admin-empty-icon"><IconHeritage size={32} color="currentColor" /></span>
               <h3>No {activeTab !== 'all' ? activeTab : ''} submissions</h3>
               <p>There are currently no community contributions in the "{activeTab}" queue.</p>
               <Link to="/contribute" className="btn btn-secondary btn-sm" style={{ marginTop: '12px' }}>
-                📸 Test Submit a Contribution
+                <IconCamera size={16} color="currentColor" /> Test Submit a Contribution
               </Link>
             </div>
           ) : (
@@ -194,7 +195,7 @@ function Admin() {
                 <div key={contrib._id} className="contribution-card">
                   <div className="contrib-header">
                     <div className="contrib-info">
-                      <span className="contrib-type">{typeLabels[contrib.type] || contrib.type}</span>
+                      <span className="contrib-type">{contrib.type === 'photo' ? <IconCamera size={14} color="currentColor" /> : contrib.type === 'information' ? <IconHeritage size={14} color="currentColor" /> : contrib.type === 'new_site' ? <IconHeritage size={14} color="currentColor" /> : <IconCheck size={14} color="currentColor" />} {typeLabels[contrib.type] || contrib.type}</span>
                       <span className={`contrib-status badge badge-${contrib.status === 'pending' ? 'warning' : contrib.status === 'approved' ? 'success' : 'error'}`}>
                         {contrib.status}
                       </span>
@@ -205,14 +206,14 @@ function Admin() {
                   <div className="contrib-body">
                     <div className="contrib-meta">
                       <p className="contrib-contributor">
-                        <strong>👤 {contrib.contributor?.name || 'Explorer'}</strong>
+                        <strong><IconUser size={14} color="currentColor" /> {contrib.contributor?.name || 'Explorer'}</strong>
                         <span className="contrib-email">{contrib.contributor?.email}</span>
                       </p>
                       {contrib.siteId && (
-                        <p className="contrib-site">📍 Documented Site: <strong>{contrib.siteId.name || 'Site'}</strong></p>
+                        <p className="contrib-site"><IconHeritage size={14} color="currentColor" /> Documented Site: <strong>{contrib.siteId.name || 'Site'}</strong></p>
                       )}
                       {contrib.siteName && (
-                        <p className="contrib-site">🏛️ Suggested Unlisted Site: <strong>{contrib.siteName}</strong></p>
+                        <p className="contrib-site"><IconHeritage size={14} color="currentColor" /> Suggested Unlisted Site: <strong>{contrib.siteName}</strong></p>
                       )}
                     </div>
 
@@ -230,7 +231,7 @@ function Admin() {
                           {contrib.photos.map((photo, i) => (
                             <div key={i} className="contrib-photo-thumb" onClick={() => setPreviewModal(photo)}>
                               <img src={photo} alt={`Contribution photo ${i + 1}`} />
-                              <span className="photo-zoom-hint">🔍 Expand</span>
+                              <span className="photo-zoom-hint"><IconSearch size={14} color="currentColor" /> Expand</span>
                             </div>
                           ))}
                         </div>
@@ -239,13 +240,13 @@ function Admin() {
 
                     {contrib.isVerified && (
                       <span className="contrib-verified">
-                        ✅ Contributor claims this is verified/original historical information
+                        <IconCheck size={14} color="currentColor" /> Contributor claims this is verified/original historical information
                       </span>
                     )}
 
                     {contrib.reviewNote && (
                       <p className="contrib-review-note">
-                        💬 Review note: {contrib.reviewNote}
+                        <IconHeritage size={14} color="currentColor" /> Review note: {contrib.reviewNote}
                       </p>
                     )}
                   </div>
@@ -257,7 +258,7 @@ function Admin() {
                           className="btn btn-sm action-approve"
                           onClick={() => handleReview(contrib._id, 'approved')}
                         >
-                          ✅ Approve & Publish
+                          <IconCheck size={14} color="currentColor" /> Approve & Publish
                         </button>
                         <button
                           className="btn btn-sm action-reject"
@@ -266,7 +267,7 @@ function Admin() {
                             setReviewNote('')
                           }}
                         >
-                          ❌ Reject with Note
+                          <IconX size={14} color="currentColor" /> Reject with Note
                         </button>
                       </>
                     )}
@@ -274,7 +275,7 @@ function Admin() {
                       className="btn btn-sm action-delete"
                       onClick={() => handleDelete(contrib._id)}
                     >
-                      🗑️ Delete
+                      <IconX size={14} color="currentColor" /> Delete
                     </button>
                   </div>
                 </div>

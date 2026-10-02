@@ -8,7 +8,10 @@ import {
   IconSparkles,
   IconCheck,
   IconEdit,
-  IconPlus
+  IconPlus,
+  IconSearch,
+  IconShield,
+  IconUser
 } from '../components/Icons'
 import Toast from '../components/Toast'
 import Loader from '../components/Loader'
@@ -188,7 +191,7 @@ function Contribute() {
       <div className="contribute">
         <section className="contribute-header">
           <div className="container">
-            <span className="hero-badge-pill">🔒 Community Membership Required</span>
+            <span className="hero-badge-pill"><IconShield size={16} color="currentColor" /> Community Membership Required</span>
             <h1>Share Your Heritage Knowledge</h1>
             <p>Help document India's local heritage by contributing photographs, videos, and historical information</p>
           </div>
@@ -237,15 +240,15 @@ function Contribute() {
 
               <div className="lock-actions">
                 <Link to="/login?redirect=/contribute" className="btn btn-primary btn-lg">
-                  🔑 Sign In as Explorer
+                  <IconShield size={18} color="currentColor" /> Sign In as Explorer
                 </Link>
                 <Link to="/register" className="btn btn-secondary btn-lg">
-                  ✨ Create Free Account
+                  <IconUser size={18} color="currentColor" /> Create Free Account
                 </Link>
               </div>
 
               <p className="lock-demo-hint">
-                💡 Testing? Use Explorer login: <code>user@heritagewalk.com</code> (password: <code>user123</code>)
+                Testing? Use Explorer login: <code>user@heritagewalk.com</code> (password: <code>user123</code>)
               </p>
             </div>
           </div>
@@ -269,7 +272,7 @@ function Contribute() {
       <div className="contribute">
         <section className="contribute-header">
           <div className="container">
-            <h1>Thank You, {user.name}! 🎉</h1>
+            <h1>Thank You, {user.name}! <IconCheck size={26} color="currentColor" /></h1>
             <p>Your contribution directly supports India's cultural heritage documentation</p>
           </div>
         </section>
@@ -303,10 +306,10 @@ function Contribute() {
                     })
                   }}
                 >
-                  📸 Submit Another Contribution
+                  <IconCamera size={18} color="currentColor" /> Submit Another Contribution
                 </button>
                 <Link to="/explore" className="btn btn-secondary">
-                  🔍 Browse All Sites
+                  <IconSearch size={18} color="currentColor" /> Browse All Sites
                 </Link>
               </div>
             </div>
@@ -356,7 +359,7 @@ function Contribute() {
     <div className="contribute">
       <section className="contribute-header">
         <div className="container">
-          <span className="hero-badge-pill">👤 Logged in as: {user.name}</span>
+          <span className="hero-badge-pill"><IconUser size={16} color="currentColor" /> Logged in as: {user.name}</span>
           <h1>Share Your Heritage Knowledge</h1>
           <p>
             Help document India's local heritage by contributing photographs, videos, historical information, or new site records
@@ -552,7 +555,7 @@ function Contribute() {
                     className="file-input-hidden"
                   />
                   <label htmlFor="photo-input" className="file-upload-label">
-                    <span className="upload-icon">📸</span>
+                    <span className="upload-icon"><IconCamera size={20} color="currentColor" /></span>
                     <span className="upload-text">
                       <strong>Click to browse files</strong> or drag and drop media here
                     </span>
@@ -564,7 +567,7 @@ function Contribute() {
                   <div className="file-preview-list">
                     {form.photos.map((file, idx) => (
                       <div key={idx} className="file-preview-item">
-                        <span className="file-preview-name">{file.type.startsWith('video/') ? '🎬' : '📷'} {file.name}</span>
+                        <span className="file-preview-name">{file.type.startsWith('video/') ? <IconScroll size={16} color="currentColor" /> : <IconCamera size={16} color="currentColor" />} {file.name}</span>
                         <span className="file-preview-size">
                           ({(file.size / (1024 * 1024)).toFixed(2)} MB)
                         </span>
@@ -601,7 +604,7 @@ function Contribute() {
                   className="btn btn-primary btn-lg submit-btn"
                   disabled={submitting}
                 >
-                  {submitting ? 'Submitting Heritage Record...' : '🚀 Submit Contribution for Review'}
+                  {submitting ? 'Submitting Heritage Record...' : <><IconHeritage size={18} color="currentColor" /> Submit Contribution for Review</>}
                 </button>
               </div>
             </form>

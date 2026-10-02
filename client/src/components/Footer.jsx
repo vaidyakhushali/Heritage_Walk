@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { IconHeritage, IconHeart } from './Icons'
 import './Footer.css'
 
 function Footer() {
@@ -8,7 +9,7 @@ function Footer() {
         <div className="footer-grid">
           <div className="footer-section footer-about">
             <div className="footer-logo">
-              <span className="footer-logo-icon">🏛️</span>
+              <span className="footer-logo-icon"><IconHeritage size={22} color="currentColor" /></span>
               <span className="footer-logo-text">HeritageWalk</span>
             </div>
             <p className="footer-description">
@@ -48,7 +49,7 @@ function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} HeritageWalk. Built with ❤️ for India's heritage.</p>
+          <p>© {new Date().getFullYear()} HeritageWalk. Built with <IconHeart size={14} color="#f43f5e" fill="currentColor" /> for India's heritage.</p>
           <p className="footer-disclaimer">Community-sourced content. Not a replacement for official heritage records.</p>
         </div>
       </div>

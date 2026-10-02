@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import { IconHeritage } from './components/Icons'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -27,7 +28,7 @@ function NotFound() {
   return (
     <div className="not-found">
       <div className="container">
-        <span className="not-found-emoji">🏛️</span>
+        <span className="not-found-emoji"><IconHeritage size={56} color="currentColor" /></span>
         <h1>404</h1>
         <p>The heritage you're looking for seems lost in history.</p>
         <a href="/" className="btn btn-primary">Return Home</a>

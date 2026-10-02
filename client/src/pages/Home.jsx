@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SiteCard from '../components/SiteCard'
 import Loader from '../components/Loader'
-import { IconArrowRight, IconCamera, IconScroll, IconSearch } from '../components/Icons'
+import { IconArrowRight, IconCamera, IconHeritage, IconLocation, IconSearch, IconScroll } from '../components/Icons'
 import { fallbackSites } from '../data/fallbackSites'
 import './Home.css'
 
@@ -30,11 +30,49 @@ const heroSlides = [
   }
 ];
 
+function CountUpStat({ value, suffix, started }) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (!started) return
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setCount(value)
+      return
+    }
+
+    let animationFrame
+    const duration = 1400
+    let startTime
+    const animate = (timestamp) => {
+      if (startTime === undefined) startTime = timestamp
+      const progress = Math.min((timestamp - startTime) / duration, 1)
+      const easedProgress = 1 - Math.pow(1 - progress, 3)
+      setCount(Math.floor(value * easedProgress))
+
+      if (progress < 1) {
+        animationFrame = window.requestAnimationFrame(animate)
+      } else {
+        setCount(value)
+      }
+    }
+
+    animationFrame = window.requestAnimationFrame(animate)
+    return () => {
+      window.cancelAnimationFrame(animationFrame)
+    }
+  }, [started, value])
+
+  return <span className="stat-number">{count}{suffix}</span>
+}
+
 function Home() {
   const [featuredSites, setFeaturedSites] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeSlide, setActiveSlide] = useState(0)
   const [heroSearch, setHeroSearch] = useState('')
+  const [statsStarted, setStatsStarted] = useState(false)
+  const statsSectionRef = useRef(null)
   const navigate = useNavigate()
 
   // Auto rotate hero slides every 6 seconds
@@ -43,6 +81,26 @@ function Home() {
       setActiveSlide(prev => (prev + 1) % heroSlides.length)
     }, 6000)
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    const section = statsSectionRef.current
+    if (!section) return
+
+    if (!('IntersectionObserver' in window)) {
+      setStatsStarted(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setStatsStarted(true)
+        observer.disconnect()
+      }
+    }, { threshold: 0.25 })
+
+    observer.observe(section)
+    return () => observer.disconnect()
   }, [])
 
   // Fetch featured sites with instant fallback
@@ -93,7 +151,7 @@ function Home() {
         <div className="container hero-container">
           <div className="hero-content">
             <span className="hero-badge">
-              🏛️ Community Heritage Documentation Platform
+              <IconHeritage size={16} color="currentColor" /> Community Heritage Documentation Platform
             </span>
 
             <h1 className="hero-title">{currentSlide.title}</h1>
@@ -101,7 +159,7 @@ function Home() {
 
             {/* Interactive Hero Search */}
             <form className="hero-search-form" onSubmit={handleHeroSearch}>
-              <span className="hero-search-icon">🔍</span>
+              <span className="hero-search-icon"><IconSearch size={18} color="currentColor" /></span>
               <input
                 type="text"
                 className="hero-search-input"
@@ -116,10 +174,10 @@ function Home() {
 
             <div className="hero-actions">
               <Link to="/explore" className="btn btn-primary btn-lg hero-cta-btn">
-                🔍 Explore All
+                <IconSearch size={18} color="currentColor" /> Explore All
               </Link>
               <Link to="/contribute" className="btn btn-outline-white btn-lg hero-cta-btn">
-                📸 Contribute Documentation
+                <IconCamera size={18} color="currentColor" /> Contribute Documentation
               </Link>
             </div>
           </div>
@@ -159,27 +217,27 @@ function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="stats-section">
+      <section className="stats-section" ref={statsSectionRef}>
         <div className="container">
           <div className="stats-grid stagger-children">
             <div className="stat-item">
-              <span className="stat-icon">🏛️</span>
-              <span className="stat-number">12+</span>
+              <span className="stat-icon"><IconHeritage size={22} color="currentColor" /></span>
+              <CountUpStat value={12} suffix="+" started={statsStarted} />
               <span className="stat-label">Documented Heritage Sites</span>
             </div>
             <div className="stat-item">
-              <span className="stat-icon">📍</span>
-              <span className="stat-number">4+</span>
+              <span className="stat-icon"><IconLocation size={22} color="currentColor" /></span>
+              <CountUpStat value={4} suffix="+" started={statsStarted} />
               <span className="stat-label">States Across India</span>
             </div>
             <div className="stat-item">
-              <span className="stat-icon">📸</span>
-              <span className="stat-number">35+</span>
+              <span className="stat-icon"><IconCamera size={22} color="currentColor" /></span>
+              <CountUpStat value={35} suffix="+" started={statsStarted} />
               <span className="stat-label">High-Resolution Photos</span>
             </div>
             <div className="stat-item">
-              <span className="stat-icon">👥</span>
-              <span className="stat-number">100%</span>
+              <span className="stat-icon"><IconSearch size={22} color="currentColor" /></span>
+              <CountUpStat value={100} suffix="%" started={statsStarted} />
               <span className="stat-label">Community Sourced</span>
             </div>
           </div>
@@ -257,7 +315,7 @@ function Home() {
               </div>
               <div className="featured-cta">
                 <Link to="/explore" className="btn btn-primary btn-lg">
-                  🔍 View All Documented Sites in Catalog →
+                  <IconSearch size={18} color="currentColor" /> View All Documented Sites in Catalog →
                 </Link>
               </div>
             </>
@@ -275,10 +333,10 @@ function Home() {
           </p>
           <div className="cta-buttons">
             <Link to="/contribute" className="btn btn-accent btn-lg">
-              📸 Start Contributing Documentation
+              <IconCamera size={18} color="currentColor" /> Start Contributing Documentation
             </Link>
             <Link to="/register" className="btn btn-outline-white btn-lg">
-              ✨ Create Explorer Account
+              <IconSearch size={18} color="currentColor" /> Create Explorer Account
             </Link>
           </div>
         </div>

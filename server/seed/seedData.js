@@ -39,21 +39,7 @@ async function seedDatabase() {
       location: "New Delhi, India",
       bio: "Official HeritageWalk platform administrator and preservation curator."
     });
-    await adminUser.save();
-   
-
-    // Regular Explorer account: user@heritagewalk.com / user123
-    const regularUser = new User({
-      name: "Khushi Explorer",
-      email: "user1@gmail.com",
-      password: "user123",
-      role: "user",
-      location: "Ahmedabad, Gujarat",
-      bio: "Heritage enthusiast and traveler passionate about documenting local architecture.",
-      wishlist: [insertedSites[0]._id, insertedSites[1]._id]
-    });
-    await regularUser.save();
-    
+    await adminUser.save(); 
     await mongoose.disconnect();
     
     if (require.main === module) process.exit(0);

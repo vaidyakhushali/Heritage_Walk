@@ -120,7 +120,7 @@ function Profile() {
                   <h2 className="profile-name">{user.name}</h2>
                   <p className="profile-email">{user.email}</p>
                   <span className="profile-role-pill">
-                    {user.role === 'admin' ? '🛡️ Administrator' : '✨ Heritage Explorer'}
+                    {user.role === 'admin' ? <><IconHeritage size={14} color="currentColor" /> Administrator</> : <><IconSparkles size={14} color="currentColor" /> Heritage Explorer</>}
                   </span>
                   {user.location && (
                     <p className="profile-location">
@@ -149,7 +149,7 @@ function Profile() {
 
                 <div className="profile-actions">
                   <button className="btn btn-primary btn-sm" onClick={() => setEditing(!editing)}>
-                    {editing ? '✕ Cancel Editing' : '✏️ Edit Profile'}
+                    {editing ? 'Cancel Editing' : 'Edit Profile'}
                   </button>
                   <Link to="/wishlist" className="btn btn-secondary btn-sm">
                     <IconHeart size={14} color="currentColor" /> Saved Wishlist
@@ -194,7 +194,7 @@ function Profile() {
                     />
                   </div>
                   <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
-                    {saving ? 'Saving...' : '💾 Save Profile Updates'}
+                    {saving ? 'Saving...' : 'Save Profile Updates'}
                   </button>
                 </div>
               )}

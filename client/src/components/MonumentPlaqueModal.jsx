@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import QRCode from 'qrcode'
-import { IconHeritage, IconX } from './Icons'
+import { IconHeritage, IconLocation, IconX } from './Icons'
 import './MonumentPlaqueModal.css'
 
 function MonumentPlaqueModal({ site, onClose }) {
@@ -49,7 +49,7 @@ function MonumentPlaqueModal({ site, onClose }) {
 
               <h2 className="plaque-monument-name">{site.name}</h2>
               <p className="plaque-location-text">
-                📍 {site.location.city}, {site.location.state} • {site.period || 'Historic Monument'}
+                <IconLocation size={14} color="currentColor" /> {site.location.city}, {site.location.state} • {site.period || 'Historic Monument'}
               </p>
 
               <div className="plaque-qr-center">
@@ -77,7 +77,7 @@ function MonumentPlaqueModal({ site, onClose }) {
 
         <div className="plaque-actions">
           <button type="button" className="btn btn-primary" onClick={handlePrint}>
-            🖨️ Print / Download Plaque
+            <IconHeritage size={16} color="currentColor" /> Print / Download Plaque
           </button>
           <button type="button" className="btn btn-secondary" onClick={onClose}>
             Close

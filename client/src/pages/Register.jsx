@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { IconCamera, IconEye, IconHeart, IconHeritage, IconShield, IconUser } from '../components/Icons'
 import Toast from '../components/Toast'
 import './Auth.css'
 
@@ -51,10 +52,10 @@ function Register() {
           <div className="auth-left-overlay"></div>
           <div className="auth-left-content">
             <div className="auth-brand">
-              <span className="auth-brand-icon">🏛️</span>
+              <span className="auth-brand-icon"><IconHeritage size={28} color="currentColor" /></span>
               <h2>HeritageWalk</h2>
             </div>
-            <div className="explorer-badge-pill">✨ Join Community of Explorers</div>
+            <div className="explorer-badge-pill"><IconUser size={16} color="currentColor" /> Join Community of Explorers</div>
             <h1 className="auth-left-title">Preserve India's Architectural Legacy</h1>
             <p className="auth-left-desc">
               Become part of a collaborative heritage initiative documenting stepwells, temples, and havelis across India's tier-2 and tier-3 towns.
@@ -62,15 +63,15 @@ function Register() {
 
             <div className="auth-features">
               <div className="auth-feature">
-                <span className="auth-feature-icon">📸</span>
+                <span className="auth-feature-icon"><IconCamera size={18} color="currentColor" /></span>
                 <span>Document unlisted heritage sites & photographs</span>
               </div>
               <div className="auth-feature">
-                <span className="auth-feature-icon">🏛️</span>
+                <span className="auth-feature-icon"><IconHeritage size={18} color="currentColor" /></span>
                 <span>Access verified historical timelines and architecture</span>
               </div>
               <div className="auth-feature">
-                <span className="auth-feature-icon">❤️</span>
+                <span className="auth-feature-icon"><IconHeart size={18} color="currentColor" fill="currentColor" /></span>
                 <span>Curate your personalized heritage exploration wishlist</span>
               </div>
             </div>
@@ -87,14 +88,14 @@ function Register() {
               <div className="form-group">
                 <label className="form-label">Full Name</label>
                 <div className="input-icon-wrapper">
-                  <span className="input-icon">👤</span>
+                  <span className="input-icon"><IconUser size={16} color="currentColor" /></span>
                   <input
                     type="text"
                     name="name"
                     className="form-input input-with-icon"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="e.g., Khushi Vaidya"
+                    placeholder="e.g., Enter your full name"
                     required
                   />
                 </div>
@@ -103,7 +104,7 @@ function Register() {
               <div className="form-group">
                 <label className="form-label">Email Address</label>
                 <div className="input-icon-wrapper">
-                  <span className="input-icon">📧</span>
+                  <span className="input-icon"><IconHeritage size={16} color="currentColor" /></span>
                   <input
                     type="email"
                     name="email"
@@ -119,7 +120,7 @@ function Register() {
               <div className="form-group">
                 <label className="form-label">Password</label>
                 <div className="input-icon-wrapper">
-                  <span className="input-icon">🔒</span>
+                  <span className="input-icon"><IconShield size={16} color="currentColor" /></span>
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"
@@ -135,7 +136,7 @@ function Register() {
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    {showPassword ? '🙈' : '👁️'}
+                    <IconEye size={18} color="currentColor" />
                   </button>
                 </div>
               </div>
@@ -143,7 +144,7 @@ function Register() {
               <div className="form-group">
                 <label className="form-label">Confirm Password</label>
                 <div className="input-icon-wrapper">
-                  <span className="input-icon">🔒</span>
+                  <span className="input-icon"><IconShield size={16} color="currentColor" /></span>
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name="confirmPassword"
@@ -159,7 +160,7 @@ function Register() {
               <button type="submit" className="btn btn-primary btn-lg auth-submit" disabled={loading}>
                 {loading ? (
                   <span className="btn-loading"><span className="btn-spinner"></span> Creating Account...</span>
-                ) : '✨ Create Free Account →'}
+                ) : <><IconUser size={16} color="currentColor" /> Create Free Account →</>}
               </button>
             </form>
 

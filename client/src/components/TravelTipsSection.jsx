@@ -97,11 +97,11 @@ function TravelTipsSection({ siteId, siteName }) {
   }
 
   const categories = [
-    { label: '📷 Photography', value: 'Photography' },
-    { label: '⏰ Best Timing', value: 'Timing' },
-    { label: '🎟️ Entry & Guide', value: 'Entry & Guide' },
-    { label: '♿ Accessibility', value: 'Accessibility' },
-    { label: '💡 General Tip', value: 'General Tip' }
+    { label: 'Photography', value: 'Photography' },
+    { label: 'Best Timing', value: 'Timing' },
+    { label: 'Entry & Guide', value: 'Entry & Guide' },
+    { label: 'Accessibility', value: 'Accessibility' },
+    { label: 'General Tip', value: 'General Tip' }
   ]
 
   return (
@@ -118,7 +118,7 @@ function TravelTipsSection({ siteId, siteName }) {
             className="btn btn-secondary btn-sm"
             onClick={() => setShowForm(!showForm)}
           >
-            {showForm ? 'Cancel' : '✍️ Share a Field Tip'}
+            {showForm ? 'Cancel' : 'Share a Field Tip'}
           </button>
         ) : (
           <span className="tips-signin-hint">Sign in to share your field tips</span>

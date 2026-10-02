@@ -62,7 +62,7 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/herita
 mongoose.connect(MONGODB_URI)
   .then(async () => {
     console.log('✅ Connected to MongoDB');
-    
+
     // Auto-seed if database is empty
     try {
       const Site = require('./models/Site');
@@ -71,13 +71,13 @@ mongoose.connect(MONGODB_URI)
         console.log('🌱 Database is empty, auto-seeding initial heritage sites & demo accounts...');
         const { sites } = require('./seed/seedData');
         const User = require('./models/User');
-        
+
         const insertedSites = await Site.insertMany(sites.map(site => {
           const s = new Site(site);
           s.slug = site.name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
           return s;
         }));
-        
+
         const adminUser = new User({
           name: "HeritageWalk Admin",
           email: "admin@heritagewalk.com",

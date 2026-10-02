@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { IconCheck, IconX, IconHeritage, IconShield } from './Icons'
 import './Toast.css'
 
 function Toast({ message, type = 'success', link, actionLabel, onClick, onClose, duration = 5000 }) {
@@ -13,10 +14,10 @@ function Toast({ message, type = 'success', link, actionLabel, onClick, onClose,
   }, [onClose, duration])
 
   const icons = {
-    success: '✅',
-    error: '❌',
-    info: 'ℹ️',
-    warning: '⚠️'
+    success: <IconCheck size={18} color="currentColor" />,
+    error: <IconX size={18} color="currentColor" />,
+    info: <IconHeritage size={18} color="currentColor" />,
+    warning: <IconShield size={18} color="currentColor" />
   }
 
   const handleClick = (e) => {

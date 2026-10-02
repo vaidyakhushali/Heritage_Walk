@@ -36,7 +36,7 @@ function FieldGuideModal({ site, onClose }) {
           </div>
           <div className="toolbar-actions">
             <button type="button" className="btn btn-primary btn-sm" onClick={handlePrint}>
-              🖨️ Print / Save as PDF
+              <IconHeritage size={16} color="currentColor" /> Print / Save as PDF
             </button>
             <button type="button" className="btn btn-secondary btn-sm" onClick={onClose} aria-label="Close guide">
               <IconX size={16} color="currentColor" /> Close
@@ -69,7 +69,7 @@ function FieldGuideModal({ site, onClose }) {
               </span>
               <h1 className="guide-monument-title">{site.name}</h1>
               <p className="guide-loc-bar">
-                📍 {site.location.city}, {site.location.state}
+                <IconLocation size={14} color="currentColor" /> {site.location.city}, {site.location.state}
                 {site.location.address && ` • ${site.location.address}`}
                 <span className="guide-coords"> (GPS: {coords.lat.toFixed(4)}°N, {coords.lng.toFixed(4)}°E)</span>
               </p>
@@ -139,11 +139,11 @@ function FieldGuideModal({ site, onClose }) {
             </h2>
             <div className="guide-tips-grid">
               <div className="guide-tip-card">
-                <strong>📷 Photography Tips</strong>
+                <strong><IconCamera size={14} color="currentColor" /> Photography Tips</strong>
                 <p>{practical.photographyTips}</p>
               </div>
               <div className="guide-tip-card">
-                <strong>🌿 Preservation Etiquette</strong>
+                <strong><IconHeritage size={14} color="currentColor" /> Preservation Etiquette</strong>
                 <p>Do not touch or lean on fragile sandstone carvings. Maintain cleanliness on monument grounds and avoid using flash photography near ancient murals.</p>
               </div>
             </div>
