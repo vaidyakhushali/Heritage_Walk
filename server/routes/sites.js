@@ -5,8 +5,17 @@ const Site = require('../models/Site');
 // GET /api/sites - Get all published sites with filtering, search, pagination
 router.get('/', async (req, res, next) => {
   try {
-    const { type, search, featured, page = 1, limit = 9 } = req.query;
+    const { type, search, location, region, featured, page = 1, limit = 9 } = req.query;
     const filter = { status: 'published' };
+    const conditions = [];
+
+    const regionStates = {
+      North: ['Jammu and Kashmir', 'Ladakh', 'Himachal Pradesh', 'Punjab', 'Chandigarh', 'Uttarakhand', 'Haryana', 'Delhi', 'Uttar Pradesh', 'Rajasthan'],
+      South: ['Andhra Pradesh', 'Karnataka', 'Kerala', 'Tamil Nadu', 'Telangana', 'Puducherry', 'Lakshadweep'],
+      East: ['Bihar', 'Jharkhand', 'Odisha', 'West Bengal', 'Sikkim', 'Assam', 'Arunachal Pradesh', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Tripura'],
+      West: ['Goa', 'Gujarat', 'Maharashtra', 'Dadra and Nagar Haveli and Daman and Diu'],
+      Central: ['Chhattisgarh', 'Madhya Pradesh']
+    };
 
     if (type && type !== 'all') {
       filter.type = type;
@@ -17,14 +26,33 @@ router.get('/', async (req, res, next) => {
     }
 
     if (search) {
-      const regex = new RegExp(search, 'i');
-      filter.$or = [
+      const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
+      conditions.push({ $or: [
         { name: regex },
         { 'location.city': regex },
         { 'location.state': regex },
         { description: regex }
-      ];
+      ] });
     }
+
+    if (location) {
+      const escapedLocation = location.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      conditions.push({
+        $or: [
+          { 'location.city': new RegExp(escapedLocation, 'i') },
+          { 'location.state': new RegExp(escapedLocation, 'i') }
+        ]
+      });
+    }
+
+    if (region) {
+      const regions = Array.isArray(region) ? region : String(region).split(',');
+      const states = [...new Set(regions.flatMap(name => regionStates[name] || []))];
+      if (states.length > 0) conditions.push({ 'location.state': { $in: states } });
+    }
+
+    if (conditions.length > 0) filter.$and = conditions;
 
     const pageNum = Math.max(1, parseInt(page));
     const limitNum = Math.max(1, Math.min(50, parseInt(limit)));

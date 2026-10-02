@@ -5,9 +5,7 @@ import HeritageMap from '../components/HeritageMap'
 import Loader from '../components/Loader'
 import {
   IconHeritage,
-  IconSearch,
-  IconX,
-  MonumentTypeIcon
+  IconSearch
 } from '../components/Icons'
 import { fallbackSites, fallbackTypes } from '../data/fallbackSites'
 import './Explore.css'
@@ -24,33 +22,78 @@ function Explore() {
 
   const currentType = searchParams.get('type') || 'all'
   const currentSearch = searchParams.get('search') || ''
+  const currentLocation = searchParams.get('location') || ''
+  const currentRegions = searchParams.getAll('region')
+  const regionsKey = currentRegions.join(',')
   const currentPage = parseInt(searchParams.get('page')) || 1
 
-  // Fetch distinct types
+  const filterFallbackData = (typeFilter, searchFilter, locationFilter, regions, page, limit) => {
+    let result = [...fallbackSites]
+
+    if (typeFilter && typeFilter !== 'all') {
+      result = result.filter(site => site.type.toLowerCase() === typeFilter.toLowerCase())
+    }
+
+    if (searchFilter && searchFilter.trim()) {
+      const query = searchFilter.toLowerCase().trim()
+      result = result.filter(site =>
+        site.name.toLowerCase().includes(query) ||
+        site.location.city.toLowerCase().includes(query) ||
+        site.location.state.toLowerCase().includes(query) ||
+        site.description.toLowerCase().includes(query)
+      )
+    }
+
+    if (locationFilter.trim()) {
+      const locationQuery = locationFilter.toLowerCase().trim()
+      result = result.filter(site =>
+        site.location.city.toLowerCase().includes(locationQuery) ||
+        site.location.state.toLowerCase().includes(locationQuery)
+      )
+    }
+
+    if (regions.length > 0) {
+      const stateRegions = {
+        North: ['Jammu and Kashmir', 'Ladakh', 'Himachal Pradesh', 'Punjab', 'Chandigarh', 'Uttarakhand', 'Haryana', 'Delhi', 'Uttar Pradesh', 'Rajasthan'],
+        South: ['Andhra Pradesh', 'Karnataka', 'Kerala', 'Tamil Nadu', 'Telangana', 'Puducherry', 'Lakshadweep'],
+        East: ['Bihar', 'Jharkhand', 'Odisha', 'West Bengal', 'Sikkim', 'Assam', 'Arunachal Pradesh', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Tripura'],
+        West: ['Goa', 'Gujarat', 'Maharashtra', 'Dadra and Nagar Haveli and Daman and Diu'],
+        Central: ['Chhattisgarh', 'Madhya Pradesh']
+      }
+      const states = regions.flatMap(region => stateRegions[region] || [])
+      result = result.filter(site => states.includes(site.location.state))
+    }
+
+    setTotal(result.length)
+    setPages(Math.ceil(result.length / limit) || 1)
+    setDbSites(result.slice((page - 1) * limit, page * limit))
+  }
+
   useEffect(() => {
     fetch('/api/sites/types')
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setTypes(data)
-        }
+        if (Array.isArray(data) && data.length > 0) setTypes(data)
       })
       .catch(() => {})
   }, [])
 
-  // Fetch sites from API with graceful fallback to local dataset
   useEffect(() => {
     setLoading(true)
     const params = new URLSearchParams()
     if (currentType !== 'all') params.set('type', currentType)
     if (currentSearch) params.set('search', currentSearch)
-    params.set('page', currentPage)
-    params.set('limit', 12)
+    if (currentLocation) params.set('location', currentLocation)
+    if (currentRegions.length > 0) params.set('region', currentRegions.join(','))
+    const page = viewMode === 'map' ? 1 : currentPage
+    const limit = viewMode === 'map' ? 50 : 6
+    params.set('page', page)
+    params.set('limit', limit)
 
     fetch(`/api/sites?${params.toString()}`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch')
-        return res.json()
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to fetch sites')
+        return response.json()
       })
       .then(data => {
         if (data && Array.isArray(data.sites) && data.sites.length > 0) {
@@ -58,68 +101,49 @@ function Explore() {
           setTotal(data.total || data.sites.length)
           setPages(data.pages || 1)
         } else {
-          filterFallbackData(currentType, currentSearch)
+          filterFallbackData(currentType, currentSearch, currentLocation, currentRegions, page, limit)
         }
         setLoading(false)
       })
       .catch(() => {
-        filterFallbackData(currentType, currentSearch)
+        filterFallbackData(currentType, currentSearch, currentLocation, currentRegions, page, limit)
         setLoading(false)
       })
-  }, [currentType, currentSearch, currentPage])
+  }, [currentType, currentSearch, currentLocation, regionsKey, currentPage, viewMode])
 
-  const filterFallbackData = (typeFilter, searchFilter) => {
-    let result = [...fallbackSites]
-
-    if (typeFilter && typeFilter !== 'all') {
-      result = result.filter(s => s.type.toLowerCase() === typeFilter.toLowerCase())
-    }
-
-    if (searchFilter && searchFilter.trim()) {
-      const q = searchFilter.toLowerCase().trim()
-      result = result.filter(s =>
-        s.name.toLowerCase().includes(q) ||
-        s.location.city.toLowerCase().includes(q) ||
-        s.location.state.toLowerCase().includes(q) ||
-        s.description.toLowerCase().includes(q)
-      )
-    }
-
-    setDbSites(result)
-    setTotal(result.length)
-    setPages(Math.ceil(result.length / 12) || 1)
-  }
-
-  // Sorted sites
   const sortedSites = useMemo(() => {
-    const list = [...dbSites]
-    if (sortBy === 'name') {
-      return list.sort((a, b) => a.name.localeCompare(b.name))
-    }
+    const sites = [...dbSites]
+    if (sortBy === 'name') return sites.sort((a, b) => a.name.localeCompare(b.name))
     if (sortBy === 'photos') {
-      return list.sort((a, b) => (b.photos?.length || 0) - (a.photos?.length || 0))
+      return sites.sort((a, b) => (b.photos?.length || 0) - (a.photos?.length || 0))
     }
     if (sortBy === 'contributions') {
-      return list.sort((a, b) => (b.contributionCount || 0) - (a.contributionCount || 0))
+      return sites.sort((a, b) => (b.contributionCount || 0) - (a.contributionCount || 0))
     }
-    // Default: featured first
-    return list.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+    return sites.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
   }, [dbSites, sortBy])
 
   const updateFilter = (key, value) => {
     const params = new URLSearchParams(searchParams)
-    if (value && value !== 'all') {
-      params.set(key, value)
-    } else {
-      params.delete(key)
-    }
+    if (value && value !== 'all') params.set(key, value)
+    else params.delete(key)
     params.delete('page')
     setSearchParams(params)
   }
 
-  const clearAllFilters = () => {
-    setSearchParams({})
+  const toggleRegion = (region) => {
+    const params = new URLSearchParams(searchParams)
+    const selectedRegions = params.getAll('region')
+    params.delete('region')
+    const nextRegions = selectedRegions.includes(region)
+      ? selectedRegions.filter(selected => selected !== region)
+      : [...selectedRegions, region]
+    nextRegions.forEach(selected => params.append('region', selected))
+    params.delete('page')
+    setSearchParams(params)
   }
+
+  const clearAllFilters = () => setSearchParams({})
 
   const goToPage = (page) => {
     const params = new URLSearchParams(searchParams)
@@ -130,214 +154,166 @@ function Explore() {
 
   return (
     <div className="explore">
-      {/* Page Header with Real Heritage Background */}
-      <section className="explore-header">
-        <div className="explore-header-overlay"></div>
-        <div className="container explore-header-content">
-          <span className="explore-badge">
-            <IconHeritage size={14} color="currentColor" style={{ marginRight: '6px' }} />
-            Interactive Heritage Repository
-          </span>
-          <h1>Explore India's Heritage Sites</h1>
-          <p>
-            Discover, study, and document ancient stepwells, ornate temples, havelis, and colonial monuments across tier-2 and tier-3 towns.
-          </p>
+      <div className="explore-shell container">
+        <header className="explore-intro">
+          <h1>Explore Heritage Sites</h1>
+          <p>Discover historic monuments, temples, palaces, and hidden landmarks across the region.</p>
+        </header>
 
-          {/* Quick Category Filter Chips */}
-          <div className="explore-chips-row">
-            <button
-              className={`explore-chip ${currentType === 'all' ? 'active' : ''}`}
-              onClick={() => updateFilter('type', 'all')}
-            >
-              All Categories
-            </button>
-            {types.map(t => (
-              <button
-                key={t}
-                className={`explore-chip ${currentType === t ? 'active' : ''}`}
-                onClick={() => updateFilter('type', t)}
-              >
-                <MonumentTypeIcon type={t} size={14} color="currentColor" style={{ marginRight: '6px', verticalAlign: '-2px' }} />
-                {t}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+        <div className="explore-layout">
+          <aside className="explore-sidebar">
+            <h3>Filters</h3>
 
-      {/* Sticky Filter & Search Bar */}
-      <section className="explore-filters">
-        <div className="container filters-bar">
-          <div className="filter-group filter-search-wrap">
-            <span className="search-inline-icon">
-              <IconSearch size={18} color="var(--color-text-muted)" />
-            </span>
-            <input
-              id="search-filter"
-              type="text"
-              className="form-input search-input-styled"
-              placeholder="Search by monument name, city, or state..."
-              value={currentSearch}
-              onChange={(e) => updateFilter('search', e.target.value)}
-            />
-            {currentSearch && (
-              <button
-                type="button"
-                className="clear-search-btn"
-                onClick={() => updateFilter('search', '')}
-                aria-label="Clear search text"
-              >
-                <IconX size={14} color="var(--color-text-muted)" />
-              </button>
-            )}
-          </div>
-
-          <div className="filter-group">
-            <label htmlFor="type-filter" className="filter-label">Filter Type:</label>
-            <select
-              id="type-filter"
-              className="form-select filter-select"
-              value={currentType}
-              onChange={(e) => updateFilter('type', e.target.value)}
-            >
-              <option value="all">All Heritage Types</option>
-              {types.map(type => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label htmlFor="sort-filter" className="filter-label">Sort By:</label>
-            <select
-              id="sort-filter"
-              className="form-select filter-select"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-            >
-              <option value="featured">Featured First</option>
-              <option value="name">Name (A - Z)</option>
-              <option value="photos">Most Photos</option>
-              <option value="contributions">Community Documented</option>
-            </select>
-          </div>
-
-          {/* View Mode Toggle: Grid vs Map */}
-          <div className="explore-view-toggle">
-            <button
-              type="button"
-              className={`view-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
-              onClick={() => setViewMode('grid')}
-              aria-label="Grid View"
-            >
-              ▦ Grid View
-            </button>
-            <button
-              type="button"
-              className={`view-toggle-btn ${viewMode === 'map' ? 'active' : ''}`}
-              onClick={() => setViewMode('map')}
-              aria-label="Interactive Map View"
-            >
-              Map View
-            </button>
-          </div>
-
-          <div className="filter-results-badge">
-            <strong>{total}</strong> site{total !== 1 ? 's' : ''} available
-          </div>
-        </div>
-
-        {/* Active Filter Tags */}
-        {(currentType !== 'all' || currentSearch) && (
-          <div className="container active-tags-row">
-            <span className="active-tags-label">Active Filters:</span>
-            {currentType !== 'all' && (
-              <span className="filter-tag">
-                Type: <strong>{currentType}</strong>
-                <button onClick={() => updateFilter('type', 'all')} aria-label="Remove type filter">
-                  <IconX size={12} color="currentColor" />
-                </button>
-              </span>
-            )}
-            {currentSearch && (
-              <span className="filter-tag">
-                Search: <strong>"{currentSearch}"</strong>
-                <button onClick={() => updateFilter('search', '')} aria-label="Remove search filter">
-                  <IconX size={12} color="currentColor" />
-                </button>
-              </span>
-            )}
-            <button className="clear-all-link" onClick={clearAllFilters}>
-              Clear All Filters
-            </button>
-          </div>
-        )}
-      </section>
-
-      {/* Sites Results Section */}
-      <section className="explore-results section-padding">
-        <div className="container">
-          {loading ? (
-            <Loader size="full" text="Loading India's heritage catalog..." />
-          ) : viewMode === 'map' ? (
-            <div className="explore-map-container">
-              <HeritageMap sites={sortedSites} selectedType={currentType} />
-            </div>
-          ) : sortedSites.length > 0 ? (
-            <>
-              <div className="sites-grid">
-                {sortedSites.map((site) => (
-                  <SiteCard key={site._id || site.slug} site={site} />
-                ))}
+            <div className="sidebar-controls">
+              <div className="toolbar-field">
+                <label htmlFor="search-filter">Search</label>
+                <div className="field-with-icon">
+                  <IconSearch size={15} color="#7c6557" />
+                  <input
+                    id="search-filter"
+                    type="text"
+                    value={currentSearch}
+                    onChange={(e) => updateFilter('search', e.target.value)}
+                    placeholder="Search sites..."
+                  />
+                </div>
               </div>
 
-              {/* Pagination */}
-              {pages > 1 && (
-                <div className="pagination">
-                  <button
-                    className="pagination-btn"
-                    disabled={currentPage <= 1}
-                    onClick={() => goToPage(currentPage - 1)}
-                  >
-                    Previous
-                  </button>
+              <div className="toolbar-field">
+                <label htmlFor="location-filter">Location</label>
+                <input
+                  id="location-filter"
+                  type="text"
+                  placeholder="Search city..."
+                  value={currentLocation}
+                  onChange={(e) => updateFilter('location', e.target.value)}
+                />
+              </div>
 
-                  <div className="pagination-numbers">
-                    {Array.from({ length: pages }, (_, i) => i + 1).map((pageNum) => (
-                      <button
-                        key={pageNum}
-                        className={`pagination-num ${pageNum === currentPage ? 'active' : ''}`}
-                        onClick={() => goToPage(pageNum)}
-                      >
-                        {pageNum}
-                      </button>
-                    ))}
-                  </div>
+              <div className="toolbar-field">
+                <label htmlFor="sort-filter">Sort by</label>
+                <select
+                  id="sort-filter"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  <option value="featured">Featured</option>
+                  <option value="name">Name</option>
+                  <option value="photos">Photos</option>
+                  <option value="contributions">Popular</option>
+                </select>
+              </div>
+            </div>
 
-                  <button
-                    className="pagination-btn"
-                    disabled={currentPage >= pages}
-                    onClick={() => goToPage(currentPage + 1)}
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="explore-empty">
-              <span className="empty-icon">
-                <IconHeritage size={48} color="var(--color-primary-light)" />
-              </span>
-              <h3>No Heritage Sites Match Your Search</h3>
-              <p>Try searching for a different town, monument name, or clear your category filters.</p>
-              <button className="btn btn-primary" onClick={clearAllFilters}>
-                View All Heritage Sites
+            <div className="filter-block">
+              <span className="filter-title">Site Type</span>
+              {types.map((type) => (
+                <label key={type} className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={currentType.toLowerCase() === type.toLowerCase()}
+                    onChange={() => updateFilter('type', currentType === type ? 'all' : type)}
+                  />
+                  <span>{type}</span>
+                </label>
+              ))}
+            </div>
+
+            <div className="filter-block">
+              <span className="filter-title">Region</span>
+              {['North', 'South', 'East', 'West', 'Central'].map((region) => (
+                <label key={region} className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={currentRegions.includes(region)}
+                    onChange={() => toggleRegion(region)}
+                  />
+                  <span>{region}</span>
+                </label>
+              ))}
+            </div>
+
+            <button type="button" className="reset-button" onClick={clearAllFilters}>Reset Filters</button>
+          </aside>
+
+          <main className="explore-main-panel">
+            <div className="explore-view-toggle" role="group" aria-label="Results view">
+              <button
+                type="button"
+                className={`view-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                onClick={() => setViewMode('grid')}
+              >
+                Grid
+              </button>
+              <button
+                type="button"
+                className={`view-toggle-btn ${viewMode === 'map' ? 'active' : ''}`}
+                onClick={() => setViewMode('map')}
+              >
+                Map
               </button>
             </div>
-          )}
+            {loading ? (
+              <Loader size="full" text="Loading India's heritage catalog..." />
+            ) : sortedSites.length === 0 ? (
+              <div className="explore-empty">
+                <span className="empty-icon">
+                  <IconHeritage size={48} color="var(--color-primary-light)" />
+                </span>
+                <h3>No Heritage Sites Match Your Search</h3>
+                <p>Try a different town, monument name or clear your filters.</p>
+                <button className="btn btn-primary" onClick={clearAllFilters}>
+                  View All Heritage Sites
+                </button>
+              </div>
+            ) : viewMode === 'map' ? (
+              <div className="explore-map-container">
+                <HeritageMap sites={sortedSites} selectedType={currentType} />
+              </div>
+            ) : sortedSites.length > 0 ? (
+              <>
+                <div className="sites-grid">
+                  {sortedSites.map((site) => (
+                    <SiteCard key={site._id || site.slug} site={site} />
+                  ))}
+                </div>
+
+                {pages > 1 && (
+                  <div className="pagination">
+                    <button
+                      className="pagination-btn"
+                      disabled={currentPage <= 1}
+                      onClick={() => goToPage(currentPage - 1)}
+                    >
+                      Previous
+                    </button>
+
+                    <div className="pagination-numbers">
+                      {Array.from({ length: pages }, (_, i) => i + 1).map((pageNum) => (
+                        <button
+                          key={pageNum}
+                          className={`pagination-num ${pageNum === currentPage ? 'active' : ''}`}
+                          onClick={() => goToPage(pageNum)}
+                        >
+                          {pageNum}
+                        </button>
+                      ))}
+                    </div>
+
+                    <button
+                      className="pagination-btn"
+                      disabled={currentPage >= pages}
+                      onClick={() => goToPage(currentPage + 1)}
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : null}
+          </main>
         </div>
-      </section>
+      </div>
     </div>
   )
 }

@@ -259,30 +259,54 @@ function Home() {
 
           <div className="steps-grid">
             <article className="step-card">
-              <span className="step-number">01</span>
-              <h3><IconSearch size={21} color="var(--color-primary)" /> Discover</h3>
-              <p>
-                Find stepwells, temples, havelis, and monuments by place, period, or architectural style.
-              </p>
-              <Link to="/explore" className="step-link">Browse the catalog <IconArrowRight size={15} color="currentColor" /></Link>
+              <div className="step-card-inner">
+                <div className="step-card-face step-card-front">
+                  <span className="step-number">01</span>
+                  <h3><IconSearch size={21} color="var(--color-primary)" /> Discover</h3>
+                  <p>Find stepwells, temples, havelis, and monuments by place, period, or architectural style.</p>
+                  <Link to="/explore" className="step-link step-link-mobile" tabIndex={-1}>Browse the catalog <IconArrowRight size={15} color="currentColor" /></Link>
+                </div>
+                <div className="step-card-face step-card-back">
+                  <span className="step-number">01</span>
+                  <h3>Start exploring</h3>
+                  <p>Filter the catalog by region and site type to find a place that interests you.</p>
+                  <Link to="/explore" className="step-link">Browse the catalog <IconArrowRight size={15} color="currentColor" /></Link>
+                </div>
+              </div>
             </article>
 
             <article className="step-card">
-              <span className="step-number">02</span>
-              <h3><IconScroll size={21} color="var(--color-primary)" /> Learn</h3>
-              <p>
-                Explore site histories, cultural context, and photographs shared by local explorers.
-              </p>
-              <Link to="/explore" className="step-link">Read a site story <IconArrowRight size={15} color="currentColor" /></Link>
+              <div className="step-card-inner">
+                <div className="step-card-face step-card-front">
+                  <span className="step-number">02</span>
+                  <h3><IconScroll size={21} color="var(--color-primary)" /> Learn</h3>
+                  <p>Explore site histories, cultural context, and photographs shared by local explorers.</p>
+                  <Link to="/explore" className="step-link step-link-mobile" tabIndex={-1}>Read a site story <IconArrowRight size={15} color="currentColor" /></Link>
+                </div>
+                <div className="step-card-face step-card-back">
+                  <span className="step-number">02</span>
+                  <h3>Read a site story</h3>
+                  <p>Open a monument profile to discover its history, cultural context, and community photos.</p>
+                  <Link to="/explore" className="step-link">Explore site stories <IconArrowRight size={15} color="currentColor" /></Link>
+                </div>
+              </div>
             </article>
 
             <article className="step-card">
-              <span className="step-number">03</span>
-              <h3><IconCamera size={21} color="var(--color-primary)" /> Contribute</h3>
-              <p>
-                Share original photos, field notes, or a heritage place that is missing from the catalog.
-              </p>
-              <Link to="/contribute" className="step-link">Share your fieldwork <IconArrowRight size={15} color="currentColor" /></Link>
+              <div className="step-card-inner">
+                <div className="step-card-face step-card-front">
+                  <span className="step-number">03</span>
+                  <h3><IconCamera size={21} color="var(--color-primary)" /> Contribute</h3>
+                  <p>Share original photos, field notes, or a heritage place that is missing from the catalog.</p>
+                  <Link to="/contribute" className="step-link step-link-mobile" tabIndex={-1}>Share your fieldwork <IconArrowRight size={15} color="currentColor" /></Link>
+                </div>
+                <div className="step-card-face step-card-back">
+                  <span className="step-number">03</span>
+                  <h3>Share your fieldwork</h3>
+                  <p>Add original photographs, local knowledge, or details of a heritage place not yet listed.</p>
+                  <Link to="/contribute" className="step-link">Contribute documentation <IconArrowRight size={15} color="currentColor" /></Link>
+                </div>
+              </div>
             </article>
           </div>
         </div>

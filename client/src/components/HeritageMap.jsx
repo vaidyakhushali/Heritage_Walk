@@ -84,7 +84,7 @@ function HeritageMap({ sites = [], selectedType = 'all' }) {
     markersGroupRef.current.clearLayers()
 
     // Ensure all sites have valid coordinates using fallback dataset if needed
-    const resolvedSites = (sites.length > 0 ? sites : fallbackSites).map(site => {
+    const resolvedSites = sites.map(site => {
       let coords = site.location?.coordinates
       if (!coords || !coords.lat) {
         const found = fallbackSites.find(f => f.slug === site.slug || f.name === site.name)
@@ -170,7 +170,7 @@ function HeritageMap({ sites = [], selectedType = 'all' }) {
   return (
     <div className="heritage-map-wrapper">
       <div className="heritage-map-legend">
-        <span className="legend-title"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="vertical-align:middle; margin-right:6px;"><path d="M3 20h18v2H3v-2Zm2-5.8V7.2l5-3.1 5 3.1v7h-5v-4.2H5Zm2.5-1.1h2.6V9.4h2.1v3.7h2.6V8.2L12 5.9l-4.5 2.3v4.8Z" fill="currentColor"/></svg>India Heritage Map:</span>
+        <span className="legend-title"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style={{ verticalAlign: 'middle', marginRight: '6px' }}><path d="M3 20h18v2H3v-2Zm2-5.8V7.2l5-3.1 5 3.1v7h-5v-4.2H5Zm2.5-1.1h2.6V9.4h2.1v3.7h2.6V8.2L12 5.9l-4.5 2.3v4.8Z" fill="currentColor" /></svg>India Heritage Map:</span>
         <span className="legend-item"><span className="legend-dot" style={{ background: '#16a085' }}></span> Stepwells</span>
         <span className="legend-item"><span className="legend-dot" style={{ background: '#d35400' }}></span> Temples</span>
         <span className="legend-item"><span className="legend-dot" style={{ background: '#8e44ad' }}></span> Forts</span>

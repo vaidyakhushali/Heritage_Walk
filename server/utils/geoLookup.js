@@ -19,6 +19,7 @@ const CITY_COORDINATES = {
   'palitana': { lat: 21.5346, lng: 71.8275 },
   'diu': { lat: 20.7138, lng: 70.9857 },
   'gandhinagar': { lat: 23.2156, lng: 72.6369 },
+  'ankleshwar': { lat: 21.6187, lng: 73.0200 },
 
   // Rajasthan
   'jaipur': { lat: 26.9124, lng: 75.7873 },

@@ -1,7 +1,7 @@
 /* ===================== HERO SECTION ===================== */
 .hero {
   position: relative;
-  min-height: 95vh;
+  min-height: 82vh;
   display: flex;
   align-items: center;
   background-size: cover;
@@ -9,7 +9,7 @@
   background-attachment: fixed;
   transition: background-image 1s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
-  padding: 80px 0 60px;
+  padding: 42px 0 48px;
 }
 
 .hero-overlay-radial {
@@ -400,6 +400,7 @@
 .step-card {
   min-width: 0;
   padding: 24px 28px 28px;
+  perspective: 1000px;
 }
 
 .step-card:first-child {
@@ -412,6 +413,48 @@
 
 .step-card + .step-card {
   border-left: 1px solid var(--color-border);
+}
+
+.step-card-inner {
+  position: relative;
+  min-height: 280px;
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.step-card:hover .step-card-inner,
+.step-card:focus-within .step-card-inner {
+  transform: rotateY(180deg);
+}
+
+.step-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.step-card-front {
+  transform: rotateY(0deg);
+}
+
+.step-card-back {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px;
+  transform: rotateY(180deg);
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid var(--color-border);
+}
+
+.step-card-back .step-number {
+  margin-bottom: 14px;
+}
+
+.step-card-back p {
+  min-height: 0;
+  margin-bottom: 16px;
 }
 
 .step-number {
@@ -458,6 +501,10 @@
   color: var(--color-primary);
   font-size: 0.86rem;
   font-weight: 700;
+}
+
+.step-link-mobile {
+  display: none;
 }
 
 .step-link svg {
@@ -576,9 +623,7 @@
   .step-card,
   .step-card:first-child,
   .step-card:last-child {
-    display: grid;
-    grid-template-columns: 42px minmax(0, 1fr);
-    column-gap: 20px;
+    display: block;
     padding: 20px 0;
     border-bottom: 1px solid var(--color-border);
   }
@@ -589,6 +634,17 @@
 
   .step-card + .step-card {
     border-left: 0;
+  }
+
+  .step-card-inner {
+    min-height: 230px;
+  }
+
+  .step-card-front {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    align-content: start;
+    column-gap: 20px;
   }
 
   .step-number {
@@ -626,11 +682,29 @@
     font-size: 1.8rem;
   }
 
-  .step-card,
-  .step-card:first-child,
-  .step-card:last-child {
+  .step-card-front {
     grid-template-columns: 38px minmax(0, 1fr);
     column-gap: 14px;
+  }
+
+  .step-card-inner {
+    min-height: 0;
+    transform: none !important;
+  }
+
+  .step-card-face {
+    position: static;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+  }
+
+  .step-card-back {
+    display: none;
+  }
+
+  .step-link-mobile {
+    display: inline-flex;
+    grid-area: 4 / 2 / 5 / 3;
   }
 
   .step-number {
