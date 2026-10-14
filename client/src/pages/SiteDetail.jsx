@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import PhotoGallery from '../components/PhotoGallery'
-import AudioTourPlayer from '../components/AudioTourPlayer'
 import TravelTipsSection from '../components/TravelTipsSection'
-import MonumentPlaqueModal from '../components/MonumentPlaqueModal'
 import FieldGuideModal from '../components/FieldGuideModal'
 import Loader from '../components/Loader'
 import Toast from '../components/Toast'
@@ -29,13 +27,11 @@ import './SiteDetail.css'
 function SiteDetail() {
   const { slug } = useParams()
   const { user, isWishlisted, toggleWishlist } = useAuth()
-  const navigate = useNavigate()
 
   const [site, setSite] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [toast, setToast] = useState(null)
-  const [showPlaqueModal, setShowPlaqueModal] = useState(false)
   const [showFieldGuideModal, setShowFieldGuideModal] = useState(false)
 
   useEffect(() => {
@@ -100,10 +96,6 @@ function SiteDetail() {
     if (galleryEl) {
       galleryEl.scrollIntoView({ behavior: 'smooth' })
     }
-  }
-
-  const handlePrintFieldGuide = () => {
-    window.print()
   }
 
   if (loading) return <Loader size="full" text="Unveiling heritage site archives..." />
@@ -206,15 +198,6 @@ function SiteDetail() {
                   fill={wishlisted ? "#ffffff" : "none"}
                 />
                 {wishlisted ? 'Saved in Wishlist' : 'Add to Wishlist'}
-              </button>
-
-              <button
-                type="button"
-                className="btn btn-outline detail-action-btn"
-                onClick={() => setShowPlaqueModal(true)}
-                title="Generate Smart QR Plaque"
-              >
-                📱 On-Site QR Plaque
               </button>
 
               <button
@@ -325,10 +308,8 @@ function SiteDetail() {
       <section className="detail-body-section section-padding">
         <div className="container">
           <div className="detail-layout-grid">
-            {/* Left Column: Audio Guide, Narrative, History, Gallery & Field Tips */}
+            {/* Left Column: Narrative, History, Gallery & Field Tips */}
             <main className="detail-main-flow">
-              {/* Interactive Audio Guide Player */}
-              <AudioTourPlayer site={site} />
 
               {/* Overview & Architecture */}
               <article className="heritage-card narrative-card">
@@ -538,14 +519,6 @@ function SiteDetail() {
           </div>
         </div>
       </section>
-
-      {/* Smart QR Plaque Modal */}
-      {showPlaqueModal && (
-        <MonumentPlaqueModal
-          site={site}
-          onClose={() => setShowPlaqueModal(false)}
-        />
-      )}
 
       {/* Field Guide PDF Modal */}
       {showFieldGuideModal && (

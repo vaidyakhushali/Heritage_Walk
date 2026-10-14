@@ -21,10 +21,14 @@ function About() {
               <span className="about-icon"><IconHeritage size={28} color="currentColor" /></span>
               <h2>Our Mission</h2>
               <p>
-                Many people living in tier-2 and tier-3 towns see heritage places every day — stepwells, temples, havelis, colonial-era buildings — without knowing their historical or cultural importance. Many of these sites lack easily accessible photographs, historical information, or written records.
+                Many people living in tier-2 and tier-3 towns see heritage places every day — stepwells, temples, havelis, 
+                colonial-era buildings — without knowing their historical or cultural importance. Many of these sites lack easily 
+                accessible photographs, historical information, or written records.
               </p>
               <p>
-                <strong>HeritageWalk</strong> exists to change that. We are building a community-driven platform where anyone can discover heritage sites, learn about their history, and contribute to their documentation. Our goal is to create a growing, accessible collection of India's local heritage — one that preserves community knowledge for future generations.
+                <strong>HeritageWalk</strong> exists to change that. We are building a community-driven platform where anyone can 
+                discover heritage sites, learn about their history, and contribute to their documentation. Our goal is to create a growing, 
+                accessible collection of India's local heritage — one that preserves community knowledge for future generations.
               </p>
             </div>
           </div>
@@ -104,15 +108,18 @@ function About() {
           <div className="guidelines-grid">
             <div className="guideline-item">
               <h3><IconCheck size={18} color="currentColor" /> Verified vs. Personal</h3>
-              <p>Contributors can mark whether their information is factually verified or based on personal memory and oral history. Both are valuable — we label them appropriately.</p>
+              <p>Contributors can mark whether their information is factually verified or based on personal memory and oral history. 
+                Both are valuable — we label them appropriately.</p>
             </div>
             <div className="guideline-item">
               <h3><IconHeritage size={18} color="currentColor" /> Attribution</h3>
-              <p>All contributions are attributed to their contributors. Photographs include credit information. We respect the effort of every contributor.</p>
+              <p>All contributions are attributed to their contributors. Photographs include credit information. We respect the effort 
+                of every contributor.</p>
             </div>
             <div className="guideline-item">
               <h3><IconSearch size={18} color="currentColor" /> Review Process</h3>
-              <p>Submitted content is reviewed before publication. This helps maintain quality, prevent misinformation, and ensure respectful representation.</p>
+              <p>Submitted content is reviewed before publication. This helps maintain quality, prevent misinformation, and ensure 
+                respectful representation.</p>
             </div>
             <div className="guideline-item">
               <h3><IconCamera size={18} color="currentColor" /> Corrections</h3>
@@ -129,7 +136,8 @@ function About() {
             <span className="about-icon"><IconShield size={28} color="currentColor" /></span>
             <h2>Important Disclaimer</h2>
             <div className="disclaimer-content">
-              <p>HeritageWalk is a <strong>community-sourced documentation platform</strong>. While we strive for accuracy, the information presented here:</p>
+              <p>HeritageWalk is a <strong>community-sourced documentation platform</strong>. While we strive for accuracy, 
+              the information presented here:</p>
               <ul>
                 <li>May not be officially verified or academically peer-reviewed</li>
                 <li>Should be used as a <strong>starting point</strong> for learning, not as a definitive historical record</li>
@@ -146,7 +154,8 @@ function About() {
       <section className="about-cta">
         <div className="container">
           <h2>Ready to Make a Difference?</h2>
-          <p>Every photograph shared, every story told, every site documented brings us closer to preserving India's heritage for future generations.</p>
+          <p>Every photograph shared, every story told, every site documented brings us closer to preserving India's heritage for 
+            future generations.</p>
           <div className="about-cta-actions">
             <Link to="/contribute" className="btn btn-primary btn-lg"><IconCamera size={18} color="currentColor" /> Start Contributing</Link>
             <Link to="/explore" className="btn btn-outline-white btn-lg"><IconSearch size={18} color="currentColor" /> Explore Sites</Link>

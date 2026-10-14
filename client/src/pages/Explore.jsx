@@ -10,6 +10,16 @@ import {
 import { fallbackSites, fallbackTypes } from '../data/fallbackSites'
 import './Explore.css'
 
+const discoveryCategories = [
+  { label: 'All', type: 'all' },
+  { label: 'Temples', type: 'Temple' },
+  { label: 'Stepwells', type: 'Stepwell' },
+  { label: 'Havelis', type: 'Haveli' },
+  { label: 'Forts', type: 'Fort' },
+  { label: 'Colonial', type: 'Colonial Building' },
+  { label: 'Architecture', type: 'Monument' }
+]
+
 function Explore() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [dbSites, setDbSites] = useState([])
@@ -156,9 +166,24 @@ function Explore() {
     <div className="explore">
       <div className="explore-shell container">
         <header className="explore-intro">
+          <span className="section-pill">The community archive</span>
           <h1>Explore Heritage Sites</h1>
           <p>Discover historic monuments, temples, palaces, and hidden landmarks across the region.</p>
         </header>
+
+        <nav className="explore-category-nav" aria-label="Filter by heritage category">
+          {discoveryCategories.map(category => (
+            <button
+              type="button"
+              key={category.type}
+              className={`explore-category-chip${currentType.toLowerCase() === category.type.toLowerCase() ? ' active' : ''}`}
+              onClick={() => updateFilter('type', category.type)}
+              aria-pressed={currentType.toLowerCase() === category.type.toLowerCase()}
+            >
+              {category.label}
+            </button>
+          ))}
+        </nav>
 
         <div className="explore-layout">
           <aside className="explore-sidebar">
@@ -237,6 +262,11 @@ function Explore() {
           </aside>
 
           <main className="explore-main-panel">
+            {!loading && (
+              <div className="explore-results-summary" aria-live="polite">
+                <strong>{total}</strong> {total === 1 ? 'place' : 'places'} to discover
+              </div>
+            )}
             <div className="explore-view-toggle" role="group" aria-label="Results view">
               <button
                 type="button"

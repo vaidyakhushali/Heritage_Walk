@@ -246,6 +246,10 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .about-hero {
+    padding: 46px 0 38px;
+  }
+
   .about-hero h1 {
     font-size: 1.8rem;
   }
@@ -275,5 +279,44 @@
   .about-cta-actions {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-hero {
+    text-align: left;
+  }
+
+  .about-hero p {
+    font-size: 0.98rem;
+  }
+
+  .mission-content h2 {
+    font-size: 1.65rem;
+  }
+
+  .mission-content p {
+    font-size: 0.98rem;
+  }
+
+  .audience-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .flow-step,
+  .audience-card,
+  .guideline-item,
+  .disclaimer-content {
+    padding: 22px 18px;
+  }
+
+  .about-cta {
+    padding: 54px 0;
+    text-align: left;
+  }
+
+  .about-cta p {
+    margin-left: 0;
   }
 }

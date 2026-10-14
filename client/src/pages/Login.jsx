@@ -6,7 +6,7 @@ import Toast from '../components/Toast'
 import './Auth.css'
 
 function Login() {
-  const [loginRole, setLoginRole] = useState('user') // 'user' | 'admin'
+  const [loginRole, setLoginRole] = useState('user') 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)

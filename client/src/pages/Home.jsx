@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SiteCard from '../components/SiteCard'
+import HomeEngagement from '../components/HomeEngagement'
 import Loader from '../components/Loader'
 import { IconArrowRight, IconCamera, IconHeritage, IconLocation, IconSearch, IconScroll } from '../components/Icons'
 import { fallbackSites } from '../data/fallbackSites'
@@ -8,7 +9,7 @@ import './Home.css'
 
 const heroSlides = [
   {
-    title: "Discover India's Architectural Wonders",
+    title: "Discover the Stories Behind Our Heritage",
     subtitle: "A community-driven platform to document, preserve, and celebrate ancient stepwells, havelis, and forts hidden across India's towns and cities.",
     image: "https://www.thevintagenews.com/wp-content/uploads/sites/65/2017/04/Detailed-view-of-the-facade.-Photo-Credit-640x427.jpg?auto=format&fit=crop&w=1800&q=85",
     siteName: "Hawa Mahal, Jaipur",
@@ -174,10 +175,10 @@ function Home() {
 
             <div className="hero-actions">
               <Link to="/explore" className="btn btn-primary btn-lg hero-cta-btn">
-                <IconSearch size={18} color="currentColor" /> Explore All
+                <IconSearch size={18} color="currentColor" /> Explore Heritage
               </Link>
               <Link to="/contribute" className="btn btn-outline-white btn-lg hero-cta-btn">
-                <IconCamera size={18} color="currentColor" /> Contribute Documentation
+                <IconCamera size={18} color="currentColor" /> Share Your Story
               </Link>
             </div>
           </div>
@@ -346,6 +347,8 @@ function Home() {
           )}
         </div>
       </section>
+
+      <HomeEngagement />
 
       {/* CTA Section */}
       <section className="cta-section">

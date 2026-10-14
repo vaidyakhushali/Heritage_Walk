@@ -487,6 +487,10 @@
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
+  .contribute-header {
+    padding: 48px 0 38px;
+  }
+
   .contribute-card {
     padding: 30px 20px;
   }
@@ -501,5 +505,68 @@
 
   .contribute-header h1 {
     font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .contribute-header {
+    padding: 38px 0 32px;
+    text-align: left;
+  }
+
+  .hero-badge-pill {
+    font-size: 0.74rem;
+  }
+
+  .contribute-header h1 {
+    font-size: 1.8rem;
+    line-height: 1.18;
+  }
+
+  .contribute-header p {
+    font-size: 0.94rem;
+  }
+
+  .contribute-form-section {
+    padding: 24px 0 48px;
+  }
+
+  .auth-lock-card,
+  .success-card,
+  .contribute-card {
+    border-radius: 18px;
+    padding: 26px 18px;
+  }
+
+  .lock-benefits-grid {
+    padding: 14px;
+  }
+
+  .lock-benefit {
+    align-items: flex-start;
+  }
+
+  .lock-actions,
+  .success-actions {
+    flex-direction: column;
+  }
+
+  .radio-card,
+  .file-upload-label {
+    padding: 16px;
+  }
+
+  .file-preview-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .file-preview-size {
+    margin-left: 0;
+  }
+
+  .file-preview-remove {
+    align-self: flex-end;
   }
 }

@@ -651,12 +651,63 @@
 }
 
 @media (max-width: 600px) {
+  .profile-header {
+    padding: 38px 0 30px;
+    text-align: left;
+  }
+
+  .profile-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .profile-main {
+    padding: 28px 0 46px;
+  }
+
+  .profile-card,
+  .profile-section-card,
+  .badges-card,
   .contributions-panel {
     padding: 22px 18px;
   }
 
+  .profile-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-actions {
+    flex-direction: column;
+  }
+
+  .profile-actions .btn,
+  .profile-actions button {
+    width: 100%;
+  }
+
   .contributions-heading {
     flex-direction: column;
+  }
+
+  .contributions-heading .btn {
+    width: 100%;
+  }
+
+  .contribution-totals {
+    grid-template-columns: 1fr;
+  }
+
+  .contribution-totals div + div {
+    border-left: 0;
+    border-top: 1px solid rgba(139, 69, 19, 0.12);
+  }
+
+  .contribution-entry-heading {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .contribution-status {
+    align-self: flex-start;
   }
 
   .contribution-media-grid {

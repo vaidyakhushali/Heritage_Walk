@@ -1,28 +1,28 @@
 /* ===================== CSS CUSTOM PROPERTIES ===================== */
 :root {
-  --color-primary: #8B4513;
-  --color-primary-dark: #5C2E0A;
-  --color-primary-light: #A0522D;
-  --color-secondary: #D2691E;
-  --color-accent: #C17817;
-  --color-accent-light: #DAA520;
-  --color-bg: #FFF8F0;
-  --color-bg-alt: #FAF0E6;
-  --color-bg-dark: #F5E6D3;
-  --color-text: #2C1810;
-  --color-text-light: #6B4423;
-  --color-text-muted: #8B7355;
-  --color-border: #D4C4B0;
+  --color-primary: #6B3F24;
+  --color-primary-dark: #3E2415;
+  --color-primary-light: #8B5E3C;
+  --color-secondary: #8B5E3C;
+  --color-accent: #D89B5B;
+  --color-accent-light: #E8BD8E;
+  --color-bg: #FFF8EF;
+  --color-bg-alt: #FAF0E4;
+  --color-bg-dark: #F4E5D3;
+  --color-text: #2B211B;
+  --color-text-light: #604A3A;
+  --color-text-muted: #806B58;
+  --color-border: #E2D2C0;
   --color-white: #FFFFFF;
   --color-success: #5B8C3E;
   --color-error: #C0392B;
   --color-warning: #D4A017;
-  --shadow-sm: 0 1px 3px rgba(44, 24, 16, 0.1);
-  --shadow-md: 0 4px 12px rgba(44, 24, 16, 0.12);
-  --shadow-lg: 0 8px 30px rgba(44, 24, 16, 0.15);
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --shadow-sm: 0 2px 8px rgba(62, 36, 21, 0.07);
+  --shadow-md: 0 8px 24px rgba(62, 36, 21, 0.1);
+  --shadow-lg: 0 16px 42px rgba(62, 36, 21, 0.14);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --transition: all 0.3s ease;
   --max-width: 1200px;
   --font-heading: 'Playfair Display', Georgia, serif;
@@ -97,6 +97,15 @@ button {
   border: none;
   outline: none;
   transition: var(--transition);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(216, 155, 91, 0.75);
+  outline-offset: 3px;
 }
 
 input, textarea, select {
@@ -422,6 +431,16 @@ input, textarea, select {
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
   h1 { font-size: 1.8rem; }
   h2 { font-size: 1.5rem; }
   h3 { font-size: 1.25rem; }
@@ -430,8 +449,43 @@ input, textarea, select {
     padding: 50px 0;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   .btn-lg {
     padding: 14px 28px;
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 14px;
+  }
+
+  .section-padding {
+    padding: 42px 0;
+  }
+
+  .btn,
+  a.btn,
+  button.btn {
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+    white-space: normal;
+  }
+
+  .section-title {
+    font-size: 1.65rem;
+    line-height: 1.2;
   }
 }
