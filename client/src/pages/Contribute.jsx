@@ -55,7 +55,10 @@ function Contribute() {
   // Fetch available sites list
   useEffect(() => {
     fetch('/api/sites?limit=100')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch sites')
+        return res.json()
+      })
       .then(data => {
         if (data && data.sites) {
           setSites(data.sites)
@@ -160,8 +163,14 @@ function Contribute() {
       })
 
       if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error?.message || 'Submission failed')
+        let errorMessage = 'Submission failed'
+        try {
+          const data = await res.json()
+          errorMessage = data.error?.message || errorMessage
+        } catch {
+          // Response was not JSON (e.g., HTML error page)
+        }
+        throw new Error(errorMessage)
       }
 
       setToast({

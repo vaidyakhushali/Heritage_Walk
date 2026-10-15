@@ -39,7 +39,12 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     })
-    const data = await res.json()
+    let data
+    try {
+      data = await res.json()
+    } catch {
+      throw new Error('Server returned an invalid response')
+    }
     if (!res.ok) throw new Error(data.error?.message || 'Login failed')
     
     localStorage.setItem('hw_token', data.token)
@@ -54,7 +59,12 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password })
     })
-    const data = await res.json()
+    let data
+    try {
+      data = await res.json()
+    } catch {
+      throw new Error('Server returned an invalid response')
+    }
     if (!res.ok) throw new Error(data.error?.message || 'Registration failed')
     
     localStorage.setItem('hw_token', data.token)

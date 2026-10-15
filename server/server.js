@@ -68,7 +68,7 @@ mongoose.connect(MONGODB_URI)
       const Site = require('./models/Site');
       const count = await Site.countDocuments();
       if (count === 0) {
-        console.log('🌱 Database is empty, auto-seeding initial heritage sites & demo accounts...');
+        console.log(' Database is empty, auto-seeding initial heritage sites & demo accounts...');
         const { sites } = require('./seed/seedData');
         const User = require('./models/User');
 
@@ -96,20 +96,20 @@ mongoose.connect(MONGODB_URI)
           wishlist: [insertedSites[0]._id, insertedSites[1]._id]
         });
         await demoUser.save();
-        console.log(`✅ Auto-seeded ${insertedSites.length} sites and default Admin/User accounts!`);
+        console.log(` Auto-seeded ${insertedSites.length} sites and default Admin/User accounts!`);
       }
     } catch (e) {
       console.warn('Auto-seed check note:', e.message);
     }
 
     app.listen(PORT, () => {
-      console.log(`🚀 HeritageWalk server running on port ${PORT}`);
-      console.log(`   Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(`HeritageWalk server running on port ${PORT}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
   })
   .catch((err) => {
-    console.error('❌ MongoDB connection error:', err.message);
-    console.error('   Make sure MongoDB is running and MONGODB_URI is correct.');
+    console.error('MongoDB connection error:', err.message);
+    console.error('Make sure MongoDB is running and MONGODB_URI is correct.');
     process.exit(1);
   });
 

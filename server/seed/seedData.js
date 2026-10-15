@@ -15,7 +15,7 @@ async function seedDatabase() {
     await Site.deleteMany({});
     const insertedSites = await Site.insertMany(fallbackSites.map(site => {
       const siteObj = { ...site };
-      delete siteObj._id; // Let Mongo generate native ObjectId
+      delete siteObj._id; 
       const s = new Site(siteObj);
       s.slug = site.name
         .toLowerCase()
