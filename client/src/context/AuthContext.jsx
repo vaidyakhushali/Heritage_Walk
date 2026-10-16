@@ -3,8 +3,9 @@ import { createContext, useContext, useState, useEffect } from 'react'
 const AuthContext = createContext(null)
 
 // Uses Render backend on Vercel and localhost backend during local development
-const API_URL =
-  import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+const API_URL = (
+  import.meta.env.VITE_API_URL || '/api'
+).replace(/\/$/, '')
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)

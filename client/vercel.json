@@ -1,8 +1,12 @@
- {
+{
   "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://heritage-walk-1.onrender.com/api/:path*"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
-} 
+}
