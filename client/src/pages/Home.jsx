@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SiteCard from '../components/SiteCard'
-import HomeEngagement from '../components/HomeEngagement'
 import Loader from '../components/Loader'
 import { IconArrowRight, IconCamera, IconHeritage, IconLocation, IconSearch, IconScroll } from '../components/Icons'
 import { fallbackSites } from '../data/fallbackSites'
@@ -347,8 +346,6 @@ function Home() {
           )}
         </div>
       </section>
-
-      <HomeEngagement />
 
       {/* CTA Section */}
       <section className="cta-section">

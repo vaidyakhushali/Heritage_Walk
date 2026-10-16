@@ -7,7 +7,7 @@ import { IconHeart, IconSearch } from '../components/Icons'
 import './Wishlist.css'
 
 function Wishlist() {
-  const { user, loading, token, fetchProfile } = useAuth()
+  const { user, loading, token } = useAuth()
   const navigate = useNavigate()
   const [sites, setSites] = useState([])
   const [fetching, setFetching] = useState(true)

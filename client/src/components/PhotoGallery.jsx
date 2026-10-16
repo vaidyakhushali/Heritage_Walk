@@ -2,8 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import {
   IconCamera,
   IconSearch,
-  IconX,
-  IconArrowRight
+  IconX
 } from './Icons'
 import './PhotoGallery.css'
 

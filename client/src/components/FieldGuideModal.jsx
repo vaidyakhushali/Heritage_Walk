@@ -1,8 +1,7 @@
-import React from 'react'
+
 import {
   IconHeritage,
   IconLocation,
-  IconClock,
   IconCamera,
   IconScroll,
   IconX,

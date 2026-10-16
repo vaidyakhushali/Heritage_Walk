@@ -8,7 +8,6 @@ import {
   IconSparkles,
   IconCheck,
   IconEdit,
-  IconPlus,
   IconSearch,
   IconShield,
   IconUser
@@ -20,8 +19,6 @@ import './Contribute.css'
 function Contribute() {
   const [searchParams] = useSearchParams()
   const { user, token, loading: authLoading } = useAuth()
-  const navigate = useNavigate()
-
   const [sites, setSites] = useState([])
   const [toast, setToast] = useState(null)
   const [submitting, setSubmitting] = useState(false)
