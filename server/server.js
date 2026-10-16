@@ -14,23 +14,34 @@ const app = express();
 
 const allowedOrigins = [
   'https://heritagewalk.vercel.app',
+  'https://heritagewalk-git-main-k-6dfa.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000'
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin
+    // Allow requests without an Origin header
     // Example: Postman, server-to-server requests
     if (!origin) {
       return callback(null, true);
     }
 
+    // Allow exact known origins
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
+    // Allow HeritageWalk Vercel preview deployments
+    if (
+      origin.startsWith('https://heritagewalk-') &&
+      origin.endsWith('.vercel.app')
+    ) {
+      return callback(null, true);
+    }
+
     console.log('CORS blocked origin:', origin);
+
     return callback(new Error('Not allowed by CORS'));
   },
 
@@ -53,17 +64,24 @@ const corsOptions = {
   optionsSuccessStatus: 204
 };
 
-// Apply CORS before routes
+// =====================================================
+// APPLY CORS BEFORE ALL ROUTES
+// =====================================================
+
 app.use(cors(corsOptions));
 
-// Handle preflight requests
+// Handle browser preflight requests
 app.options('*', cors(corsOptions));
 
 // =====================================================
 // GENERAL MIDDLEWARE
 // =====================================================
 
-app.use(express.json({ limit: '10mb' }));
+app.use(
+  express.json({
+    limit: '10mb'
+  })
+);
 
 app.use(
   express.urlencoded({
@@ -83,7 +101,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(
   '/uploads',
-  express.static(path.join(__dirname, 'uploads'))
+  express.static(
+    path.join(__dirname, 'uploads')
+  )
 );
 
 // =====================================================
@@ -123,7 +143,8 @@ app.get('/api/health', (req, res) => {
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'HeritageWalk Backend API is running successfully',
+    message:
+      'HeritageWalk Backend API is running successfully',
     status: 'ok'
   });
 });
@@ -140,30 +161,37 @@ if (process.env.NODE_ENV === 'production') {
     'dist'
   );
 
-  app.use(express.static(clientBuild));
+  // Serve React static files
+  app.use(
+    express.static(clientBuild)
+  );
 
   // React Router fallback
   app.get('*', (req, res, next) => {
-    // Do not return React index.html for API routes
+    // Never send React index.html for API routes
     if (req.path.startsWith('/api/')) {
       return next();
     }
 
     res.sendFile(
-      path.join(clientBuild, 'index.html')
+      path.join(
+        clientBuild,
+        'index.html'
+      )
     );
   });
 }
 
 // =====================================================
-// 404 HANDLER
+// API 404 HANDLER
 // =====================================================
 
 app.use((req, res, next) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({
       error: {
-        message: `API route not found: ${req.method} ${req.originalUrl}`
+        message:
+          `API route not found: ${req.method} ${req.originalUrl}`
       }
     });
   }
@@ -176,14 +204,19 @@ app.use((req, res, next) => {
 // =====================================================
 
 app.use((err, req, res, next) => {
-  console.error('Error:', err.message);
+  console.error(
+    'Error:',
+    err.message
+  );
 
-  const status = err.status || 500;
+  const status =
+    err.status || 500;
 
   res.status(status).json({
     error: {
       message:
-        err.message || 'Internal Server Error',
+        err.message ||
+        'Internal Server Error',
 
       ...(process.env.NODE_ENV !== 'production' && {
         stack: err.stack
@@ -196,7 +229,8 @@ app.use((err, req, res, next) => {
 // DATABASE & SERVER START
 // =====================================================
 
-const PORT = process.env.PORT || 5000;
+const PORT =
+  process.env.PORT || 5000;
 
 const MONGODB_URI =
   process.env.MONGODB_URI ||
@@ -205,90 +239,132 @@ const MONGODB_URI =
 mongoose
   .connect(MONGODB_URI)
   .then(async () => {
-    console.log('✅ Connected to MongoDB');
+    console.log(
+      '✅ Connected to MongoDB'
+    );
 
     // =================================================
     // AUTO SEED
     // =================================================
 
     try {
-      const Site = require('./models/Site');
+      const Site =
+        require('./models/Site');
 
-      const count = await Site.countDocuments();
+      const count =
+        await Site.countDocuments();
 
       if (count === 0) {
         console.log(
           'Database is empty, auto-seeding initial heritage sites & demo accounts...'
         );
 
-        const { sites } = require('./seed/seedData');
+        const {
+          sites
+        } = require('./seed/seedData');
 
-        const User = require('./models/User');
-
-        // ---------------------------------------------
-        // Insert Sites
-        // ---------------------------------------------
-
-        const insertedSites = await Site.insertMany(
-          sites.map((site) => {
-            const s = new Site(site);
-
-            s.slug = site.name
-              .toLowerCase()
-              .replace(/[^a-z0-9\s-]/g, '')
-              .replace(/\s+/g, '-')
-              .replace(/-+/g, '-')
-              .trim();
-
-            return s;
-          })
-        );
+        const User =
+          require('./models/User');
 
         // ---------------------------------------------
-        // Create Admin User
+        // INSERT SITES
+        // ---------------------------------------------
+
+        const insertedSites =
+          await Site.insertMany(
+            sites.map((site) => {
+              const s =
+                new Site(site);
+
+              s.slug =
+                site.name
+                  .toLowerCase()
+                  .replace(
+                    /[^a-z0-9\s-]/g,
+                    ''
+                  )
+                  .replace(
+                    /\s+/g,
+                    '-'
+                  )
+                  .replace(
+                    /-+/g,
+                    '-'
+                  )
+                  .trim();
+
+              return s;
+            })
+          );
+
+        // ---------------------------------------------
+        // CREATE ADMIN USER
         // ---------------------------------------------
 
         const existingAdmin =
           await User.findOne({
-            email: 'admin@heritagewalk.com'
+            email:
+              'admin@heritagewalk.com'
           });
 
         if (!existingAdmin) {
-          const adminUser = new User({
-            name: 'HeritageWalk Admin',
-            email: 'admin@heritagewalk.com',
-            password: 'admin123',
-            role: 'admin',
-            location: 'New Delhi, India'
-          });
+          const adminUser =
+            new User({
+              name:
+                'HeritageWalk Admin',
+
+              email:
+                'admin@heritagewalk.com',
+
+              password:
+                'admin123',
+
+              role:
+                'admin',
+
+              location:
+                'New Delhi, India'
+            });
 
           await adminUser.save();
         }
 
         // ---------------------------------------------
-        // Create Demo User
+        // CREATE DEMO USER
         // ---------------------------------------------
 
         const existingDemoUser =
           await User.findOne({
-            email: 'user@heritagewalk.com'
+            email:
+              'user@heritagewalk.com'
           });
 
         if (!existingDemoUser) {
-          const demoUser = new User({
-            name: 'Khushi Explorer',
-            email: 'user@heritagewalk.com',
-            password: 'user123',
-            role: 'user',
-            location: 'Ahmedabad, Gujarat',
-            wishlist:
-              insertedSites.length >= 2
-                ? [
-                    insertedSites[0]._id,
-                    insertedSites[1]._id
-                  ]
-                : []
-          });
+          const demoUser =
+            new User({
+              name:
+                'Khushi Explorer',
+
+              email:
+                'user@heritagewalk.com',
+
+              password:
+                'user123',
+
+              role:
+                'user',
+
+              location:
+                'Ahmedabad, Gujarat',
+
+              wishlist:
+                insertedSites.length >= 2
+                  ? [
+                      insertedSites[0]._id,
+                      insertedSites[1]._id
+                    ]
+                  : []
+            });
 
           await demoUser.save();
         }
@@ -308,21 +384,25 @@ mongoose
     // START SERVER
     // =================================================
 
-    app.listen(PORT, () => {
-      console.log(
-        `HeritageWalk server running on port ${PORT}`
-      );
+    app.listen(
+      PORT,
+      () => {
+        console.log(
+          `HeritageWalk server running on port ${PORT}`
+        );
 
-      console.log(
-        `Environment: ${
-          process.env.NODE_ENV || 'development'
-        }`
-      );
+        console.log(
+          `Environment: ${
+            process.env.NODE_ENV ||
+            'development'
+          }`
+        );
 
-      console.log(
-        `API: http://localhost:${PORT}/api`
-      );
-    });
+        console.log(
+          `API: http://localhost:${PORT}/api`
+        );
+      }
+    );
   })
   .catch((err) => {
     console.error(
