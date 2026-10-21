@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import PhotoGallery from '../components/PhotoGallery'
 import TravelTipsSection from '../components/TravelTipsSection'
-import FieldGuideModal from '../components/FieldGuideModal'
 import Loader from '../components/Loader'
 import Toast from '../components/Toast'
 import {
@@ -25,6 +24,39 @@ import { fallbackSites } from '../data/fallbackSites'
 import { siteService } from '../services/siteService'
 import './SiteDetail.css'
 
+function CountUpNumber({ value = 0 }) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setCount(value)
+      return
+    }
+
+    let frame
+    const duration = 750
+    let startTimestamp = null
+
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1)
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      setCount(Math.floor(value * easeOut))
+
+      if (progress < 1) {
+        frame = window.requestAnimationFrame(step)
+      } else {
+        setCount(value)
+      }
+    }
+
+    frame = window.requestAnimationFrame(step)
+    return () => window.cancelAnimationFrame(frame)
+  }, [value])
+
+  return <span>{count}</span>
+}
+
 function SiteDetail() {
   const { slug } = useParams()
   const { user, isWishlisted, toggleWishlist } = useAuth()
@@ -33,7 +65,28 @@ function SiteDetail() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [toast, setToast] = useState(null)
-  const [showFieldGuideModal, setShowFieldGuideModal] = useState(false)
+
+  // Scroll-triggered reveal for heritage cards
+  useEffect(() => {
+    if (!site) return
+    const waypoints = document.querySelectorAll('.hw-walk-waypoint')
+    if (!waypoints.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    waypoints.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [site])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -124,12 +177,9 @@ function SiteDetail() {
   const mainPhoto = photos[0]
   const sidePhotos = photos.slice(1, 3)
   const wishlisted = user && site._id ? isWishlisted(site._id) : false
-  const practical = site.practicalInfo || {
-    timings: "8:00 AM – 6:00 PM (Daily)",
-    entryFee: "Standard ASI Heritage Entry",
-    bestTimeToVisit: "October to March (Morning hours)",
-    photographyTips: "Early morning sunlight captures intricate stonework without heavy shadows."
-  }
+  const photoCount = Array.isArray(photos) ? photos.length : 0
+  const storiesCount = typeof site.contributionCount === 'number' ? site.contributionCount : 0
+  const contributorsCount = site.contributorsCount || (storiesCount > 0 ? Math.max(1, Math.ceil(storiesCount * 0.7)) : 0)
 
   return (
     <div className="site-detail-modern">
@@ -195,15 +245,6 @@ function SiteDetail() {
                   fill={wishlisted ? "#ffffff" : "none"}
                 />
                 {wishlisted ? 'Saved in Wishlist' : 'Add to Wishlist'}
-              </button>
-
-              <button
-                type="button"
-                className="btn btn-secondary detail-action-btn"
-                onClick={() => setShowFieldGuideModal(true)}
-                title="View and Download PDF Field Guide"
-              >
-                📄 Field Guide (PDF)
               </button>
 
               <Link
@@ -445,27 +486,52 @@ function SiteDetail() {
                 </div>
               </div>
 
-              {/* Practical Visitor Guide Box */}
-              <div className="sidebar-box practical-guide-box">
-                <h4><IconHeritage size={18} color="currentColor" /> Practical Visitor Guide</h4>
-                <div className="practical-items">
-                  <div className="practical-item">
-                    <span className="practical-label"><IconClock size={14} color="currentColor" /> Timings</span>
-                    <span className="practical-value">{practical.timings}</span>
-                  </div>
-                  <div className="practical-item">
-                    <span className="practical-label"><IconCamera size={14} color="currentColor" /> Entry Fee</span>
-                    <span className="practical-value">{practical.entryFee}</span>
-                  </div>
-                  <div className="practical-item">
-                    <span className="practical-label"><IconClock size={14} color="currentColor" /> Best Season</span>
-                    <span className="practical-value">{practical.bestTimeToVisit}</span>
-                  </div>
-                  <div className="practical-item">
-                    <span className="practical-label"><IconCamera size={14} color="currentColor" /> Photo Tip</span>
-                    <span className="practical-value">{practical.photographyTips}</span>
+              {/* DOCUMENTED BY THE COMMUNITY CARD */}
+              <div className="sidebar-box community-documented-box">
+                <div className="community-doc-header">
+                  <span className="community-doc-icon">
+                    <IconUsers size={20} color="var(--color-accent)" />
+                  </span>
+                  <div>
+                    <h3 className="community-doc-title">DOCUMENTED BY THE COMMUNITY</h3>
+                    <p className="community-doc-subtitle">
+                      “Help preserve the story of this place through photographs, memories, and local knowledge.”
+                    </p>
                   </div>
                 </div>
+
+                <div className="community-doc-stats-grid">
+                  <div className="community-stat-block">
+                    <span className="community-stat-num">
+                      <CountUpNumber value={photoCount} />
+                    </span>
+                    <span className="community-stat-lbl">PHOTOS</span>
+                  </div>
+                  <div className="community-stat-block">
+                    <span className="community-stat-num">
+                      <CountUpNumber value={storiesCount} />
+                    </span>
+                    <span className="community-stat-lbl">STORIES</span>
+                  </div>
+                  <div className="community-stat-block">
+                    <span className="community-stat-num">
+                      <CountUpNumber value={contributorsCount} />
+                    </span>
+                    <span className="community-stat-lbl">CONTRIBUTORS</span>
+                  </div>
+                </div>
+
+                <p className="community-doc-statement">
+                  Every contribution helps keep local heritage visible for future generations.
+                </p>
+
+                <Link
+                  to={`/contribute?site=${site._id || site.slug}`}
+                  className="btn btn-primary community-doc-cta"
+                >
+                  <span>＋ CONTRIBUTE TO THIS PLACE</span>
+                  <IconArrowRight size={15} color="currentColor" />
+                </Link>
               </div>
 
               {/* Document CTA Box */}
@@ -516,14 +582,6 @@ function SiteDetail() {
           </div>
         </div>
       </section>
-
-      {/* Field Guide PDF Modal */}
-      {showFieldGuideModal && (
-        <FieldGuideModal
-          site={site}
-          onClose={() => setShowFieldGuideModal(false)}
-        />
-      )}
 
       {/* Toast notification */}
       {toast && (

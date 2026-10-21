@@ -76,13 +76,13 @@
   gap: 28px;
   margin-bottom: 30px;
   flex-wrap: wrap;
-  animation: detailCardOpen 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: detailCardOpen 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes detailCardOpen {
   from {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
@@ -299,23 +299,16 @@
   cursor: pointer;
   border: 1px solid var(--border-color, #C9B99D);
   background-color: #171613;
-  clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
-  animation: heroMonumentUnveil 1.2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: heroMonumentUnveil 0.9s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes heroMonumentUnveil {
-  0% {
+  from {
     opacity: 0;
-    clip-path: polygon(10% 20%, 90% 15%, 85% 80%, 15% 85%);
-    transform: scale(1.08) translateY(24px);
+    transform: scale(1.04) translateY(16px);
   }
-  60% {
-    opacity: 0.9;
-    clip-path: polygon(2% 2%, 98% 0%, 99% 98%, 1% 100%);
-  }
-  100% {
+  to {
     opacity: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     transform: scale(1) translateY(0);
   }
 }
@@ -566,13 +559,18 @@
   border-radius: var(--radius-sm, 6px);
   padding: 36px;
   box-shadow: 0 8px 24px rgba(37, 32, 24, 0.05);
-  transition: box-shadow 0.4s ease, border-color 0.4s ease;
-  opacity: 0;
-  transform: translateY(24px);
-  animation: manuscriptReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.heritage-card.is-revealed {
+/* Reveal state for scroll-triggered animations */
+.heritage-card.hw-walk-waypoint {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.heritage-card.hw-walk-waypoint.is-revealed {
   opacity: 1;
   transform: translateY(0);
 }
@@ -836,45 +834,25 @@
   border-radius: var(--radius-sm, 6px) !important;
 }
 
-/* 9. PRACTICAL VISITOR GUIDE CARD */
-.practical-guide-box {
+/* ===================================================
+   DOCUMENTED BY THE COMMUNITY SECTION
+   Replaces old Practical Visitor Guide
+   =================================================== */
+
+.community-documented-box {
   background: var(--card-bg, #FFFAF1);
+  border: 1px solid var(--border-color, #C9B99D);
+  border-radius: var(--radius-sm, 6px);
+  padding: 26px 24px;
+  box-shadow: 0 8px 24px rgba(37, 32, 24, 0.06);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  animation: communityBoxFadeUp 0.7s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.practical-guide-box h4 {
-  font-family: Georgia, 'Playfair Display', serif;
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.practical-items {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.practical-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: practicalItemFade 0.5s ease forwards;
-}
-
-.practical-item:nth-child(1) { animation-delay: 0.15s; }
-.practical-item:nth-child(2) { animation-delay: 0.28s; }
-.practical-item:nth-child(3) { animation-delay: 0.40s; }
-.practical-item:nth-child(4) { animation-delay: 0.52s; }
-
-@keyframes practicalItemFade {
+@keyframes communityBoxFadeUp {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -882,18 +860,150 @@
   }
 }
 
-.practical-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.community-documented-box:hover {
+  border-color: var(--accent, #A97835);
+  box-shadow: 0 16px 36px rgba(37, 32, 24, 0.12);
 }
 
-.practical-value {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
+.community-doc-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-light, rgba(201, 185, 157, 0.45));
+}
+
+.community-doc-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(169, 120, 53, 0.12);
+  border: 1px solid rgba(169, 120, 53, 0.3);
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.community-doc-title {
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.25;
+}
+
+.community-doc-subtitle {
+  font-size: 0.84rem;
+  color: var(--text-muted);
   line-height: 1.45;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Three Statistics Blocks */
+.community-doc-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.community-stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 6px;
+  background: var(--surface, #EAE3D6);
+  border: 1px solid var(--border-light, rgba(201, 185, 157, 0.45));
+  border-radius: var(--radius-sm, 6px);
+  text-align: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+}
+
+.community-stat-block:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent, #A97835);
+  background: var(--card-bg, #FFFAF1);
+  box-shadow: 0 8px 18px rgba(169, 120, 53, 0.18), 0 0 0 1px var(--accent, #A97835);
+}
+
+.community-stat-num {
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.community-stat-block:hover .community-stat-num {
+  color: var(--accent, #A97835);
+  transform: scale(1.05);
+}
+
+.community-stat-lbl {
+  font-family: var(--font-body, -apple-system, sans-serif);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Statement & CTA */
+.community-doc-statement {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 18px;
+  text-align: center;
+  padding: 0 4px;
+}
+
+.community-doc-cta {
+  width: 100%;
+  padding: 12px 18px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-sm, 6px) !important;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--dark, #171613);
+  color: #dfbf8a !important;
+  border: 1px solid rgba(223, 191, 138, 0.35);
+  box-shadow: 0 4px 14px rgba(23, 22, 19, 0.2);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  text-decoration: none;
+}
+
+.community-doc-cta:hover {
+  background: #a97835;
+  color: #171613 !important;
+  border-color: #a97835;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(169, 120, 53, 0.3);
+}
+
+.community-doc-cta svg {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.community-doc-cta:hover svg {
+  transform: translateX(4px);
 }
 
 /* 15. COMMUNITY ARCHIVING CARD */
@@ -1444,23 +1554,54 @@
   border-top-color: #5a493a;
 }
 
-/* Practical guide box */
-[data-theme="dark"] .practical-guide-box {
-  background: #2a201a;
-  border-color: #5a493a;
+/* Community documented dark mode */
+[data-theme="dark"] .community-documented-box {
+  background: #211F1B;
+  border-color: #51483B;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
-[data-theme="dark"] .practical-guide-box h4 {
-  color: #f4eadc;
-  border-bottom-color: #5a493a;
+[data-theme="dark"] .community-doc-title {
+  color: #EEE7DA;
 }
 
-[data-theme="dark"] .practical-label {
-  color: #d09a61;
+[data-theme="dark"] .community-doc-subtitle {
+  color: #B7AE9F;
 }
 
-[data-theme="dark"] .practical-value {
-  color: #d6c5b3;
+[data-theme="dark"] .community-stat-block {
+  background: #171613;
+  border-color: #51483B;
+}
+
+[data-theme="dark"] .community-stat-block:hover {
+  background: #262420;
+  border-color: #D4AA67;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6), 0 0 0 1px #D4AA67;
+}
+
+[data-theme="dark"] .community-stat-num {
+  color: #D4AA67;
+}
+
+[data-theme="dark"] .community-stat-lbl {
+  color: #B7AE9F;
+}
+
+[data-theme="dark"] .community-doc-statement {
+  color: #CEC5B5;
+}
+
+[data-theme="dark"] .community-doc-cta {
+  background: #151513;
+  color: #D4AA67 !important;
+  border-color: #51483B;
+}
+
+[data-theme="dark"] .community-doc-cta:hover {
+  background: #D4AA67;
+  color: #171613 !important;
+  border-color: #D4AA67;
 }
 
 /* Contribute sidebar box */

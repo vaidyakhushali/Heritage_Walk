@@ -230,10 +230,7 @@ function Contribute() {
                   <IconUser size={18} color="currentColor" /> Create Free Account
                 </Link>
               </div>
-
-              <p className="lock-demo-hint">
-                Testing? Use Explorer login: <code>user@heritagewalk.com</code> (password: <code>user123</code>)
-              </p>
+              
             </div>
           </div>
         </section>
