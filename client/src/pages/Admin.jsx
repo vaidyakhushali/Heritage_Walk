@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { contributionService } from '../services/contributionService'
 import Loader from '../components/Loader'
 import Toast from '../components/Toast'
 import { IconCamera, IconCheck, IconHeritage, IconSearch, IconShield, IconUser, IconX } from '../components/Icons'
 import './Admin.css'
 
 function Admin() {
-  const { user, loading: authLoading } = useAuth()
+  const { user, token, loading: authLoading } = useAuth()
   const [contributions, setContributions] = useState([])
   const [counts, setCounts] = useState({ all: 0, pending: 0, approved: 0, rejected: 0 })
   const [activeTab, setActiveTab] = useState('pending')
@@ -20,9 +21,8 @@ function Admin() {
   const fetchContributions = async (status = activeTab) => {
     setLoading(true)
     try {
-      const params = status !== 'all' ? `?status=${status}` : ''
-      const res = await fetch(`/api/contributions${params}`)
-      const data = await res.json()
+      const params = status !== 'all' ? { status } : {}
+      const data = await contributionService.getContributions(params, token)
       setContributions(data.contributions || [])
       setCounts(data.counts || { all: 0, pending: 0, approved: 0, rejected: 0 })
     } catch {
@@ -42,13 +42,7 @@ function Admin() {
 
   const handleReview = async (id, status) => {
     try {
-      const res = await fetch(`/api/contributions/${id}/review`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status, reviewNote })
-      })
-
-      if (!res.ok) throw new Error('Review request failed')
+      await contributionService.reviewContribution(id, { status, reviewNote }, token)
 
       setToast({
         message: `Contribution ${status} successfully!`,
@@ -67,8 +61,7 @@ function Admin() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to permanently delete this submission?')) return
     try {
-      const res = await fetch(`/api/contributions/${id}`, { method: 'DELETE' })
-      if (!res.ok) throw new Error('Delete failed')
+      await contributionService.deleteContribution(id, token)
       setToast({ message: 'Contribution deleted from archives', type: 'success' })
       fetchContributions(activeTab)
     } catch {

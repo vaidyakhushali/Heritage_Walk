@@ -413,3 +413,224 @@
     background: #ffffff !important;
   }
 }
+
+
+/* ===================================================
+   DARK MODE — FIELD GUIDE MODAL
+   =================================================== */
+
+[data-theme="dark"] .field-guide-container {
+  background: #211a15;
+  border-color: #5a493a;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .field-guide-toolbar {
+  background: #292019;
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .toolbar-info h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .field-guide-document {
+  background: #1c1612;
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-doc-header {
+  border-bottom-color: #d09a61;
+}
+
+[data-theme="dark"] .guide-org-title {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .guide-org-sub {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .guide-doc-meta {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .guide-doc-id {
+  color: #e0ad75;
+}
+
+[data-theme="dark"] .guide-type-pill {
+  background: rgba(208, 154, 97, 0.15);
+  color: #d09a61;
+}
+
+[data-theme="dark"] .guide-monument-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-loc-bar {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .guide-coords {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .guide-facts-card {
+  background: #251d17;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .guide-facts-card h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-fact-item {
+  border-bottom-color: #3d2e24;
+}
+
+[data-theme="dark"] .guide-fact-label {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .guide-fact-val {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-section h3 {
+  color: #f4eadc;
+  border-bottom-color: #3d2e24;
+}
+
+[data-theme="dark"] .guide-section p {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .guide-practical-grid > div {
+  background: #251d17;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .guide-practical-label {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .guide-practical-val {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-doc-footer {
+  border-top-color: #3d2e24;
+  color: #b6a28e;
+}
+
+
+/* ===================================================
+   DARK MODE — FIELD GUIDE MODAL
+   =================================================== */
+
+[data-theme="dark"] .field-guide-container {
+  background: #211a15;
+  border-color: #5a493a;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .field-guide-toolbar {
+  background: #292019;
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .toolbar-info h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .field-guide-document {
+  background: #1c1612;
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-doc-header {
+  border-bottom-color: #d09a61;
+}
+
+[data-theme="dark"] .guide-org-title {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .guide-org-sub {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .guide-doc-meta {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .guide-doc-id {
+  color: #e0ad75;
+}
+
+[data-theme="dark"] .guide-type-pill {
+  background: rgba(208, 154, 97, 0.15);
+  color: #d09a61;
+}
+
+[data-theme="dark"] .guide-monument-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-loc-bar {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .guide-coords {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .guide-facts-card {
+  background: #251d17;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .guide-facts-card h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-fact-item {
+  border-bottom-color: #3d2e24;
+}
+
+[data-theme="dark"] .guide-fact-label {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .guide-fact-val {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-section h3 {
+  color: #f4eadc;
+  border-bottom-color: #3d2e24;
+}
+
+[data-theme="dark"] .guide-section p {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .guide-practical-grid > div {
+  background: #251d17;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .guide-practical-label {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .guide-practical-val {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .guide-doc-footer {
+  border-top-color: #3d2e24;
+  color: #b6a28e;
+}
+

@@ -714,3 +714,112 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* ===================================================
+   DARK MODE — PROFILE PAGE
+   =================================================== */
+
+[data-theme="dark"] .profile-card {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .profile-name {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .profile-email {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .profile-avatar-large {
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .profile-stat-box,
+[data-theme="dark"] .profile-info-box,
+[data-theme="dark"] .profile-section-card {
+  background: #292019;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .profile-stat-number {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .profile-stat-label {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .profile-info-label {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .profile-info-value {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .profile-section-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .profile-body {
+  background: #171310;
+}
+
+
+[data-theme="dark"] .profile-edit-card,
+[data-theme="dark"] .profile-links-card,
+[data-theme="dark"] .passport-card,
+[data-theme="dark"] .badge-card,
+[data-theme="dark"] .contribution-item {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .profile-edit-card h3,
+[data-theme="dark"] .profile-links-card h3,
+[data-theme="dark"] .passport-header h2,
+[data-theme="dark"] .badge-card h4,
+[data-theme="dark"] .contribution-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .profile-link-item:hover {
+  background: #33271f;
+}
+
+[data-theme="dark"] .profile-link-item strong {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .passport-tab {
+  background: #211a15;
+  border-color: #5a493a;
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .passport-tab.active {
+  background: #d09a61;
+  color: #211810;
+  border-color: #d09a61;
+}
+
+[data-theme="dark"] .profile-role-pill {
+  background: rgba(208, 154, 97, 0.15);
+  color: #d09a61;
+}
+
+[data-theme="dark"] .profile-stats-row {
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .profile-stat-num {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .profile-bio {
+  color: #cdbba8;
+}

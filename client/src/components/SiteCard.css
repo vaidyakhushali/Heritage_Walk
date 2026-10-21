@@ -1,47 +1,48 @@
 .site-card {
   position: relative;
   display: block;
-  background: var(--color-white);
-  border-radius: var(--radius-md);
+  background: var(--card-bg, #FFFAF1);
+  border-radius: var(--radius-sm, 6px);
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(44, 24, 16, 0.08);
-  transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+  box-shadow: 0 8px 24px rgba(37, 32, 24, 0.08);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
   text-decoration: none;
   color: inherit;
-  border: 1px solid rgba(212, 196, 176, 0.5);
+  border: 1px solid var(--border-color, #C9B99D);
+  will-change: transform, box-shadow;
 }
 
 .site-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(44, 24, 16, 0.15);
-  border-color: var(--color-primary-light);
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(23, 22, 19, 0.2), 0 0 0 1px var(--accent, #A97835);
+  border-color: var(--accent, #A97835);
 }
 
 .site-card:focus-visible {
-  outline: 3px solid var(--color-primary-light);
+  outline: 2px solid var(--accent, #A97835);
   outline-offset: 3px;
 }
 
 .site-card-image {
   position: relative;
-  height: 220px;
+  height: 240px;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--color-bg-dark), var(--color-primary-light));
+  background: #171613;
 }
 
 .site-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
 }
 
 .site-card:hover .site-card-image img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .site-card:focus-visible .site-card-image img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .site-card-placeholder {
@@ -139,27 +140,29 @@
 }
 
 .site-card-name {
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  color: var(--color-primary-dark);
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--text-primary);
   margin-bottom: 6px;
-  line-height: 1.3;
+  line-height: 1.25;
   transition: color 0.3s ease;
 }
 
 .site-card:hover .site-card-name {
-  color: var(--color-primary);
+  color: var(--accent, #A97835);
 }
 
-.site-card-location { font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 8px; }
+.site-card-location { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
 
 .site-card-period {
   display: inline-block;
   padding: 3px 10px;
-  background: var(--color-bg-dark);
-  color: var(--color-text-light);
+  background: var(--surface);
+  color: var(--text-secondary);
   font-size: 0.75rem; font-weight: 500;
-  border-radius: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
   margin-bottom: 10px;
 }
 
@@ -219,4 +222,103 @@
   .site-card:hover .site-card-image img {
     transform: none;
   }
+}
+
+/* ===================================================
+   DARK MODE — SITE CARDS
+   =================================================== */
+
+[data-theme="dark"] .site-card {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .site-card:hover {
+  background: #33261e;
+  border-color: #d09a61;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(208, 154, 97, 0.45);
+}
+
+[data-theme="dark"] .site-card:focus-visible {
+  outline-color: #d09a61;
+}
+
+[data-theme="dark"] .site-card-image {
+  background: linear-gradient(135deg, #33271f, #5a3e2b);
+}
+
+[data-theme="dark"] .site-card-overlay {
+  background: linear-gradient(to top, rgba(10, 6, 4, 0.65), transparent);
+}
+
+[data-theme="dark"] .site-card:hover .site-card-overlay {
+  opacity: 0.85;
+}
+
+/* Type badge */
+[data-theme="dark"] .site-card-type {
+  background: rgba(23, 19, 16, 0.9);
+  color: #d09a61;
+  border: 1px solid rgba(208, 154, 97, 0.3);
+}
+
+[data-theme="dark"] .site-card:hover .site-card-type {
+  background: #d09a61;
+  color: #211810;
+}
+
+/* Heart button */
+[data-theme="dark"] .site-card-heart {
+  background: rgba(23, 19, 16, 0.88);
+  border: 1px solid rgba(208, 154, 97, 0.25);
+}
+
+[data-theme="dark"] .site-card-heart:hover {
+  background: rgba(33, 26, 21, 1);
+}
+
+/* Photo count */
+[data-theme="dark"] .site-card-photo-count {
+  background: rgba(0, 0, 0, 0.65);
+  color: #d6c5b3;
+}
+
+/* Card content */
+[data-theme="dark"] .site-card-content {
+  background: #292019;
+}
+
+[data-theme="dark"] .site-card-name {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .site-card:hover .site-card-name {
+  color: #e0ad75;
+}
+
+[data-theme="dark"] .site-card-location {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .site-card-period {
+  background: #33271f;
+  color: #d6c5b3;
+  border: 1px solid #5a493a;
+}
+
+[data-theme="dark"] .site-card-desc {
+  color: #cdbba8;
+}
+
+[data-theme="dark"] .site-card-link {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .site-card:hover .site-card-link {
+  color: #e0ad75;
+}
+
+[data-theme="dark"] .site-card-placeholder {
+  background: linear-gradient(135deg, #5a3e2b, #33271f);
 }

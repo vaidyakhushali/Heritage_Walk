@@ -22,6 +22,7 @@ import {
   MonumentTypeIcon
 } from '../components/Icons'
 import { fallbackSites } from '../data/fallbackSites'
+import { siteService } from '../services/siteService'
 import './SiteDetail.css'
 
 function SiteDetail() {
@@ -36,11 +37,7 @@ function SiteDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    fetch(`/api/sites/${slug}`)
-      .then(res => {
-        if (!res.ok) throw new Error('Site not found')
-        return res.json()
-      })
+    siteService.getSiteBySlug(slug)
       .then(data => {
         if (data && data.name) {
           setSite(data)
@@ -312,7 +309,7 @@ function SiteDetail() {
             <main className="detail-main-flow">
 
               {/* Overview & Architecture */}
-              <article className="heritage-card narrative-card">
+              <article className="heritage-card narrative-card hw-walk-waypoint">
                 <div className="heritage-card-header">
                   <span className="heritage-card-kicker">Architectural Overview</span>
                   <h2 className="heritage-card-title">About {site.name}</h2>
@@ -324,7 +321,7 @@ function SiteDetail() {
 
               {/* Historical Significance */}
               {site.significance && (
-                <article className="heritage-card significance-card">
+                <article className="heritage-card significance-card hw-walk-waypoint">
                   <div className="significance-icon-badge">
                     <IconScroll size={28} color="var(--color-accent)" />
                   </div>
@@ -337,7 +334,7 @@ function SiteDetail() {
               )}
 
               {/* Photo Gallery Section */}
-              <section id="community-gallery-section" className="heritage-card gallery-section-card">
+              <section id="community-gallery-section" className="heritage-card gallery-section-card hw-walk-waypoint">
                 <div className="gallery-section-header">
                   <div>
                     <span className="heritage-card-kicker">Visual Archives</span>

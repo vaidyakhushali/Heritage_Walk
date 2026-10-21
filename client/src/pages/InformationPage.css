@@ -152,3 +152,57 @@
     gap: 8px;
   }
 }
+
+
+/* ===================================================
+   DARK MODE — INFORMATION PAGE
+   =================================================== */
+
+[data-theme="dark"] .information-page {
+  background: #171310;
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .information-nav {
+  border-left-color: #5a493a;
+}
+
+[data-theme="dark"] .information-nav a {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .information-nav a[aria-current="page"] {
+  color: #d09a61;
+  background: #292019;
+  border-left-color: #d09a61;
+}
+
+[data-theme="dark"] .information-content section + section {
+  border-top-color: #5a493a;
+}
+
+[data-theme="dark"] .information-content h2 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .information-content p {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .information-contact {
+  background: #292019;
+  border-color: #5a493a;
+  border-left-color: #d09a61;
+}
+
+[data-theme="dark"] .information-contact strong {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .information-content .information-contact p {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .information-contact a {
+  color: #d09a61;
+}

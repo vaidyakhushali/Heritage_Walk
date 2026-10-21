@@ -166,3 +166,110 @@
   color: #2E7D32;
   cursor: default;
 }
+
+
+/* ===================================================
+   DARK MODE — TRAVEL TIPS SECTION
+   =================================================== */
+
+[data-theme="dark"] .travel-tips-card {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .travel-tips-header h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .tips-signin-hint {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .add-tip-form {
+  background: #211a15;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .add-tip-form h4 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .tip-category-label {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .tip-cat-chip {
+  background: #2a201a;
+  border-color: #5a493a;
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .tip-cat-chip:hover {
+  background: #33271f;
+  border-color: #d09a61;
+  color: #e0ad75;
+}
+
+[data-theme="dark"] .tip-cat-chip.active {
+  background: #d09a61;
+  color: #211810;
+  border-color: #d09a61;
+}
+
+[data-theme="dark"] .tip-textarea {
+  background: #171310;
+  border-color: #665342;
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .tip-textarea:focus {
+  border-color: #d09a61;
+  box-shadow: 0 0 0 3px rgba(208, 154, 97, 0.18);
+}
+
+[data-theme="dark"] .tip-item {
+  background: #211a15;
+  border-color: #5a493a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .tip-item:hover {
+  border-color: #d09a61;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .tip-author {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .tip-badge {
+  background: rgba(208, 154, 97, 0.15);
+  color: #d09a61;
+}
+
+[data-theme="dark"] .tip-date {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .tip-text {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .tip-helpful-btn {
+  background: #2a201a;
+  border-color: #5a493a;
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .tip-helpful-btn:hover {
+  background: #33271f;
+  border-color: #d09a61;
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .tip-helpful-btn.upvoted {
+  background: rgba(91, 140, 62, 0.2);
+  border-color: #5b8c3e;
+  color: #8bc34a;
+}

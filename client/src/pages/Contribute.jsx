@@ -14,6 +14,8 @@ import {
 } from '../components/Icons'
 import Toast from '../components/Toast'
 import Loader from '../components/Loader'
+import { siteService } from '../services/siteService'
+import { contributionService } from '../services/contributionService'
 import './Contribute.css'
 
 function Contribute() {
@@ -51,11 +53,7 @@ function Contribute() {
 
   // Fetch available sites list
   useEffect(() => {
-    fetch('/api/sites?limit=100')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch sites')
-        return res.json()
-      })
+    siteService.getSites({ limit: 100 })
       .then(data => {
         if (data && data.sites) {
           setSites(data.sites)
@@ -148,27 +146,7 @@ function Contribute() {
         formData.append('photos', photo)
       })
 
-      const headers = {}
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`
-      }
-
-      const res = await fetch('/api/contributions', {
-        method: 'POST',
-        headers,
-        body: formData
-      })
-
-      if (!res.ok) {
-        let errorMessage = 'Submission failed'
-        try {
-          const data = await res.json()
-          errorMessage = data.error?.message || errorMessage
-        } catch {
-          // Response was not JSON (e.g., HTML error page)
-        }
-        throw new Error(errorMessage)
-      }
+      await contributionService.submitContribution(formData, token)
 
       setToast({
         message: 'Contribution submitted! Our team will review your media & details.',

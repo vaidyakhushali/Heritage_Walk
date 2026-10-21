@@ -8,6 +8,7 @@ const cloudinary = require('cloudinary').v2;
 const Contribution = require('../models/Contribution');
 const Site = require('../models/Site');
 const auth = require('../middleware/auth');
+const { adminAuth } = require('../middleware/auth');
 const { getCoordinatesForLocation } = require('../utils/geoLookup');
 
 cloudinary.config({
@@ -238,8 +239,8 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// PATCH /api/contributions/:id/review - Review a contribution
-router.patch('/:id/review', async (req, res, next) => {
+// PATCH /api/contributions/:id/review - Review a contribution (admin only)
+router.patch('/:id/review', adminAuth, async (req, res, next) => {
   try {
     const { status, reviewNote } = req.body;
 
@@ -331,8 +332,8 @@ router.patch('/:id/review', async (req, res, next) => {
   }
 });
 
-// DELETE /api/contributions/:id - Delete contribution
-router.delete('/:id', async (req, res, next) => {
+// DELETE /api/contributions/:id - Delete contribution (admin only)
+router.delete('/:id', adminAuth, async (req, res, next) => {
   try {
     const contribution = await Contribution.findByIdAndDelete(req.params.id);
     if (!contribution) {

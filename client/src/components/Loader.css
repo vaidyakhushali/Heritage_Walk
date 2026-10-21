@@ -34,3 +34,16 @@
   color: var(--color-text-muted);
   font-size: 0.9rem;
 }
+
+/* ===================================================
+   DARK MODE — LOADER
+   =================================================== */
+
+[data-theme="dark"] .loader-spinner {
+  border-color: #33271f;
+  border-top-color: #d09a61;
+}
+
+[data-theme="dark"] .loader-text {
+  color: #b6a28e;
+}

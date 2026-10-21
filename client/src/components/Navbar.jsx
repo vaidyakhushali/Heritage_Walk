@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import {
   IconStepwell,
   IconUser,
   IconHeart,
   IconCamera,
   IconShield,
-  IconSparkles
+  IconSparkles,
+  IconSun,
+  IconMoon
 } from './Icons'
 import './Navbar.css'
 
@@ -16,6 +19,7 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const { user, logout } = useAuth()
+  const { theme, isDark, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const userMenuRef = useRef(null)
 
@@ -69,15 +73,29 @@ function Navbar() {
           <span className="logo-text">HeritageWalk</span>
         </Link>
 
-        <button
-          className={`navbar-toggle ${isOpen ? 'active' : ''}`}
-          onClick={toggleMenu}
-          aria-label="Toggle navigation menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <div className="navbar-header-actions">
+          <button
+            type="button"
+            className="navbar-theme-toggle mobile-only-toggle"
+            onClick={toggleTheme}
+            aria-label={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
+            title={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
+          >
+            <span className="theme-toggle-icon">
+              {isDark ? <IconMoon size={18} color="var(--accent)" /> : <IconSun size={18} color="var(--accent)" />}
+            </span>
+          </button>
+
+          <button
+            className={`navbar-toggle ${isOpen ? 'active' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Toggle navigation menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
 
         <div className={`navbar-menu ${isOpen ? 'open' : ''}`}>
           <NavLink to="/" className="navbar-link" onClick={closeMenu}>Home</NavLink>
@@ -86,6 +104,21 @@ function Navbar() {
           <NavLink to="/about" className="navbar-link" onClick={closeMenu}>About</NavLink>
 
           <div className="navbar-right">
+            <button
+              type="button"
+              className="navbar-theme-toggle desktop-only-toggle"
+              onClick={toggleTheme}
+              aria-label={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
+              title={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
+            >
+              <span className={`theme-toggle-pill ${isDark ? 'is-dark' : 'is-light'}`}>
+                <span className="toggle-indicator">
+                  {isDark ? <IconMoon size={13} color="#f5eadc" /> : <IconSun size={13} color="#b98255" />}
+                </span>
+                <span className="toggle-label">{isDark ? 'Night' : 'Day'}</span>
+              </span>
+            </button>
+
             {user ? (
               <div
                 className="navbar-user"

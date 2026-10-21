@@ -49,13 +49,13 @@
 
 /* Page transition */
 .main-content > * {
-  animation: pageEnter 0.4s ease;
+  animation: pageEnter 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes pageEnter {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;

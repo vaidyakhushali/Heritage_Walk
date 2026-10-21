@@ -2,117 +2,157 @@
 
 **A Community-Based Heritage Documentation Web Platform**
 
-HeritageWalk is a full-stack web platform where people can discover, learn about, and contribute to documenting India's local heritage sites — from ancient stepwells to colonial-era buildings.
+HeritageWalk is a full-stack web platform where people can discover, learn about, and contribute to documenting India's local heritage sites — from ancient stepwells and temples to havelis, forts, and colonial-era buildings.
 
 ---
 
 ## ✨ Features
 
-- **🔍 Explore** — Browse heritage sites with search and type filtering
-- **📖 Learn** — Detailed site pages with history, significance, and photo galleries
-- **📸 Contribute** — Submit photographs, information, new site suggestions, or corrections
-- **👨‍💼 Admin Review** — Approve/reject community contributions before publication
-- **📱 Responsive** — Works beautifully on desktop, tablet, and mobile
-- **🎨 Heritage Design** — Warm brown/earthy color palette with professional typography
+- **🔍 Explore & Filter** — Browse heritage sites with category chips, keyword search, city/state filtering, and regional filters.
+- **🗺️ Interactive India Map** — Custom Leaflet map with type-coded monument markers strictly bounded to India.
+- **📖 Rich Site Archives** — Detailed monument pages with historical narratives, travel tips, and responsive photo galleries.
+- **📸 Community Contributions** — Explorers can upload original photos, suggest unlisted sites, or submit historical corrections.
+- **🛡️ Curator & Admin Portal** — Secure moderation console to review, approve, or reject submissions before publication.
+- **❤️ Explorer Profiles & Wishlists** — Personal passports for saving bookmarked sites and tracking submitted contributions.
+- **📱 Fully Responsive** — Seamless mobile, tablet, laptop, and desktop experiences with touch-friendly navigation.
+- **🎨 Warm Heritage Aesthetic** — Earthy palette with typography and subtle animations.
+
+---
 
 ## 🛠️ Tech Stack
 
-| Layer     | Technology           |
-|-----------|----------------------|
-| Frontend  | React 18 + Vite      |
-| Backend   | Node.js + Express.js |
-| Database  | MongoDB + Mongoose   |
-| Uploads   | Multer               |
-| Styling   | Normal CSS           |
+| Layer       | Technology                                                |
+| ----------- | --------------------------------------------------------- |
+| **Frontend**| React 18, Vite, React Router 6, Leaflet, CSS3 Custom Vars |
+| **Backend** | Node.js, Express.js, Multer (Memory Storage)              |
+| **Database**| MongoDB, Mongoose 7                                       |
+| **Auth**    | JWT (JSON Web Tokens), Bcrypt.js                          |
+| **Storage** | Local disk uploads (with optional Cloudinary fallback)    |
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Node.js** (v16 or higher)
-- **MongoDB** (running locally or use MongoDB Atlas)
+- **Node.js** (v18 or higher recommended)
+- **MongoDB** (running locally or MongoDB Atlas connection string)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
    git clone <your-repo-url>
-   cd heritagewalk
+   cd Heritage_Walk
    ```
 
 2. **Install all dependencies**
    ```bash
-   npm install
-   cd server && npm install
-   cd ../client && npm install
-   cd ..
+   npm run install-all
    ```
+   *(or run `npm install` in the root, `client`, and `server` folders)*
 
-3. **Set up environment variables**
+3. **Configure Environment Variables**
    ```bash
    cp .env.example .env
    ```
-   Edit `.env` with your MongoDB URI if needed.
+   Verify or update values in `.env`:
+   - `MONGODB_URI`: MongoDB connection string
+   - `PORT`: Express server port (default: `5000`)
+   - `JWT_SECRET`: Secret key for signing tokens
+   - `CLIENT_URL`: Client URL for CORS in production
 
-4. **Seed the database** (adds 8 sample heritage sites)
+4. **Start Development**
    ```bash
-   cd server && npm run seed
+   npm run dev
    ```
+   This runs both services concurrently:
+   - **Frontend App**: `http://localhost:5173`
+   - **Backend API**: `http://localhost:5000/api`
 
-5. **Start development servers**
-   ```bash
-   cd .. && npm run dev
-   ```
-
-   This starts both:
-   - Backend API: `http://localhost:5000`
-   - Frontend: `http://localhost:5173`
-
-### Production Build
-
-```bash
-cd client && npm run build
-cd ../server
-NODE_ENV=production npm start
-```
+---
 
 ## 📁 Project Structure
 
 ```
-heritagewalk/
-├── client/                  # React frontend
+Heritage_Walk/
+├── client/                      # React Frontend
 │   ├── src/
-│   │   ├── components/      # Navbar, Footer, SiteCard, PhotoGallery, etc.
-│   │   ├── pages/           # Home, Explore, SiteDetail, Contribute, About, Admin
-│   │   ├── App.jsx
-│   │   └── index.css        # Global styles + brown color palette
-│   └── index.html
-├── server/                  # Express backend
-│   ├── models/              # Site, Contribution (Mongoose)
-│   ├── routes/              # /api/sites, /api/contributions
-│   ├── seed/                # Database seeder with sample data
-│   └── server.js
-├── .env
-└── package.json
+│   │   ├── components/          # Reusable UI components (Navbar, Footer, SiteCard, etc.)
+│   │   ├── config/              # Centralized API configuration (api.js)
+│   │   ├── context/             # React Context providers (AuthContext.jsx)
+│   │   ├── data/                # Verified heritage fallback dataset (fallbackSites.js)
+│   │   ├── pages/               # Application views (Home, Explore, SiteDetail, Admin, etc.)
+│   │   ├── services/            # Decoupled API service layer (authService, siteService, etc.)
+│   │   ├── App.jsx              # Routes and layout wrapper
+│   │   ├── index.css            # Global design tokens and responsive utilities
+│   │   └── main.jsx             # React DOM entry point
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── vercel.json              # Vercel deployment rewrites
+│   └── package.json
+│
+├── server/                      # Express Backend
+│   ├── config/                  # Database connection and auto-seeding (db.js)
+│   ├── middleware/              # Authentication & authorization guards (auth.js)
+│   ├── models/                  # Mongoose schemas (Site.js, User.js, Contribution.js)
+│   ├── routes/                  # Express route controllers (auth.js, sites.js, contributions.js)
+│   ├── seed/                    # Database seeding dataset and scripts
+│   ├── tests/                   # Automated node:test test suite
+│   ├── uploads/                 # Local uploaded images/videos directory
+│   ├── utils/                   # Geocoding and helper utilities
+│   ├── server.js                # Express app entry point
+│   └── package.json
+│
+├── .env.example                 # Environment variables template
+├── .gitignore
+├── package.json                 # Monorepo task orchestration scripts
+└── README.md
 ```
 
-## 🌐 API Endpoints
+---
 
-### Sites
-| Method | Endpoint              | Description              |
-|--------|-----------------------|--------------------------|
-| GET    | `/api/sites`          | List sites (filter/search/paginate) |
-| GET    | `/api/sites/featured` | Get featured sites       |
-| GET    | `/api/sites/types`    | Get distinct site types  |
-| GET    | `/api/sites/:slug`    | Get site by slug         |
+## 🌐 API Reference
 
-### Contributions
-| Method | Endpoint                          | Description           |
-|--------|-----------------------------------|-----------------------|
-| POST   | `/api/contributions`              | Submit contribution   |
-| GET    | `/api/contributions`              | List all contributions|
-| PATCH  | `/api/contributions/:id/review`   | Approve/reject        |
+### Authentication (`/api/auth`)
+| Method | Endpoint                    | Description                           | Access  |
+| ------ | --------------------------- | ------------------------------------- | ------- |
+| `POST` | `/api/auth/register`        | Create new explorer account           | Public  |
+| `POST` | `/api/auth/login`           | Login and receive JWT token           | Public  |
+| `GET`  | `/api/auth/me`              | Get authenticated profile & wishlist  | Private |
+| `PUT`  | `/api/auth/profile`         | Update profile bio / location         | Private |
+| `POST` | `/api/auth/wishlist/:id`    | Toggle site saved in wishlist         | Private |
 
-## 📄 License
+### Heritage Sites (`/api/sites`)
+| Method | Endpoint                    | Description                           | Access  |
+| ------ | --------------------------- | ------------------------------------- | ------- |
+| `GET`  | `/api/sites`                | List sites (filter, search, paginate) | Public  |
+| `GET`  | `/api/sites/featured`       | Get curated featured monuments        | Public  |
+| `GET`  | `/api/sites/types`          | Get distinct monument categories      | Public  |
+| `GET`  | `/api/sites/:slug`          | Get site details by slug              | Public  |
 
-MIT License — built with ❤️ for India's heritage.
+### Community Contributions (`/api/contributions`)
+| Method  | Endpoint                         | Description                          | Access     |
+| ------- | -------------------------------- | ------------------------------------ | ---------- |
+| `POST`  | `/api/contributions`             | Submit new media, info, or monument  | Explorer   |
+| `GET`   | `/api/contributions/mine`        | Get current user's submissions       | Explorer   |
+| `GET`   | `/api/contributions`             | List all contributions               | Public/All |
+| `PATCH` | `/api/contributions/:id/review`  | Approve or reject contribution       | Admin      |
+| `DELETE`| `/api/contributions/:id`         | Delete contribution record           | Admin      |
+
+---
+
+## 🧪 Testing
+
+Run backend automated tests:
+```bash
+cd server
+npm test
+```
+
+Build frontend for production:
+```bash
+npm run build
+```
+
+---

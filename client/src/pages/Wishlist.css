@@ -112,3 +112,23 @@
   .wishlist-header h1 { font-size: 1.8rem; }
   .wishlist-grid { grid-template-columns: 1fr; }
 }
+
+/* ===================================================
+   DARK MODE — WISHLIST PAGE
+   =================================================== */
+
+[data-theme="dark"] .wishlist-count {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .wishlist-empty h2 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .wishlist-empty p {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .wishlist-empty-circles span {
+  border-color: #5a493a;
+}

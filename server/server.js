@@ -1,10 +1,10 @@
 require('dotenv').config({ path: '../.env' });
 
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
+const connectDB = require('./config/db');
 
 const app = express();
 
@@ -13,20 +13,26 @@ const app = express();
 // =====================================================
 
 const allowedOrigins = [
+  process.env.CLIENT_URL,
+  process.env.FRONTEND_URL,
   'https://heritagewalk.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000'
-];
+].filter(Boolean);
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin
-    // Example: Postman, server-to-server requests
+    // In production, allow all origins if requested or if matched with allowedOrigins / vercel previews
     if (!origin) {
       return callback(null, true);
     }
 
-    if (allowedOrigins.includes(origin)) {
+    if (
+      process.env.NODE_ENV === 'production' ||
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.netlify.app')
+    ) {
       return callback(null, true);
     }
 
@@ -198,143 +204,14 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-const MONGODB_URI =
-  process.env.MONGODB_URI ||
-  'mongodb://localhost:27017/heritagewalk';
-
-mongoose
-  .connect(MONGODB_URI)
-  .then(async () => {
-    console.log('✅ Connected to MongoDB');
-
-    // =================================================
-    // AUTO SEED
-    // =================================================
-
-    try {
-      const Site = require('./models/Site');
-
-      const count = await Site.countDocuments();
-
-      if (count === 0) {
-        console.log(
-          'Database is empty, auto-seeding initial heritage sites & demo accounts...'
-        );
-
-        const { sites } = require('./seed/seedData');
-
-        const User = require('./models/User');
-
-        // ---------------------------------------------
-        // Insert Sites
-        // ---------------------------------------------
-
-        const insertedSites = await Site.insertMany(
-          sites.map((site) => {
-            const s = new Site(site);
-
-            s.slug = site.name
-              .toLowerCase()
-              .replace(/[^a-z0-9\s-]/g, '')
-              .replace(/\s+/g, '-')
-              .replace(/-+/g, '-')
-              .trim();
-
-            return s;
-          })
-        );
-
-        // ---------------------------------------------
-        // Create Admin User
-        // ---------------------------------------------
-
-        const existingAdmin =
-          await User.findOne({
-            email: 'admin@heritagewalk.com'
-          });
-
-        if (!existingAdmin) {
-          const adminUser = new User({
-            name: 'HeritageWalk Admin',
-            email: 'admin@heritagewalk.com',
-            password: 'admin123',
-            role: 'admin',
-            location: 'New Delhi, India'
-          });
-
-          await adminUser.save();
-        }
-
-        // ---------------------------------------------
-        // Create Demo User
-        // ---------------------------------------------
-
-        const existingDemoUser =
-          await User.findOne({
-            email: 'user@heritagewalk.com'
-          });
-
-        if (!existingDemoUser) {
-          const demoUser = new User({
-            name: 'Khushi Explorer',
-            email: 'user@heritagewalk.com',
-            password: 'user123',
-            role: 'user',
-            location: 'Ahmedabad, Gujarat',
-            wishlist:
-              insertedSites.length >= 2
-                ? [
-                    insertedSites[0]._id,
-                    insertedSites[1]._id
-                  ]
-                : []
-          });
-
-          await demoUser.save();
-        }
-
-        console.log(
-          `Auto-seeded ${insertedSites.length} sites and default Admin/User accounts!`
-        );
-      }
-    } catch (e) {
-      console.warn(
-        'Auto-seed check note:',
-        e.message
-      );
-    }
-
-    // =================================================
-    // START SERVER
-    // =================================================
-
+if (require.main === module) {
+  connectDB().then(() => {
     app.listen(PORT, () => {
-      console.log(
-        `HeritageWalk server running on port ${PORT}`
-      );
-
-      console.log(
-        `Environment: ${
-          process.env.NODE_ENV || 'development'
-        }`
-      );
-
-      console.log(
-        `API: http://localhost:${PORT}/api`
-      );
+      console.log(`🚀 HeritageWalk server running on port ${PORT}`);
+      console.log(`   Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(`   API: http://localhost:${PORT}/api`);
     });
-  })
-  .catch((err) => {
-    console.error(
-      'MongoDB connection error:',
-      err.message
-    );
-
-    console.error(
-      'Make sure MongoDB is running and MONGODB_URI is correct.'
-    );
-
-    process.exit(1);
   });
+}
 
 module.exports = app;

@@ -383,3 +383,91 @@
     min-height: 48px;
   }
 }
+
+/* ===================================================
+   DARK MODE — AUTH PAGES (Login / Register)
+   =================================================== */
+
+[data-theme="dark"] .auth-page {
+  background: #171310;
+}
+
+[data-theme="dark"] .auth-container {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .auth-right {
+  background: #292019;
+}
+
+[data-theme="dark"] .auth-role-tabs {
+  background: #33271f;
+}
+
+[data-theme="dark"] .auth-role-tab {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .auth-role-tab:hover {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .auth-role-tab.active {
+  background: #3d2e24;
+  color: #d09a61;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .auth-role-tab.admin-tab-active {
+  background: #211a15;
+  color: #e0ad75;
+}
+
+[data-theme="dark"] .auth-title,
+[data-theme="dark"] .auth-subtitle {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .auth-subtitle {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .form-label {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .auth-form .form-input,
+[data-theme="dark"] .auth-form input[type="email"],
+[data-theme="dark"] .auth-form input[type="password"],
+[data-theme="dark"] .auth-form input[type="text"] {
+  background: #211a15;
+  color: #f4eadc;
+  border-color: #665342;
+}
+
+[data-theme="dark"] .auth-link {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .auth-link:hover {
+  color: #e0ad75;
+}
+
+[data-theme="dark"] .auth-separator {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .auth-separator::before,
+[data-theme="dark"] .auth-separator::after {
+  background: #5a493a;
+}
+
+[data-theme="dark"] .password-toggle {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .password-toggle:hover {
+  color: #d09a61;
+}

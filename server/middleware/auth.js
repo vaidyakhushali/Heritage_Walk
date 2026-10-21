@@ -24,4 +24,17 @@ const auth = async (req, res, next) => {
   }
 };
 
+const adminAuth = async (req, res, next) => {
+  auth(req, res, () => {
+    if (req.user && req.user.role === 'admin') {
+      next();
+    } else {
+      res.status(403).json({ error: { message: 'Access denied: Administrator privileges required' } });
+    }
+  });
+};
+
 module.exports = auth;
+module.exports.auth = auth;
+module.exports.adminAuth = adminAuth;
+

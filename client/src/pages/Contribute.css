@@ -160,12 +160,36 @@
   text-align: center;
   box-shadow: 0 10px 30px rgba(78, 38, 12, 0.08);
   border: 1.5px solid rgba(193, 120, 23, 0.25);
+  animation: successCardPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes successCardPop {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .success-icon {
   font-size: 3.5rem;
   display: block;
   margin-bottom: 16px;
+  animation: successIconReveal 0.6s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes successIconReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .success-card h2 {
@@ -569,4 +593,185 @@
   .file-preview-remove {
     align-self: flex-end;
   }
+}
+
+/* ===================================================
+   DARK MODE — CONTRIBUTE PAGE
+   =================================================== */
+
+[data-theme="dark"] .contribute {
+  background-color: #171310;
+}
+
+[data-theme="dark"] .auth-lock-card {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .auth-lock-card h2 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .lock-desc {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .lock-icon-circle {
+  background: rgba(208, 154, 97, 0.12);
+  border-color: rgba(208, 154, 97, 0.3);
+}
+
+[data-theme="dark"] .lock-benefits-grid {
+  background: #211a15;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .lock-benefit strong {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .lock-benefit p {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .benefit-icon {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .lock-demo-hint {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .lock-demo-hint code {
+  background: #33271f;
+  color: #d09a61;
+}
+
+[data-theme="dark"] .success-card {
+  background: #292019;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .success-card h2 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .success-card p {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .contribute-card {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .form-section {
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .form-section-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .form-section-desc {
+  color: #b6a28e;
+}
+
+/* Radio grid items - What are you contributing? */
+[data-theme="dark"] .radio-card {
+  background: #211a15;
+  border-color: #5a493a;
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .radio-card:hover {
+  background: #2a201a;
+  border-color: #d09a61;
+}
+
+[data-theme="dark"] .radio-card.selected {
+  background: #2e231b;
+  border-color: #d09a61;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .radio-card-label {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .radio-card-desc {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .radio-card-icon {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .radio-card-active-dot {
+  background: #d09a61;
+  color: #211810;
+}
+
+/* Form inputs */
+[data-theme="dark"] .form-label {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea {
+  background: #211a15;
+  border-color: #665342;
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-textarea:focus {
+  background: #261d17;
+  border-color: #d09a61;
+  box-shadow: 0 0 0 3px rgba(208, 154, 97, 0.18);
+}
+
+/* Media upload dropzone */
+[data-theme="dark"] .file-upload-label {
+  background: #211a15;
+  border-color: #665342;
+}
+
+[data-theme="dark"] .file-upload-label:hover {
+  background: #2a201a;
+  border-color: #d09a61;
+}
+
+[data-theme="dark"] .upload-icon {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .upload-text {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .upload-hint {
+  color: #b6a28e;
+}
+
+/* File preview list */
+[data-theme="dark"] .file-preview-item {
+  background: #211a15;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .file-preview-name {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .file-preview-size {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .checkbox-label {
+  color: #d6c5b3;
 }

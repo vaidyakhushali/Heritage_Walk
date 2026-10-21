@@ -1,16 +1,34 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { authService } from '../services/authService'
 
 const AuthContext = createContext(null)
-
-// Uses Render backend on Vercel and localhost backend during local development
-const API_URL = (
-  import.meta.env.VITE_API_URL || '/api'
-).replace(/\/$/, '')
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(localStorage.getItem('hw_token'))
   const [loading, setLoading] = useState(true)
+
+  const logout = useCallback(() => {
+    localStorage.removeItem('hw_token')
+    setToken(null)
+    setUser(null)
+  }, [])
+
+  const fetchProfile = useCallback(async () => {
+    if (!token) {
+      setLoading(false)
+      return
+    }
+
+    try {
+      const data = await authService.getProfile(token)
+      setUser(data)
+    } catch {
+      logout()
+    } finally {
+      setLoading(false)
+    }
+  }, [token, logout])
 
   useEffect(() => {
     if (token) {
@@ -18,137 +36,41 @@ export function AuthProvider({ children }) {
     } else {
       setLoading(false)
     }
-  }, [])
-
-  const fetchProfile = async () => {
-    try {
-      const res = await fetch(`${API_URL}/auth/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-
-      if (res.ok) {
-        const data = await res.json()
-        setUser(data)
-      } else {
-        logout()
-      }
-    } catch {
-      logout()
-    } finally {
-      setLoading(false)
-    }
-  }
+  }, [token, fetchProfile])
 
   const login = async (email, password) => {
-    const res = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
-    })
-
-    let data
-
-    try {
-      data = await res.json()
-    } catch {
-      throw new Error('Server returned an invalid response')
-    }
-
-    if (!res.ok) {
-      throw new Error(data.error?.message || 'Login failed')
-    }
-
+    const data = await authService.login(email, password)
     localStorage.setItem('hw_token', data.token)
     setToken(data.token)
     setUser(data.user)
-
     return data
   }
 
   const register = async (name, email, password) => {
-    const res = await fetch(`${API_URL}/auth/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, password })
-    })
-
-    let data
-
-    try {
-      data = await res.json()
-    } catch {
-      throw new Error('Server returned an invalid response')
-    }
-
-    if (!res.ok) {
-      throw new Error(data.error?.message || 'Registration failed')
-    }
-
+    const data = await authService.register(name, email, password)
     localStorage.setItem('hw_token', data.token)
     setToken(data.token)
     setUser(data.user)
-
     return data
   }
 
-  const logout = () => {
-    localStorage.removeItem('hw_token')
-    setToken(null)
-    setUser(null)
-  }
-
   const updateProfile = async (updates) => {
-    const res = await fetch(`${API_URL}/auth/profile`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(updates)
-    })
-
-    const data = await res.json()
-
-    if (!res.ok) {
-      throw new Error(data.error?.message || 'Update failed')
-    }
-
+    const data = await authService.updateProfile(updates, token)
     setUser(data.user)
-
     return data
   }
 
   const toggleWishlist = async (siteId) => {
-    const res = await fetch(`${API_URL}/auth/wishlist/${siteId}`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-
-    const data = await res.json()
-
-    if (!res.ok) {
-      throw new Error(data.error?.message || 'Failed')
-    }
-
+    const data = await authService.toggleWishlist(siteId, token)
     setUser(prev => ({
       ...prev,
       wishlist: data.wishlist
     }))
-
     return data
   }
 
   const isWishlisted = (siteId) => {
     if (!user || !user.wishlist) return false
-
     return user.wishlist.some(
       w => (typeof w === 'string' ? w : w._id) === siteId
     )
@@ -176,10 +98,8 @@ export function AuthProvider({ children }) {
 
 export const useAuth = () => {
   const context = useContext(AuthContext)
-
   if (!context) {
     throw new Error('useAuth must be used within AuthProvider')
   }
-
   return context
 }

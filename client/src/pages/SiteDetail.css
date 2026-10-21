@@ -1,5 +1,7 @@
 /* ===================================================
    HERITAGEWALK — LUXURY MONUMENT DETAIL STYLING
+   DIGITAL ARCHAEOLOGY ANIMATION & REVEAL SYSTEM
+   "Don't show the heritage. REVEAL it."
    =================================================== */
 
 .site-detail-modern {
@@ -13,8 +15,8 @@
 .detail-top-section {
   padding-top: 30px;
   padding-bottom: 40px;
-  background: linear-gradient(180deg, #F4ECE1 0%, var(--color-bg) 100%);
-  border-bottom: 1px solid rgba(139, 69, 19, 0.12);
+  background: linear-gradient(180deg, var(--surface, #EAE3D6) 0%, var(--color-bg) 100%);
+  border-bottom: 1px solid var(--border-light, rgba(201, 185, 157, 0.45));
 }
 
 /* Breadcrumbs */
@@ -23,7 +25,7 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 24px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   flex-wrap: wrap;
 }
 
@@ -35,36 +37,57 @@
   align-items: center;
   gap: 4px;
   transition: var(--transition);
+  opacity: 0;
+  animation: breadcrumbFade 0.5s ease forwards;
 }
 
-.breadcrumb-link:hover {
-  color: var(--color-accent);
-  text-decoration: underline;
-}
+.breadcrumb-link:nth-child(1) { animation-delay: 0.05s; }
+.breadcrumb-link:nth-child(3) { animation-delay: 0.15s; }
 
 .breadcrumb-sep {
-  color: #BCAAA4;
+  color: var(--text-muted);
   font-weight: 300;
+  opacity: 0;
+  animation: breadcrumbFade 0.5s 0.1s ease forwards;
 }
 
 .breadcrumb-current {
-  color: var(--color-text-muted);
+  color: var(--text-muted);
   font-weight: 600;
+  opacity: 0;
+  animation: breadcrumbFade 0.5s 0.25s ease forwards;
 }
 
-/* Header Card */
+@keyframes breadcrumbFade {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Header Card (Staggered Opening: Badge -> Title -> Location -> Actions) */
 .detail-header-card {
-  background: var(--color-white);
-  border: 1px solid rgba(193, 120, 23, 0.18);
-  border-radius: var(--radius-lg);
-  padding: 32px 36px;
-  box-shadow: 0 10px 30px rgba(78, 38, 12, 0.06);
+  background: var(--card-bg, #FFFAF1);
+  border: 1px solid var(--border-color, #C9B99D);
+  border-radius: var(--radius-md, 10px);
+  padding: 34px 38px;
+  box-shadow: 0 12px 36px rgba(37, 32, 24, 0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 28px;
   margin-bottom: 30px;
   flex-wrap: wrap;
+  animation: detailCardOpen 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes detailCardOpen {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .detail-header-left {
@@ -76,7 +99,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
 }
 
@@ -84,58 +107,102 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  background: rgba(139, 69, 19, 0.08);
-  color: var(--color-primary);
-  border: 1px solid rgba(139, 69, 19, 0.2);
-  border-radius: 20px;
-  font-size: 0.82rem;
+  padding: 5px 14px;
+  background: rgba(169, 120, 53, 0.12);
+  color: var(--accent, #A97835);
+  border: 1px solid rgba(169, 120, 53, 0.3);
+  border-radius: 999px;
+  font-size: 0.76rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  animation: badgePop 0.6s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .detail-period-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  background: rgba(193, 120, 23, 0.12);
-  color: #8B4513;
-  border: 1px solid rgba(193, 120, 23, 0.25);
-  border-radius: 20px;
-  font-size: 0.82rem;
+  padding: 5px 14px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  font-size: 0.76rem;
   font-weight: 600;
+  opacity: 0;
+  animation: badgePop 0.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .detail-featured-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 14px;
-  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
-  color: #B25900;
-  border: 1px solid #FFCC80;
-  border-radius: 20px;
-  font-size: 0.82rem;
+  padding: 5px 14px;
+  background: linear-gradient(135deg, rgba(212, 170, 103, 0.25), rgba(169, 120, 53, 0.2));
+  color: var(--color-primary);
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  font-size: 0.76rem;
   font-weight: 700;
+  opacity: 0;
+  animation: badgePop 0.6s 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes badgePop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .detail-title {
-  font-family: var(--font-heading);
-  font-size: 2.8rem;
-  color: var(--color-primary-dark);
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 400;
+  color: var(--text-primary);
   margin-bottom: 10px;
-  line-height: 1.15;
-  letter-spacing: -0.5px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  animation: titleReveal 0.8s 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes titleReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .detail-location-bar {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-text-light);
-  font-size: 1.05rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  opacity: 0;
+  animation: locationReveal 0.7s 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes locationReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .detail-pin-icon {
@@ -143,7 +210,7 @@
 }
 
 .detail-address-sub {
-  color: var(--color-text-muted);
+  color: var(--text-muted);
   font-weight: 400;
 }
 
@@ -152,55 +219,105 @@
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
+  opacity: 0;
+  animation: actionsReveal 0.8s 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes actionsReveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .detail-action-btn {
-  padding: 13px 24px !important;
-  font-size: 0.95rem !important;
-  font-weight: 600 !important;
-  border-radius: 30px !important;
-  box-shadow: 0 4px 14px rgba(78, 38, 12, 0.12);
+  padding: 12px 22px !important;
+  font-size: 0.92rem !important;
+  font-weight: 500 !important;
+  border-radius: 999px !important;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
 }
 
 .detail-action-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(78, 38, 12, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(37, 32, 24, 0.15);
+}
+
+.detail-action-btn:active {
+  transform: scale(0.98);
 }
 
 .btn-wishlisted-active {
-  background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+  background: #C0392B !important;
   color: #ffffff !important;
-  border: 1px solid #c0392b !important;
+  border: 1px solid #C0392B !important;
 }
 
 .btn-wishlisted-active:hover {
-  background: linear-gradient(135deg, #c0392b, #962d22) !important;
+  background: #A93226 !important;
   color: #ffffff !important;
+}
+
+/* Wishlist Heart Micro-Interaction */
+.detail-action-btn svg {
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-wishlisted-active svg {
+  animation: heartPulse 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
 }
 
 /* ===================== EDITORIAL PHOTO BENTO COLLAGE ===================== */
 .editorial-photo-bento {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
-  gap: 20px;
-  margin-top: 10px;
+  gap: 24px;
+  margin-top: 14px;
   align-items: stretch;
 }
 
-/* Hero primary photo */
+/* 2. MAIN HERO IMAGE CARD — "UNCOVER THE MONUMENT" */
 .bento-photo-hero {
   position: relative;
-  height: 480px;
-  border-radius: 20px;
+  height: 500px;
+  border-radius: var(--radius-sm, 6px);
   overflow: hidden;
-  box-shadow: 0 14px 36px rgba(78, 38, 12, 0.15);
+  box-shadow: 0 16px 40px rgba(37, 32, 24, 0.18);
   cursor: pointer;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  background-color: var(--color-primary-dark);
+  border: 1px solid var(--border-color, #C9B99D);
+  background-color: #171613;
+  clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
+  animation: heroMonumentUnveil 1.2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroMonumentUnveil {
+  0% {
+    opacity: 0;
+    clip-path: polygon(10% 20%, 90% 15%, 85% 80%, 15% 85%);
+    transform: scale(1.08) translateY(24px);
+  }
+  60% {
+    opacity: 0.9;
+    clip-path: polygon(2% 2%, 98% 0%, 99% 98%, 1% 100%);
+  }
+  100% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1) translateY(0);
+  }
 }
 
 .bento-photo-hero img {
@@ -208,82 +325,123 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
 }
 
 .bento-photo-hero:hover img {
   transform: scale(1.04);
+  filter: contrast(1.04) brightness(0.96);
 }
 
 .bento-hero-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(28, 14, 6, 0.85) 0%, rgba(28, 14, 6, 0.2) 40%, transparent 100%);
+  background: linear-gradient(to top, rgba(23, 22, 19, 0.92) 0%, rgba(23, 22, 19, 0.35) 45%, transparent 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 30px;
-  transition: var(--transition);
+  padding: 32px;
+  transition: background 0.4s ease;
 }
 
 .bento-photo-hero:hover .bento-hero-gradient {
-  background: linear-gradient(to top, rgba(28, 14, 6, 0.92) 0%, rgba(28, 14, 6, 0.3) 50%, transparent 100%);
+  background: linear-gradient(to top, rgba(23, 22, 19, 0.96) 0%, rgba(23, 22, 19, 0.5) 55%, transparent 100%);
 }
 
 .bento-hero-info {
   margin-bottom: 8px;
+  transform: translateY(6px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-photo-hero:hover .bento-hero-info {
+  transform: translateY(0);
 }
 
 .bento-hero-tag {
   display: inline-block;
   padding: 4px 12px;
-  background: rgba(255, 255, 255, 0.25);
-  color: #FFF8F0;
-  border-radius: 20px;
-  font-size: 0.78rem;
+  background: rgba(223, 191, 138, 0.2);
+  color: #dfbf8a;
+  border: 1px solid rgba(223, 191, 138, 0.35);
+  border-radius: 999px;
+  font-size: 0.74rem;
   font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   margin-bottom: 8px;
   backdrop-filter: blur(8px);
 }
 
 .bento-hero-caption {
   color: #FFFFFF;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.45rem;
+  font-weight: 400;
   margin: 0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  line-height: 1.35;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  line-height: 1.3;
 }
 
 .bento-fullscreen-hint {
   align-self: flex-start;
-  margin-top: 10px;
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.85);
-  background: rgba(0, 0, 0, 0.4);
-  padding: 5px 12px;
-  border-radius: 12px;
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: #dfbf8a;
+  background: rgba(23, 22, 19, 0.75);
+  padding: 6px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(223, 191, 138, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
 }
 
-/* Side Column */
+.bento-photo-hero:hover .bento-fullscreen-hint {
+  background: #a97835;
+  color: #171613;
+  border-color: #a97835;
+}
+
+/* 3 & 4. SECONDARY & DETAIL PHOTO CARDS ("ARCHIVE REVEAL" & "DISCOVER THE DETAIL") */
 .bento-side-column {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: 480px;
+  height: 500px;
+  animation: bentoSideEnter 0.9s 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes bentoSideEnter {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .bento-photo-card {
   position: relative;
   flex: 1;
-  border-radius: 18px;
+  border-radius: var(--radius-sm, 6px);
   overflow: hidden;
-  box-shadow: 0 10px 24px rgba(78, 38, 12, 0.1);
+  box-shadow: 0 8px 24px rgba(37, 32, 24, 0.08);
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  background-color: var(--color-primary-dark);
+  border: 1px solid var(--border-color, #C9B99D);
+  background-color: #171613;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.bento-photo-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent, #A97835);
+  box-shadow: 0 14px 32px rgba(37, 32, 24, 0.16);
 }
 
 .bento-photo-card img {
@@ -291,61 +449,95 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-photo-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.06);
+}
+
+/* Circular focus indicator for the carvings/detail card */
+.bento-photo-card:nth-child(2)::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border: 1.5px dashed #dfbf8a;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.bento-photo-card:nth-child(2):hover::before {
+  opacity: 0.9;
+  transform: scale(1.15) rotate(45deg);
 }
 
 .bento-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(28, 14, 6, 0.8) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(23, 22, 19, 0.88) 0%, transparent 60%);
   display: flex;
   align-items: flex-end;
   padding: 16px 20px;
+  transform: translateY(8px);
+  opacity: 0.9;
+  transition: all 0.35s ease;
+}
+
+.bento-photo-card:hover .bento-card-overlay {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .bento-card-caption {
   color: #FFFFFF;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 500;
   margin: 0;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-  line-height: 1.3;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  line-height: 1.35;
 }
 
+/* 5. PHOTO ARCHIVE BUTTON / CARD */
 .bento-view-all-pill {
   width: 100%;
-  padding: 14px 20px;
-  background: linear-gradient(135deg, var(--color-primary-dark), #3D1C06);
-  color: #FFF8F0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  padding: 13px 20px;
+  background: var(--dark, #171613);
+  color: #dfbf8a;
+  border: 1px solid rgba(223, 191, 138, 0.35);
+  border-radius: var(--radius-sm, 6px);
+  font-size: 0.9rem;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(78, 38, 12, 0.18);
-  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(23, 22, 19, 0.2);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-view-all-pill:hover {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(193, 120, 23, 0.3);
+  background: #a97835;
+  color: #171613;
+  border-color: #a97835;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(169, 120, 53, 0.35);
 }
 
 .bento-pill-arrow {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-view-all-pill:hover .bento-pill-arrow {
-  transform: translateX(4px);
+  transform: translateX(6px);
 }
 
 /* ===================== MAIN CONTENT & SIDEBAR LAYOUT ===================== */
@@ -369,16 +561,36 @@
 }
 
 .heritage-card {
-  background: var(--color-white);
-  border: 1px solid rgba(193, 120, 23, 0.16);
-  border-radius: var(--radius-lg);
+  background: var(--card-bg, #FFFAF1);
+  border: 1px solid var(--border-color, #C9B99D);
+  border-radius: var(--radius-sm, 6px);
   padding: 36px;
-  box-shadow: 0 8px 24px rgba(78, 38, 12, 0.05);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 8px 24px rgba(37, 32, 24, 0.05);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: manuscriptReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.heritage-card.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes manuscriptReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .heritage-card:hover {
-  box-shadow: 0 12px 32px rgba(78, 38, 12, 0.08);
+  box-shadow: 0 16px 36px rgba(37, 32, 24, 0.1);
+  border-color: var(--accent, #A97835);
 }
 
 .heritage-card-header {
@@ -387,49 +599,57 @@
 
 .heritage-card-kicker {
   display: inline-block;
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 0.22em;
   font-weight: 700;
   color: var(--color-accent);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .heritage-card-title {
-  font-family: var(--font-heading);
-  font-size: 1.95rem;
-  color: var(--color-primary-dark);
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+  font-weight: 400;
+  color: var(--text-primary);
   margin: 0;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .narrative-lead-text {
-  font-size: 1.1rem;
-  line-height: 1.85;
-  color: var(--color-text-light);
+  font-size: 1.08rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
   margin: 0;
 }
 
-/* Significance Card */
+/* 7. SIGNIFICANCE & LEGACY CARD ("MEMORY REVEAL") */
 .significance-card {
-  background: linear-gradient(135deg, #FFFDF9 0%, #FFF5E8 100%);
-  border-left: 5px solid var(--color-accent);
+  background: var(--card-bg, #FFFAF1);
+  border-left: 4px solid var(--color-accent);
   display: flex;
   gap: 22px;
   align-items: flex-start;
 }
 
 .significance-icon-badge {
-  font-size: 2.2rem;
-  background: rgba(193, 120, 23, 0.12);
-  width: 58px;
-  height: 58px;
-  border-radius: 16px;
+  font-size: 2rem;
+  background: rgba(169, 120, 53, 0.12);
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-sm, 6px);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid rgba(193, 120, 23, 0.25);
+  border: 1px solid rgba(169, 120, 53, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.significance-card.is-revealed .significance-icon-badge,
+.significance-card:hover .significance-icon-badge {
+  transform: scale(1);
 }
 
 .significance-text-wrap {
@@ -437,20 +657,21 @@
 }
 
 .significance-title {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  color: var(--color-primary-dark);
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  color: var(--text-primary);
   margin: 4px 0 12px;
 }
 
 .significance-body-text {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   line-height: 1.75;
-  color: var(--color-text);
+  color: var(--text-secondary);
   margin: 0;
 }
 
-/* Gallery Card Section */
+/* 10 & 11. DOCUMENTED PHOTO GALLERY CARD ("LIVING ARCHIVE") */
 .gallery-section-card {
   padding: 36px;
 }
@@ -465,18 +686,19 @@
 }
 
 .gallery-archive-count {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--color-primary-dark);
-  background: rgba(139, 69, 19, 0.1);
-  padding: 6px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(139, 69, 19, 0.2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: rgba(169, 120, 53, 0.1);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(169, 120, 53, 0.25);
+  letter-spacing: 0.05em;
 }
 
 .gallery-section-desc {
   font-size: 0.95rem;
-  color: var(--color-text-muted);
+  color: var(--text-muted);
   margin-bottom: 24px;
   line-height: 1.6;
 }
@@ -491,14 +713,20 @@
 }
 
 .sidebar-box {
-  background: var(--color-white);
-  border: 1px solid rgba(193, 120, 23, 0.18);
-  border-radius: var(--radius-lg);
+  background: var(--card-bg, #FFFAF1);
+  border: 1px solid var(--border-color, #C9B99D);
+  border-radius: var(--radius-sm, 6px);
   padding: 28px;
-  box-shadow: 0 8px 24px rgba(78, 38, 12, 0.06);
+  box-shadow: 0 8px 24px rgba(37, 32, 24, 0.06);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Monument Fact Sheet */
+.sidebar-box:hover {
+  border-color: var(--accent, #A97835);
+  box-shadow: 0 12px 30px rgba(37, 32, 24, 0.1);
+}
+
+/* 8. MONUMENT FACT SHEET ("ARCHIVAL INFORMATION SHEET") */
 .fact-sheet-header {
   display: flex;
   align-items: center;
@@ -506,21 +734,21 @@
 }
 
 .fact-sheet-icon {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .fact-sheet-header h3 {
-  font-family: var(--font-heading);
-  font-size: 1.4rem;
-  color: var(--color-primary-dark);
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .fact-sheet-divider {
-  height: 2px;
+  height: 1px;
   background: linear-gradient(to right, var(--color-accent), transparent);
-  margin: 16px 0 20px;
-  border-radius: 2px;
+  margin: 16px 0 18px;
 }
 
 .fact-list {
@@ -532,9 +760,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 13px 0;
-  border-bottom: 1px dashed rgba(139, 69, 19, 0.16);
+  padding: 11px 0;
+  border-bottom: 1px dashed var(--border-light, rgba(201, 185, 157, 0.45));
   gap: 16px;
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: factRowSlide 0.5s ease forwards;
+}
+
+.fact-row:nth-child(1) { animation-delay: 0.1s; }
+.fact-row:nth-child(2) { animation-delay: 0.18s; }
+.fact-row:nth-child(3) { animation-delay: 0.26s; }
+.fact-row:nth-child(4) { animation-delay: 0.34s; }
+.fact-row:nth-child(5) { animation-delay: 0.42s; }
+.fact-row:nth-child(6) { animation-delay: 0.50s; }
+.fact-row:nth-child(7) { animation-delay: 0.58s; }
+
+@keyframes factRowSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .fact-row:last-child {
@@ -543,9 +793,9 @@
 }
 
 .fact-key {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: var(--color-text-muted);
+  color: var(--text-muted);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -553,18 +803,19 @@
 }
 
 .fact-val {
-  font-size: 0.94rem;
+  font-size: 0.92rem;
   font-weight: 600;
-  color: var(--color-primary-dark);
+  color: var(--text-primary);
   text-align: right;
   word-break: break-word;
 }
 
 .fact-val-badge {
-  background: rgba(139, 69, 19, 0.08);
-  padding: 4px 10px;
-  border-radius: 8px;
-  color: var(--color-primary);
+  background: rgba(169, 120, 53, 0.1);
+  padding: 3px 10px;
+  border-radius: 4px;
+  color: var(--accent, #A97835);
+  border: 1px solid rgba(169, 120, 53, 0.2);
 }
 
 .fact-val-highlight {
@@ -573,31 +824,31 @@
 }
 
 .fact-sheet-cta-wrap {
-  margin-top: 24px;
+  margin-top: 22px;
   padding-top: 18px;
-  border-top: 1px solid var(--color-bg-dark);
+  border-top: 1px solid var(--border-light);
 }
 
 .fact-full-btn {
   width: 100%;
-  padding: 13px !important;
-  font-size: 0.95rem !important;
-  border-radius: 12px !important;
+  padding: 12px !important;
+  font-size: 0.9rem !important;
+  border-radius: var(--radius-sm, 6px) !important;
 }
 
-/* Practical Visitor Guide Box */
+/* 9. PRACTICAL VISITOR GUIDE CARD */
 .practical-guide-box {
-  background: #FFFDF8;
-  border: 1px solid rgba(193, 120, 23, 0.25);
+  background: var(--card-bg, #FFFAF1);
 }
 
 .practical-guide-box h4 {
-  font-family: var(--font-heading);
+  font-family: Georgia, 'Playfair Display', serif;
   font-size: 1.25rem;
-  color: var(--color-primary-dark);
+  font-weight: 400;
+  color: var(--text-primary);
   margin-bottom: 16px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(139, 69, 19, 0.12);
+  border-bottom: 1px solid var(--border-light);
 }
 
 .practical-items {
@@ -610,51 +861,71 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: practicalItemFade 0.5s ease forwards;
+}
+
+.practical-item:nth-child(1) { animation-delay: 0.15s; }
+.practical-item:nth-child(2) { animation-delay: 0.28s; }
+.practical-item:nth-child(3) { animation-delay: 0.40s; }
+.practical-item:nth-child(4) { animation-delay: 0.52s; }
+
+@keyframes practicalItemFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .practical-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--color-accent);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.1em;
 }
 
 .practical-value {
-  font-size: 0.9rem;
-  color: var(--color-text);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
   line-height: 1.45;
 }
 
-/* Sidebar Contribute Box */
+/* 15. COMMUNITY ARCHIVING CARD */
 .sidebar-contribute-box {
-  background: linear-gradient(135deg, #FFF8EE 0%, #FFF0DE 100%);
-  border: 1px solid rgba(193, 120, 23, 0.3);
+  background: var(--surface);
+  border: 1px solid var(--border-color);
 }
 
 .contribute-box-badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 3px 10px;
   background: var(--color-accent);
-  color: #ffffff;
-  border-radius: 6px;
-  font-size: 0.74rem;
+  color: #171613;
+  border-radius: 4px;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.1em;
   margin-bottom: 12px;
 }
 
 .sidebar-contribute-box h4 {
-  font-family: var(--font-heading);
-  font-size: 1.3rem;
-  color: var(--color-primary-dark);
-  margin-bottom: 10px;
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 8px;
 }
 
 .sidebar-contribute-box p {
-  font-size: 0.9rem;
-  color: var(--color-text-light);
+  font-size: 0.88rem;
+  color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 18px;
 }
@@ -664,9 +935,16 @@
   text-align: center;
   justify-content: center;
   padding: 12px !important;
-  font-size: 0.92rem !important;
-  border-radius: 12px !important;
-  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.2);
+  font-size: 0.9rem !important;
+  border-radius: var(--radius-sm, 6px) !important;
+  box-shadow: 0 4px 14px rgba(37, 32, 24, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.contribute-action-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent, #A97835);
+  box-shadow: 0 8px 20px rgba(169, 120, 53, 0.25);
 }
 
 /* ===================== BOTTOM BANNER ===================== */
@@ -1000,4 +1278,215 @@
   .bento-photo-card img {
     transition: none;
   }
+}
+
+/* ===================================================
+   DARK MODE — SITE DETAIL PAGE
+   =================================================== */
+
+[data-theme="dark"] .site-detail-modern {
+  background-color: #171310;
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .detail-top-section {
+  background: linear-gradient(180deg, #211a15 0%, #171310 100%);
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .breadcrumb-link {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .breadcrumb-link:hover {
+  color: #e0ad75;
+}
+
+[data-theme="dark"] .breadcrumb-sep {
+  color: #5a493a;
+}
+
+[data-theme="dark"] .breadcrumb-current {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .detail-header-card {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .detail-type-badge {
+  background: rgba(208, 154, 97, 0.15);
+  color: #d09a61;
+  border-color: rgba(208, 154, 97, 0.35);
+}
+
+[data-theme="dark"] .detail-period-badge {
+  background: rgba(208, 154, 97, 0.1);
+  color: #e0ad75;
+  border-color: rgba(208, 154, 97, 0.3);
+}
+
+[data-theme="dark"] .detail-featured-badge {
+  background: linear-gradient(135deg, rgba(208, 154, 97, 0.2), rgba(224, 173, 117, 0.2));
+  color: #e0ad75;
+  border-color: rgba(208, 154, 97, 0.45);
+}
+
+[data-theme="dark"] .detail-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .detail-location-bar {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .detail-address-sub {
+  color: #b6a28e;
+}
+
+/* Bento photo cards */
+[data-theme="dark"] .bento-photo-hero {
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .bento-photo-card {
+  border-color: #5a493a;
+}
+
+/* Heritage content cards */
+[data-theme="dark"] .heritage-card {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .heritage-card:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .heritage-card-kicker {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .heritage-card-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .narrative-lead-text {
+  color: #d6c5b3;
+}
+
+/* Significance card */
+[data-theme="dark"] .significance-card {
+  background: linear-gradient(135deg, #2a201a 0%, #33271f 100%);
+  border-left-color: #d09a61;
+}
+
+[data-theme="dark"] .significance-icon-badge {
+  background: rgba(208, 154, 97, 0.15);
+  border-color: rgba(208, 154, 97, 0.3);
+}
+
+[data-theme="dark"] .significance-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .significance-body-text {
+  color: #d6c5b3;
+}
+
+/* Gallery section */
+[data-theme="dark"] .gallery-archive-count {
+  background: rgba(208, 154, 97, 0.15);
+  color: #e0ad75;
+  border-color: rgba(208, 154, 97, 0.35);
+}
+
+[data-theme="dark"] .gallery-section-desc {
+  color: #b6a28e;
+}
+
+/* Sidebar boxes */
+[data-theme="dark"] .sidebar-box {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .fact-sheet-header h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .fact-row {
+  border-bottom-color: #3d3028;
+}
+
+[data-theme="dark"] .fact-key {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .fact-val {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .fact-val-badge {
+  background: rgba(208, 154, 97, 0.15);
+  color: #d09a61;
+}
+
+[data-theme="dark"] .fact-val-highlight {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .fact-sheet-cta-wrap {
+  border-top-color: #5a493a;
+}
+
+/* Practical guide box */
+[data-theme="dark"] .practical-guide-box {
+  background: #2a201a;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .practical-guide-box h4 {
+  color: #f4eadc;
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .practical-label {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .practical-value {
+  color: #d6c5b3;
+}
+
+/* Contribute sidebar box */
+[data-theme="dark"] .sidebar-contribute-box {
+  background: linear-gradient(135deg, #2d2118 0%, #38261a 100%);
+  border-color: rgba(208, 154, 97, 0.35);
+}
+
+[data-theme="dark"] .sidebar-contribute-box h4 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .sidebar-contribute-box p {
+  color: #cdbba8;
+}
+
+/* Not found card */
+[data-theme="dark"] .not-found-card {
+  background: #292019;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .not-found-card h2 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .not-found-card p {
+  color: #b6a28e;
 }

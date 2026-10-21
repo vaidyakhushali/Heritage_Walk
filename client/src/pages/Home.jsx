@@ -4,6 +4,7 @@ import SiteCard from '../components/SiteCard'
 import Loader from '../components/Loader'
 import { IconArrowRight, IconCamera, IconHeritage, IconLocation, IconSearch, IconScroll } from '../components/Icons'
 import { fallbackSites } from '../data/fallbackSites'
+import { siteService } from '../services/siteService'
 import './Home.css'
 
 const heroSlides = [
@@ -105,22 +106,16 @@ function Home() {
 
   // Fetch featured sites with instant fallback
   useEffect(() => {
-    fetch('/api/sites/featured')
-      .then(res => {
-        if (!res.ok) throw new Error('API request failed')
-        return res.json()
-      })
+    siteService.getFeaturedSites()
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
           setFeaturedSites(data)
         } else {
-          // Fallback to featured items from local dataset
           setFeaturedSites(fallbackSites.filter(s => s.featured))
         }
         setLoading(false)
       })
       .catch(() => {
-        // Safe fallback
         setFeaturedSites(fallbackSites.filter(s => s.featured))
         setLoading(false)
       })
@@ -146,6 +141,11 @@ function Home() {
           backgroundImage: `linear-gradient(rgba(30, 14, 6, 0.72), rgba(65, 28, 8, 0.85)), url(${currentSlide.image})`
         }}
       >
+        {/* Archaeology Unveil Shutter Layer */}
+        <div className="hero-archaeology-frame">
+          <div key={activeSlide} className="hero-unveil-shutter" aria-hidden="true"></div>
+        </div>
+
         <div className="hero-overlay-radial"></div>
 
         <div className="container hero-container">
@@ -245,7 +245,8 @@ function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="how-it-works section-padding">
+      <section className="how-it-works section-padding hw-walk-container">
+        <div className="hw-walk-thread" aria-hidden="true"></div>
         <div className="container">
           <div className="steps-heading">
             <div>
@@ -258,7 +259,7 @@ function Home() {
           </div>
 
           <div className="steps-grid">
-            <article className="step-card">
+            <article className="step-card hw-walk-waypoint">
               <div className="step-card-inner">
                 <div className="step-card-face step-card-front">
                   <span className="step-number">01</span>
@@ -275,7 +276,7 @@ function Home() {
               </div>
             </article>
 
-            <article className="step-card">
+            <article className="step-card hw-walk-waypoint">
               <div className="step-card-inner">
                 <div className="step-card-face step-card-front">
                   <span className="step-number">02</span>
@@ -292,7 +293,7 @@ function Home() {
               </div>
             </article>
 
-            <article className="step-card">
+            <article className="step-card hw-walk-waypoint">
               <div className="step-card-inner">
                 <div className="step-card-face step-card-front">
                   <span className="step-number">03</span>

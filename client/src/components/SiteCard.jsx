@@ -70,6 +70,16 @@ function SiteCard({ site }) {
             {site.photos.length}
           </span>
         )}
+
+        {/* Archival Information Drawer Overlay ("Digital Archaeology") */}
+        <div className="hw-card-archival-drawer" aria-hidden="true">
+          <span className="hw-card-archival-era">
+            <IconClock size={11} color="currentColor" /> {site.period || site.type}
+          </span>
+          <span className="hw-card-archival-cta">
+            Uncover History <IconArrowRight size={13} color="currentColor" />
+          </span>
+        </div>
       </div>
 
       <div className="site-card-content">

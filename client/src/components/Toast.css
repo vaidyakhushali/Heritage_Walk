@@ -127,3 +127,32 @@
     top: 16px;
   }
 }
+
+/* ===================================================
+   DARK MODE — TOAST
+   =================================================== */
+
+[data-theme="dark"] .toast {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  border-top-color: #5a493a;
+  border-right-color: #5a493a;
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .toast-message {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .toast-action-hint {
+  color: #d09a61;
+}
+
+[data-theme="dark"] .toast-close {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .toast-close:hover {
+  color: #f4eadc;
+}

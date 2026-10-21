@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Toast from '../components/Toast'
 import Loader from '../components/Loader'
+import { contributionService } from '../services/contributionService'
 import {
   IconHeritage,
   IconSparkles,
@@ -38,12 +39,8 @@ function Profile() {
     if (!user || !token) return
 
     let isCurrent = true
-    fetch('/api/contributions/mine', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) throw new Error(data.error?.message || 'Could not load contributions')
+    contributionService.getUserContributions(token)
+      .then(data => {
         if (isCurrent) setContributions(data.contributions || [])
       })
       .catch(err => {

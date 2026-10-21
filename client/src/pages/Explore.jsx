@@ -5,9 +5,12 @@ import HeritageMap from '../components/HeritageMap'
 import Loader from '../components/Loader'
 import {
   IconHeritage,
-  IconSearch
+  IconSearch,
+  IconFilter,
+  IconX
 } from '../components/Icons'
 import { fallbackSites, fallbackTypes } from '../data/fallbackSites'
+import { siteService } from '../services/siteService'
 import './Explore.css'
 
 const discoveryCategories = [
@@ -29,6 +32,7 @@ function Explore() {
   const [pages, setPages] = useState(1)
   const [sortBy, setSortBy] = useState('featured')
   const [viewMode, setViewMode] = useState('grid') // 'grid' or 'map'
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   const currentType = searchParams.get('type') || 'all'
   const currentSearch = searchParams.get('search') || ''
@@ -80,8 +84,7 @@ function Explore() {
   }
 
   useEffect(() => {
-    fetch('/api/sites/types')
-      .then(response => response.json())
+    siteService.getSiteTypes()
       .then(data => {
         if (Array.isArray(data) && data.length > 0) setTypes(data)
       })
@@ -90,21 +93,17 @@ function Explore() {
 
   useEffect(() => {
     setLoading(true)
-    const params = new URLSearchParams()
-    if (currentType !== 'all') params.set('type', currentType)
-    if (currentSearch) params.set('search', currentSearch)
-    if (currentLocation) params.set('location', currentLocation)
-    if (currentRegions.length > 0) params.set('region', currentRegions.join(','))
+    const params = {}
+    if (currentType !== 'all') params.type = currentType
+    if (currentSearch) params.search = currentSearch
+    if (currentLocation) params.location = currentLocation
+    if (currentRegions.length > 0) params.region = currentRegions.join(',')
     const page = viewMode === 'map' ? 1 : currentPage
     const limit = viewMode === 'map' ? 50 : 6
-    params.set('page', page)
-    params.set('limit', limit)
+    params.page = page
+    params.limit = limit
 
-    fetch(`/api/sites?${params.toString()}`)
-      .then(response => {
-        if (!response.ok) throw new Error('Failed to fetch sites')
-        return response.json()
-      })
+    siteService.getSites(params)
       .then(data => {
         if (data && Array.isArray(data.sites) && data.sites.length > 0) {
           setDbSites(data.sites)
@@ -155,6 +154,11 @@ function Explore() {
 
   const clearAllFilters = () => setSearchParams({})
 
+  const activeFilterCount = (currentType !== 'all' ? 1 : 0) +
+    (currentSearch ? 1 : 0) +
+    (currentLocation ? 1 : 0) +
+    currentRegions.length
+
   const goToPage = (page) => {
     const params = new URLSearchParams(searchParams)
     params.set('page', page)
@@ -186,8 +190,51 @@ function Explore() {
         </nav>
 
         <div className="explore-layout">
-          <aside className="explore-sidebar">
-            <h3>Filters</h3>
+          {/* Mobile Filter Toggle Bar */}
+          <div className="mobile-explore-toolbar">
+            <button
+              type="button"
+              className={`mobile-filter-btn ${activeFilterCount > 0 ? 'has-active' : ''}`}
+              onClick={() => setMobileFiltersOpen(prev => !prev)}
+              aria-expanded={mobileFiltersOpen}
+            >
+              <IconFilter size={16} color="currentColor" />
+              <span>Filters {activeFilterCount > 0 ? `(${activeFilterCount})` : ''}</span>
+              <span className="mobile-filter-chevron">{mobileFiltersOpen ? '▲' : '▼'}</span>
+            </button>
+
+            <div className="explore-view-toggle mobile-view-toggle" role="group" aria-label="Results view">
+              <button
+                type="button"
+                className={`view-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                onClick={() => setViewMode('grid')}
+              >
+                Grid
+              </button>
+              <button
+                type="button"
+                className={`view-toggle-btn ${viewMode === 'map' ? 'active' : ''}`}
+                onClick={() => setViewMode('map')}
+              >
+                Map
+              </button>
+            </div>
+          </div>
+
+          <aside className={`explore-sidebar ${mobileFiltersOpen ? 'mobile-open' : ''}`}>
+            <div className="sidebar-header-row">
+              <h3>Filters</h3>
+              {mobileFiltersOpen && (
+                <button
+                  type="button"
+                  className="mobile-close-sidebar-btn"
+                  onClick={() => setMobileFiltersOpen(false)}
+                  aria-label="Close filters"
+                >
+                  <IconX size={18} color="currentColor" />
+                </button>
+              )}
+            </div>
 
             <div className="sidebar-controls">
               <div className="toolbar-field">
@@ -267,7 +314,7 @@ function Explore() {
                 <strong>{total}</strong> {total === 1 ? 'place' : 'places'} to discover
               </div>
             )}
-            <div className="explore-view-toggle" role="group" aria-label="Results view">
+            <div className="explore-view-toggle desktop-view-toggle" role="group" aria-label="Results view">
               <button
                 type="button"
                 className={`view-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}

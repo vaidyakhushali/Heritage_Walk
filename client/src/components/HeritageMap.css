@@ -77,12 +77,25 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
   border: 2.5px solid #ffffff;
   position: relative;
-  transition: transform 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
   cursor: pointer;
+  animation: pinDrop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pinDrop {
+  from {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.6) translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-45deg) scale(1) translateY(0);
+  }
 }
 
 .heritage-custom-pin:hover {
-  transform: rotate(-45deg) scale(1.15);
+  transform: rotate(-45deg) scale(1.18);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
 
 .pin-symbol {
@@ -168,4 +181,56 @@
 
 .popup-btn:hover {
   background: var(--color-primary-dark);
+}
+
+
+/* ===================================================
+   DARK MODE — HERITAGE MAP
+   =================================================== */
+
+[data-theme="dark"] .heritage-map-wrapper {
+  background: #211a15;
+  border-color: #5a493a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .heritage-map-legend {
+  background: #211a15;
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .legend-title {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .legend-item {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .heritage-map-popup {
+  background: #292019;
+}
+
+[data-theme="dark"] .hw-leaflet-popup .leaflet-popup-content-wrapper {
+  background: #292019;
+  border-color: #5a493a;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .popup-body h4 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .popup-loc,
+[data-theme="dark"] .popup-era {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .popup-btn {
+  background: #d09a61;
+  color: #211810 !important;
+}
+
+[data-theme="dark"] .popup-btn:hover {
+  background: #e0ad75;
 }

@@ -1,0 +1,122 @@
+/* ===================================================
+   HERITAGEWALK — EXHIBITION PAGE LOAD EXPERIENCE
+   =================================================== */
+
+.initial-opening-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: radial-gradient(circle at center, #271a12 0%, #17110c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.initial-opening-curtain.closing {
+  opacity: 0;
+  transform: scale(1.03);
+  pointer-events: none;
+}
+
+.opening-centerpiece {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  animation: openingEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.opening-logo-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #8B4513, #5C2E0A);
+  border: 1.5px solid rgba(216, 155, 91, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 6px rgba(139, 69, 19, 0.2);
+  margin-bottom: 20px;
+  animation: openingPulse 1.8s ease-in-out infinite;
+}
+
+.opening-brand-name {
+  font-family: var(--font-heading, 'Playfair Display', Georgia, serif);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  color: #FFFDF9;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.opening-tagline {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #D89B5B;
+  font-weight: 600;
+  margin: 0 0 24px;
+  opacity: 0.92;
+}
+
+.opening-ornament-line {
+  position: relative;
+  width: 180px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(216, 155, 91, 0.8), transparent);
+  transform: scaleX(0);
+  animation: lineExpand 0.8s 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.line-diamond {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 6px;
+  height: 6px;
+  background: #F7DDA7;
+  box-shadow: 0 0 8px rgba(247, 221, 167, 0.8);
+}
+
+@keyframes openingEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes openingPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 6px rgba(139, 69, 19, 0.2);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.6), 0 0 0 10px rgba(216, 155, 91, 0.25);
+  }
+}
+
+@keyframes lineExpand {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .initial-opening-curtain {
+    display: none !important;
+  }
+}
+

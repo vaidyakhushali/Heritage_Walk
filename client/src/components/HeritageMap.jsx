@@ -119,7 +119,7 @@ function HeritageMap({ sites = [], selectedType = 'all' }) {
       const customIcon = L.divIcon({
         className: 'heritage-map-pin-wrap',
         html: `
-          <div class="heritage-custom-pin" style="background: ${color}; border-color: #fff; color: #fff;">
+          <div class="heritage-custom-pin" data-cursor="MAP" style="background: ${color}; border-color: #fff; color: #fff;">
             <span class="pin-symbol">${pinSvg}</span>
           </div>
         `,

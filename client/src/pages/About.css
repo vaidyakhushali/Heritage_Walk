@@ -320,3 +320,112 @@
     margin-left: 0;
   }
 }
+
+/* ===================================================
+   DARK MODE — ABOUT PAGE
+   =================================================== */
+
+[data-theme="dark"] .about-alt {
+  background: #1d1611;
+}
+
+[data-theme="dark"] .about-section {
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .mission-content h2 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .mission-content p {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .flow-step {
+  background: #292019;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .flow-step h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .flow-step p {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .flow-arrow {
+  color: #5a493a;
+}
+
+[data-theme="dark"] .audience-card {
+  background: #292019;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .audience-card:hover {
+  border-color: #d09a61;
+}
+
+[data-theme="dark"] .audience-card h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .audience-card p {
+  color: #b6a28e;
+}
+
+/* ===================================================
+   DARK MODE — ABOUT PAGE
+   =================================================== */
+
+[data-theme="dark"] .about-alt {
+  background: #1d1611;
+}
+
+[data-theme="dark"] .about-section {
+  border-bottom-color: #5a493a;
+}
+
+[data-theme="dark"] .mission-content h2 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .mission-content p {
+  color: #d6c5b3;
+}
+
+[data-theme="dark"] .flow-step {
+  background: #292019;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .flow-step h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .flow-step p {
+  color: #b6a28e;
+}
+
+[data-theme="dark"] .flow-arrow {
+  color: #5a493a;
+}
+
+[data-theme="dark"] .audience-card {
+  background: #292019;
+  border-color: #5a493a;
+}
+
+[data-theme="dark"] .audience-card:hover {
+  border-color: #d09a61;
+}
+
+[data-theme="dark"] .audience-card h3 {
+  color: #f4eadc;
+}
+
+[data-theme="dark"] .audience-card p {
+  color: #b6a28e;
+}
+

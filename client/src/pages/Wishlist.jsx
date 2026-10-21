@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import SiteCard from '../components/SiteCard'
 import Loader from '../components/Loader'
+import { authService } from '../services/authService'
 import { IconHeart, IconSearch } from '../components/Icons'
 import './Wishlist.css'
 
@@ -24,13 +25,8 @@ function Wishlist() {
 
   const loadWishlistSites = async () => {
     try {
-      const res = await fetch('/api/auth/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      if (res.ok) {
-        const data = await res.json()
-        setSites(data.wishlist || [])
-      }
+      const data = await authService.getProfile(token)
+      setSites(data.wishlist || [])
     } catch {
       // silently fail
     } finally {
