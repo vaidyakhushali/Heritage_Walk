@@ -165,7 +165,7 @@ export const fallbackSites = [
       photographyTips: "Use a wide prime lens to shoot upwards from the narrow cobblestone alley below the 5-story facade."
     },
     photos: [
-      { url: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/4a/af/e4/hotel-the-golden-house.jpg?w=900&h=500&s=1?w=800&h=600&fit=crop", caption: "Golden sandstone facade of Patwon Ki Haveli", credit: "HeritageWalk" },
+      { url: "https://www.tourmyindia.com/images/patwaon-ki-haveli1.jpg?w=900&h=500&s=1?w=800&h=600&fit=crop", caption: "Golden sandstone facade of Patwon Ki Haveli", credit: "HeritageWalk" },
       { url: "https://tse2.mm.bing.net/th/id/OIP.EZ5FxGddhtU6mpEBGoMT8QHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3?w=800&h=600&fit=crop", caption: "Ornate jharokhas and carved balconies", credit: "HeritageWalk" },
       { url: "https://as1.ftcdn.net/jpg/03/85/57/20/1000_F_385572078_mdFTSvswBh7LnDpQa01ajBFPuNa1pHUR.jpg?w=800&h=600&fit=crop", caption: "Detailed sandstone carvings on the exterior walls", credit: "HeritageWalk" }
     ],

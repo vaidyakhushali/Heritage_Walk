@@ -7,6 +7,7 @@
    Dark:  bg #151513, text #EEE7DA, muted #B7AE9F, card #211F1B, borders #51483B
    ========================================================================== */
 :root {
+  color-scheme: dark;
   --bg-primary: #F4EFE6;
   --bg-secondary: #FFFAF1;
   --card-bg: #FFFAF1;
@@ -808,5 +809,52 @@ input, textarea, select {
   .section-title {
     font-size: 1.65rem;
     line-height: 1.2;
+  }
+}
+
+/* Touch layouts: shorter reveals and restrained press feedback. */
+@media (max-width: 1024px) {
+  .main-content > * {
+    animation-duration: 560ms;
+  }
+
+  .reveal-on-scroll {
+    transform: translateY(18px);
+    transition-duration: 560ms;
+  }
+
+  .stagger-reveal > * {
+    transform: translateY(16px);
+    transition-duration: 520ms;
+  }
+
+  .site-card {
+    transition-duration: 260ms;
+    will-change: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .site-card:active {
+    transform: scale(0.985);
+    box-shadow: 0 5px 16px rgba(37, 32, 24, 0.12);
+  }
+
+  .btn:active,
+  a.btn:active,
+  button.btn:active,
+  .navbar-toggle:active,
+  .navbar-theme-toggle:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll,
+  .stagger-reveal > *,
+  .footer.reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
   }
 }

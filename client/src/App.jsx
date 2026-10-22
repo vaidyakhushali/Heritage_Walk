@@ -33,7 +33,7 @@ function PageScrollReveal() {
     if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('.reveal-on-scroll, .stagger-reveal').forEach((el) => {
+      document.querySelectorAll('.reveal-on-scroll, .stagger-reveal, .how-it-works, .featured-section, .narrative-card, .significance-card, .gallery-section-card, .sidebar-box, .about-section, .audience-card, .stat-item, .step-card').forEach((el) => {
         el.classList.add('is-revealed')
       })
       return

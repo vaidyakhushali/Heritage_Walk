@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { useTheme } from '../context/ThemeContext'
 import {
   IconStepwell,
   IconUser,
@@ -9,8 +9,6 @@ import {
   IconCamera,
   IconShield,
   IconSparkles,
-  IconSun,
-  IconMoon
 } from './Icons'
 import './Navbar.css'
 
@@ -18,10 +16,17 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [isMobileNav, setIsMobileNav] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches)
   const { user, logout } = useAuth()
-  const { theme, isDark, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const userMenuRef = useRef(null)
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 900px)')
+    const updateMobileNav = () => setIsMobileNav(media.matches)
+    media.addEventListener('change', updateMobileNav)
+    return () => media.removeEventListener('change', updateMobileNav)
+  }, [])
 
   // Handle navbar shadow on scroll
   useEffect(() => {
@@ -63,61 +68,25 @@ function Navbar() {
       .slice(0, 2)
   }
 
-  return (
-    <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
-      <div className="container navbar-container">
-        <Link to="/" className="navbar-logo" onClick={closeMenu}>
-          <span className="logo-mark" aria-hidden="true">
-            <IconStepwell size={21} color="#F7DDA7" />
-          </span>
-          <span className="logo-text">HeritageWalk</span>
-        </Link>
-
-        <div className="navbar-header-actions">
+  const menuContent = (
+    <>
+        {isOpen && (
           <button
             type="button"
-            className="navbar-theme-toggle mobile-only-toggle"
-            onClick={toggleTheme}
-            aria-label={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
-            title={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
-          >
-            <span className="theme-toggle-icon">
-              {isDark ? <IconMoon size={18} color="var(--accent)" /> : <IconSun size={18} color="var(--accent)" />}
-            </span>
-          </button>
+            className="navbar-drawer-backdrop"
+            aria-label="Close navigation menu"
+            onClick={closeMenu}
+          />
+        )}
 
-          <button
-            className={`navbar-toggle ${isOpen ? 'active' : ''}`}
-            onClick={toggleMenu}
-            aria-label="Toggle navigation menu"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-
-        <div className={`navbar-menu ${isOpen ? 'open' : ''}`}>
+        <div id="primary-navigation" className={`navbar-menu ${isOpen ? 'open' : ''}`}>
           <NavLink to="/" className="navbar-link" onClick={closeMenu}>Home</NavLink>
           <NavLink to="/explore" className="navbar-link" onClick={closeMenu}>Explore</NavLink>
           <NavLink to="/contribute" className="navbar-link" onClick={closeMenu}>Contribute</NavLink>
           <NavLink to="/about" className="navbar-link" onClick={closeMenu}>About</NavLink>
 
           <div className="navbar-right">
-            <button
-              type="button"
-              className="navbar-theme-toggle desktop-only-toggle"
-              onClick={toggleTheme}
-              aria-label={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
-              title={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
-            >
-              <span className={`theme-toggle-pill ${isDark ? 'is-dark' : 'is-light'}`}>
-                <span className="toggle-indicator">
-                  {isDark ? <IconMoon size={13} color="#f5eadc" /> : <IconSun size={13} color="#b98255" />}
-                </span>
-                <span className="toggle-label">{isDark ? 'Night' : 'Day'}</span>
-              </span>
-            </button>
+            
 
             {user ? (
               <div
@@ -211,8 +180,41 @@ function Navbar() {
             )}
           </div>
         </div>
+    </>
+  )
+
+  return (
+    <>
+    <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
+      <div className="container navbar-container">
+        <Link to="/" className="navbar-logo" onClick={closeMenu}>
+          <span className="logo-mark" aria-hidden="true">
+            <IconStepwell size={21} color="#F7DDA7" />
+          </span>
+          <span className="logo-text">HeritageWalk</span>
+        </Link>
+
+        <div className="navbar-header-actions">
+          
+
+          <button
+            className={`navbar-toggle ${isOpen ? 'active' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Toggle navigation menu"
+            aria-expanded={isOpen}
+            aria-controls="primary-navigation"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+        {!isMobileNav && menuContent}
       </div>
     </nav>
+    {isMobileNav && createPortal(menuContent, document.body)}
+    </>
   )
 }
 

@@ -161,3 +161,11 @@
 [data-theme="dark"] .footer-disclaimer {
   color: #8f7c69 !important;
 }
+
+/* Mobile and tablet footer reveal motion; layout remains unchanged. */
+@media (max-width: 1024px) {
+  .footer.reveal-on-scroll {
+    transform: translateY(16px);
+    transition-duration: 560ms;
+  }
+}

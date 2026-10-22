@@ -206,10 +206,19 @@ const PORT = process.env.PORT || 5000;
 
 if (require.main === module) {
   connectDB().then(() => {
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`🚀 HeritageWalk server running on port ${PORT}`);
       console.log(`   Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`   API: http://localhost:${PORT}/api`);
+    });
+
+    server.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        console.error(`Port ${PORT} is already in use. Stop the other server or set PORT to a free port.`);
+      } else {
+        console.error('Failed to start HeritageWalk server:', err);
+      }
+      process.exit(1);
     });
   });
 }

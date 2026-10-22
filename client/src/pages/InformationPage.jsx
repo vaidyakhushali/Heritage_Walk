@@ -13,7 +13,7 @@ const informationPages = {
           'Do not share sensitive details that could put vulnerable sites, artifacts, or people at risk.'
         ]
       },
-      {
+      {    
         title: 'Share careful, useful information',
         paragraphs: [
           'Distinguish documented facts from personal memories, oral histories, and uncertain details. Add context or sources when available.',

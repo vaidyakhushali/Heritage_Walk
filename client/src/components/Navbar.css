@@ -1,7 +1,7 @@
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 10000;
   background: rgba(244, 239, 230, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -527,29 +527,44 @@
   }
 
   .navbar-menu {
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 68px;
     left: 0;
-    right: 0;
-    height: calc(100vh - 68px);
-    height: calc(100dvh - 68px);
-    max-height: calc(100vh - 68px);
-    max-height: calc(100dvh - 68px);
-    width: 100%;
+    right: auto;
+    bottom: 0;
+    height: auto;
+    max-height: none;
+    width: min(84vw, 320px);
     flex-direction: column;
     align-items: stretch;
     gap: 0;
     background: var(--color-bg);
     padding: 20px 24px 36px;
-    box-shadow: 0 12px 30px rgba(44, 24, 16, 0.15);
-    border-top: 1px solid var(--color-border);
+    box-shadow: 12px 0 32px rgba(23, 22, 19, 0.2);
+    border-top: 0;
+    border-right: 1px solid var(--color-border);
     transform: translateX(-100%);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.35s;
-    z-index: 999;
+    z-index: 20001;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     visibility: hidden;
     pointer-events: none;
+  }
+
+  .navbar-drawer-backdrop {
+    position: fixed;
+    inset: 68px 0 0;
+    z-index: 20000;
+    width: 100%;
+    height: auto;
+    background: rgba(18, 16, 13, 0.5);
+    opacity: 0;
+    animation: drawerBackdropIn 0.24s ease forwards;
+  }
+
+  @keyframes drawerBackdropIn {
+    to { opacity: 1; }
   }
 
   .navbar-menu.open {
@@ -600,7 +615,12 @@
   }
 
   .navbar-auth .navbar-link {
-    text-align: center;
+    width: 100%;
+    text-align: left;
+  }
+
+  .navbar-auth {
+    align-items: stretch;
   }
 
   .navbar-auth .btn {
@@ -644,11 +664,12 @@
   }
 
   .navbar-menu {
-    height: calc(100vh - 62px);
-    height: calc(100dvh - 62px);
-    max-height: calc(100vh - 62px);
-    max-height: calc(100dvh - 62px);
+    top: 62px;
     padding: 16px 18px 30px;
+  }
+
+  .navbar-drawer-backdrop {
+    inset-block-start: 62px;
   }
 
   .navbar-link {
