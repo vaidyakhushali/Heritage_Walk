@@ -156,27 +156,16 @@
 }
 
 .logo-mark {
-  position: relative;
-  width: 38px;
+  display: block;
+  width: 48px;
   height: 38px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 38px;
-  color: #F7DDA7;
-  background: linear-gradient(145deg, #8B4513, #5C2E0A);
-  border: 1px solid rgba(193, 120, 23, 0.65);
-  border-radius: 50%;
-  box-shadow: 0 2px 7px rgba(78, 38, 12, 0.2);
+  flex: 0 0 48px;
+  object-fit: contain;
   transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .logo-mark::after {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border: 1px solid rgba(247, 221, 167, 0.38);
-  border-radius: 50%;
-  pointer-events: none;
+  display: none;
 }
 
 .navbar-logo:hover .logo-mark {
@@ -654,9 +643,9 @@
   }
 
   .logo-mark {
-    width: 34px;
+    width: 42px;
     height: 34px;
-    flex: 0 0 34px;
+    flex: 0 0 42px;
   }
 
   .logo-text {

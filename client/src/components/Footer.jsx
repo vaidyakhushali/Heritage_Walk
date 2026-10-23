@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { IconHeritage, IconHeart } from './Icons'
+import { IconHeart } from './Icons'
+import heritageLogo from '../assets/heritage-logo.svg'
 import './Footer.css'
 
 function Footer() {
@@ -9,7 +10,7 @@ function Footer() {
         <div className="footer-grid">
           <div className="footer-section footer-about">
             <div className="footer-logo">
-              <span className="footer-logo-icon"><IconHeritage size={22} color="currentColor" /></span>
+              <span className="footer-logo-icon"><img src={heritageLogo} alt="" /></span>
               <span className="footer-logo-text">HeritageWalk</span>
             </div>
             <p className="footer-description">

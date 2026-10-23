@@ -3,13 +3,13 @@ import { createPortal } from 'react-dom'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import {
-  IconStepwell,
   IconUser,
   IconHeart,
   IconCamera,
   IconShield,
   IconSparkles,
 } from './Icons'
+import heritageLogo from '../assets/heritage-logo.svg'
 import './Navbar.css'
 
 function Navbar() {
@@ -188,9 +188,7 @@ function Navbar() {
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="container navbar-container">
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
-          <span className="logo-mark" aria-hidden="true">
-            <IconStepwell size={21} color="#F7DDA7" />
-          </span>
+          <img className="logo-mark" src={heritageLogo} alt="" />
           <span className="logo-text">HeritageWalk</span>
         </Link>
 

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" fill="none">
+  <g stroke="#f4eadc" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Simple horizon and rising sun frame the monument. -->
+    <path d="M25 119h150" stroke-width="3" opacity=".65"/>
+    <path d="M46 118a54 54 0 0 1 108 0" stroke-width="2.5" opacity=".72"/>
+    <path d="M91 55a9 9 0 1 1 18 0" stroke-width="2" opacity=".8"/>
+
+    <!-- Monument silhouette: central dome and open arch. -->
+    <path d="M55 119V80h25v39m40 0V80h25v39" stroke-width="3"/>
+    <path d="M50 80h35m30 0h35M61 80V61h13v19m48 0V61h13v19" stroke-width="2.5"/>
+    <path d="M62 61c0-8 3-13 6-16 4 3 6 8 6 16m49 0c0-8 3-13 6-16 4 3 6 8 6 16" stroke-width="2.2"/>
+    <path d="M79 119V78c0-19 9-31 21-38 12 7 21 19 21 38v41" stroke-width="3.2"/>
+    <path d="M89 119V84c0-9 5-15 11-15s11 6 11 15v35" stroke-width="2.8"/>
+    <path d="M95 119V87c0-4 2-7 5-7s5 3 5 7v32" stroke-width="2.2" opacity=".85"/>
+    <path d="M100 40V30m-7 16h14M51 119h98" stroke-width="2.5"/>
+
+    <!-- Walking path leads from the arch toward the viewer. -->
+    <path d="M94 119c-2 8-7 14-11 20m22-20c2 8 7 14 11 20M83 139h34" stroke-width="3"/>
+    <path d="M100 122v3m0 4v2" stroke-width="2" opacity=".75"/>
+  </g>
+</svg>
