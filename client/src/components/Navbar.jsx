@@ -9,7 +9,7 @@ import {
   IconShield,
   IconSparkles,
 } from './Icons'
-import heritageLogo from '../assets/heritage-logo.svg'
+import heritageLogo from '../assets/heritage-logo.png'
 import './Navbar.css'
 
 function Navbar() {

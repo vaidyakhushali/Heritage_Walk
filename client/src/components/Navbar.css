@@ -157,11 +157,11 @@
 
 .logo-mark {
   display: block;
-  width: 48px;
-  height: 38px;
-  flex: 0 0 48px;
+  width: 54px;
+  height: 46px;
+  flex: 0 0 54px;
   object-fit: contain;
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.25s ease;
 }
 
 .logo-mark::after {
@@ -169,7 +169,7 @@
 }
 
 .navbar-logo:hover .logo-mark {
-  transform: rotate(-8deg) scale(1.06);
+  transform: scale(1.04);
 }
 
 .logo-text {
@@ -643,9 +643,9 @@
   }
 
   .logo-mark {
-    width: 42px;
-    height: 34px;
-    flex: 0 0 42px;
+    width: 46px;
+    height: 40px;
+    flex: 0 0 46px;
   }
 
   .logo-text {

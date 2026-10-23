@@ -1,21 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" fill="none">
-  <g stroke="#f4eadc" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Simple horizon and rising sun frame the monument. -->
-    <path d="M25 119h150" stroke-width="3" opacity=".65"/>
-    <path d="M46 118a54 54 0 0 1 108 0" stroke-width="2.5" opacity=".72"/>
-    <path d="M91 55a9 9 0 1 1 18 0" stroke-width="2" opacity=".8"/>
-
-    <!-- Monument silhouette: central dome and open arch. -->
-    <path d="M55 119V80h25v39m40 0V80h25v39" stroke-width="3"/>
-    <path d="M50 80h35m30 0h35M61 80V61h13v19m48 0V61h13v19" stroke-width="2.5"/>
-    <path d="M62 61c0-8 3-13 6-16 4 3 6 8 6 16m49 0c0-8 3-13 6-16 4 3 6 8 6 16" stroke-width="2.2"/>
-    <path d="M79 119V78c0-19 9-31 21-38 12 7 21 19 21 38v41" stroke-width="3.2"/>
-    <path d="M89 119V84c0-9 5-15 11-15s11 6 11 15v35" stroke-width="2.8"/>
-    <path d="M95 119V87c0-4 2-7 5-7s5 3 5 7v32" stroke-width="2.2" opacity=".85"/>
-    <path d="M100 40V30m-7 16h14M51 119h98" stroke-width="2.5"/>
-
-    <!-- Walking path leads from the arch toward the viewer. -->
-    <path d="M94 119c-2 8-7 14-11 20m22-20c2 8 7 14 11 20M83 139h34" stroke-width="3"/>
-    <path d="M100 122v3m0 4v2" stroke-width="2" opacity=".75"/>
+  <defs>
+    <linearGradient id="sunset" x1="100" y1="28" x2="100" y2="124" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD18A"/>
+      <stop offset="1" stop-color="#F4A34F"/>
+    </linearGradient>
+  </defs>
+  <!-- Sunset disc and Indian heritage skyline inspired by the supplied mark. -->
+  <path d="M22 116a78 78 0 0 1 156 0" fill="url(#sunset)"/>
+  <g fill="#713414" stroke="#713414" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Left domed pavilion -->
+    <path d="M31 119V84h37v35h-8V91H39v28z"/>
+    <path d="M27 84h45l-4-5H31zM33 78c1-13 7-21 16-26 9 5 15 13 16 26z"/>
+    <path d="M46 51v-5l3-4 3 4v5M49 42v-4" stroke-width="2"/>
+    <path d="M42 119V94c0-8 3-12 7-12s7 4 7 12v25z" fill="#F7BE76" stroke="none"/>
+    <!-- Fort gate and crenellated wall -->
+    <path d="M69 119V70h61v49h-9V82H78v37z"/>
+    <path d="M66 70h67v-8h-7v-6h-7v6h-7v-7h-7v7h-7v-7h-7v7h-7v-7h-7v7h-7z"/>
+    <path d="M82 56V43h5V34l5-6 5 6v9h5v13m10 0V43h5V34l5-6 5 6v9h5v13"/>
+    <path d="M92 119V91c0-9 6-16 13-21 7 5 13 12 13 21v28z" fill="#F7BE76" stroke="none"/>
+    <path d="M96 119V92c0-6 4-11 9-15 5 4 9 9 9 15v27z" fill="#381D15" stroke="none"/>
+    <!-- Minaret -->
+    <path d="M151 119V53h15v66h-5V62h-5v57z"/>
+    <path d="M148 55h21l-3-6h-15zM150 47c1-8 4-13 9-17 5 4 8 9 9 17zM157 30v-5l2-3 2 3v5"/>
+    <path d="M150 72h17m-17 29h17" stroke="#E7A45B" stroke-width="2"/>
+    <!-- Curving walking path -->
+    <path d="M45 132c27-20 57-27 91-25 17 1 32 6 43 12-20-4-38-4-56 0-23 4-42 12-57 22H43z" fill="#713414"/>
+    <path d="M72 137c22-12 45-18 69-18 11 0 21 1 30 4-19 0-38 5-55 14z" fill="#FFD18A" stroke="none"/>
+    <!-- Small traveler -->
+    <circle cx="139" cy="91" r="5"/>
+    <path d="M135 98c-5 3-7 10-7 18l-4 10 5 2 7-10 4 8-4 10 5 2 8-12-4-15 4-10-6-4z"/>
+    <!-- Birds -->
+    <path d="M130 41c5-7 10-8 15-3-6 0-10 2-15 3Zm11 10c5-6 10-7 14-2-5 0-9 1-14 2Zm10 9c5-5 9-5 13-1-5 0-8 1-13 1Z"/>
+    <!-- Leaf accent -->
+    <path d="M23 125c-10-12-15-22-16-32 13 7 22 18 27 32zm5 7c1-11 6-20 15-27 1 12-3 23-12 31zM9 135c11-4 21-3 31 2-11 6-21 6-31-2z" fill="#879342" stroke="none"/>
   </g>
 </svg>

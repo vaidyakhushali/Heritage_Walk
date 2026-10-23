@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { IconHeart } from './Icons'
-import heritageLogo from '../assets/heritage-logo.svg'
+import heritageLogo from '../assets/heritage-logo.png'
 import './Footer.css'
 
 function Footer() {
