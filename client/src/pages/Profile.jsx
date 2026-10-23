@@ -349,7 +349,7 @@ function Profile() {
                           setContributionsPage(1)
                         }}
                       >
-                        {[5, 10, 20, 50].map(size => <option key={size} value={size}>{size} per page</option>)}
+                        {[1,2,5,10].map(size => <option key={size} value={size}>{size} per page</option>)}
                       </select>
                     </label>
                   </nav>
