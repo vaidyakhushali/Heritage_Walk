@@ -23,6 +23,8 @@ function Profile() {
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState({ name: '', bio: '', location: '' })
   const [contributions, setContributions] = useState([])
+  const [contributionsPage, setContributionsPage] = useState(1)
+  const [contributionsPerPage, setContributionsPerPage] = useState(10)
   const [contributionsLoading, setContributionsLoading] = useState(true)
   const [contributionsError, setContributionsError] = useState('')
 
@@ -78,6 +80,12 @@ function Profile() {
   const wishlistCount = user.wishlist?.length || 0
   const photoCount = contributions.reduce((count, item) => count + (item.photos?.length || 0), 0)
   const videoCount = contributions.reduce((count, item) => count + (item.videos?.length || 0), 0)
+  const contributionPageCount = Math.ceil(contributions.length / contributionsPerPage)
+  const visibleContributions = contributions.slice(
+    (contributionsPage - 1) * contributionsPerPage,
+    contributionsPage * contributionsPerPage
+  )
+  const contributionPageNumbers = Array.from({ length: contributionPageCount }, (_, index) => index + 1)
 
   const contributionTypeLabels = {
     photo: 'Photo contribution',
@@ -263,7 +271,7 @@ function Profile() {
                 )}
 
                 <div className="contributions-list">
-                  {contributions.map(contribution => {
+                  {visibleContributions.map(contribution => {
                     const title = contribution.siteName || contribution.siteId?.name || 'Heritage record'
                     const location = [contribution.siteLocation?.city, contribution.siteLocation?.state]
                       .filter(Boolean).join(', ')
@@ -306,6 +314,46 @@ function Profile() {
                     )
                   })}
                 </div>
+                {!contributionsLoading && !contributionsError && contributions.length > 0 && (
+                  <nav className="contributions-pagination" aria-label="Contribution pages">
+                    <div className="contributions-page-controls">
+                      <button
+                        type="button"
+                        className="contributions-page-button contributions-page-edge"
+                        onClick={() => setContributionsPage(page => Math.max(1, page - 1))}
+                        disabled={contributionsPage === 1}
+                      >Previous</button>
+                      {contributionPageNumbers.map(page => (
+                        <button
+                          type="button"
+                          key={page}
+                          className={`contributions-page-button contributions-page-number ${page === contributionsPage ? 'active' : ''}`}
+                          onClick={() => setContributionsPage(page)}
+                          aria-current={page === contributionsPage ? 'page' : undefined}
+                          aria-label={`Page ${page}`}
+                        >{page}</button>
+                      ))}
+                      <button
+                        type="button"
+                        className="contributions-page-button contributions-page-edge"
+                        onClick={() => setContributionsPage(page => Math.min(contributionPageCount, page + 1))}
+                        disabled={contributionsPage === contributionPageCount}
+                      >Next</button>
+                    </div>
+                    <label className="contributions-page-size-label">
+                      <span className="sr-only">Contributions per page</span>
+                      <select
+                        value={contributionsPerPage}
+                        onChange={event => {
+                          setContributionsPerPage(Number(event.target.value))
+                          setContributionsPage(1)
+                        }}
+                      >
+                        {[5, 10, 20, 50].map(size => <option key={size} value={size}>{size} per page</option>)}
+                      </select>
+                    </label>
+                  </nav>
+                )}
               </section>
             </div>
           </div>
