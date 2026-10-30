@@ -1,0 +1,143 @@
+/* ===================================================
+   SCROLL PROGRESS BUTTON
+   Circular fixed back-to-top button with dynamic progress ring
+   Inspired by Digital Archaeology / Modern UI
+   =================================================== */
+
+.scroll-progress-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(18, 17, 16, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  z-index: 999;
+  outline: none;
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.28s ease,
+    background-color 0.25s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* SVG ring container */
+.scroll-progress-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Background track ring */
+.scroll-progress-track {
+  stroke: rgba(255, 255, 255, 0.12);
+  transition: stroke 0.25s ease;
+}
+
+/* Active progress stroke (Soft Coral/Pink from reference image) */
+.scroll-progress-indicator {
+  stroke: #f87b86;
+  transition: stroke-dashoffset 0.12s linear;
+  filter: drop-shadow(0 0 3px rgba(248, 123, 134, 0.4));
+}
+
+/* Center arrow container */
+.scroll-progress-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  color: #f3f4f6;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.2s ease;
+}
+
+.scroll-progress-arrow {
+  display: block;
+}
+
+/* Hover state: slight scale up and soft glow */
+.scroll-progress-btn:hover {
+  transform: translateY(-2px) scale(1.06);
+  border-color: rgba(248, 123, 134, 0.35);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.45),
+    0 0 16px rgba(248, 123, 134, 0.3);
+  background: rgba(24, 22, 21, 0.94);
+}
+
+.scroll-progress-btn:hover .scroll-progress-icon-wrap {
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+/* Active / Pressed state */
+.scroll-progress-btn:active {
+  transform: translateY(0) scale(0.94);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    0 0 8px rgba(248, 123, 134, 0.2);
+}
+
+/* Focus visible for accessibility */
+.scroll-progress-btn:focus-visible {
+  outline: 2px solid #f87b86;
+  outline-offset: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scroll-progress-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .scroll-progress-arrow {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-progress-btn {
+    bottom: 18px;
+    right: 18px;
+    width: 46px;
+    height: 46px;
+  }
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress-btn,
+  .scroll-progress-icon-wrap,
+  .scroll-progress-indicator {
+    transition: none !important;
+  }
+
+  .scroll-progress-btn:hover {
+    transform: none !important;
+  }
+}
+

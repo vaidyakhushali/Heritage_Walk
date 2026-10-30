@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import InitialLoader from './components/InitialLoader'
 import ContextualCursor from './components/ContextualCursor'
+import ScrollProgressButton from './components/ScrollProgressButton'
 import Home from './pages/Home'
 import Explore from './pages/Explore'
 import SiteDetail from './pages/SiteDetail'
@@ -113,6 +114,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <ScrollProgressButton />
     </div>
   )
 }
